@@ -2,7 +2,9 @@ import { notFound } from "next/navigation";
 import TutorialPage from "@/components/TutorialPage";
 import { topics, topicBySlug } from "@/tutorials/topics";
 
-// One static page per tutorial
+// One static page per tutorial; any other address is a 404
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return topics.map((topic) => ({ slug: topic.slug }));
 }
