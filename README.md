@@ -2,6 +2,8 @@
 
 Tutorials and copy-ready examples for [rcube-html](https://www.npmjs.com/package/rcube-html) — schema-driven React + Bootstrap forms, tables, charts, calendar, file upload and trees.
 
+**Live site: [rcube-html.web.app](https://rcube-html.web.app)**
+
 Every page has:
 
 - a short explanation in simple English,
@@ -16,8 +18,19 @@ The contents on the left are searchable (press `/`).
 ```bash
 npm install
 npm run dev        # http://localhost:3000  (npx next dev -p 3100 for another port)
-npm run build && npm start
+npm run build      # static site in out/
+npm run preview    # build + serve out/ with the Firebase emulator (http://127.0.0.1:5000)
 ```
+
+## Publish
+
+The site is a static export hosted on Firebase Hosting (project `rcube-html`, see `firebase.json` and `.firebaserc`):
+
+```bash
+npm run deploy     # next build + firebase deploy --only hosting -> https://rcube-html.web.app
+```
+
+Needs the Firebase CLI (`npm install -g firebase-tools`) and `firebase login` once.
 
 Uses Next.js 16 (App Router), React 18.3, React-Bootstrap 2.10 and Bootstrap 5.3 — the same versions as salampro.
 
