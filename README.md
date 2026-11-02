@@ -2,7 +2,7 @@
 
 Tutorials and copy-ready examples for [rcube-html](https://www.npmjs.com/package/rcube-html) — schema-driven React + Bootstrap forms, tables, charts, calendar, file upload and trees.
 
-**Live site: [rcube-html.web.app](https://rcube-html.web.app)**
+**Live site: [rcube-html.com](https://rcube-html.com/)**
 
 Every page has:
 
@@ -27,7 +27,7 @@ npm run preview    # build + serve out/ with the Firebase emulator (http://127.0
 The site is a static export hosted on Firebase Hosting (project `rcube-html`, see `firebase.json` and `.firebaserc`):
 
 ```bash
-npm run deploy     # next build + firebase deploy --only hosting -> https://rcube-html.web.app
+npm run deploy     # next build + firebase deploy --only hosting -> https://rcube-html.com/
 ```
 
 Needs the Firebase CLI (`npm install -g firebase-tools`) and `firebase login` once.
