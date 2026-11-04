@@ -1,5 +1,7 @@
 # rcube-html examples
 
+**Examples for rcube-html: An Open-Source, JSON-Driven HTML Page Renderer.**
+
 Tutorials and copy-ready examples for [rcube-html](https://www.npmjs.com/package/rcube-html) — schema-driven React + Bootstrap forms, tables, charts, calendar, file upload and trees.
 
 **Live site: [rcube-html.com](https://rcube-html.com/)**
