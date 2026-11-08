@@ -5,3 +5,5 @@ out/
 *.log
 .env*
 .DS_Store
+# local links to .agents/skills (made by the skills installer on each machine)
+.claude/
