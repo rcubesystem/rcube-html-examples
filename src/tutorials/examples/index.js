@@ -3,8 +3,9 @@ import { introduction, schemaBasics, eventsActions } from "./start";
 import { htmlTags, elementDynamics } from "./text";
 import { inputFields, selectFields, choiceFields, validation, conditionalFields, formValues, repeatableEntries } from "./fields";
 import { cardsAlerts, tabsAccordion, modalCarousel } from "./containers";
-import { dataTable, tableEditing, charts, calendar, fileUpload, tree, treeExplorer } from "./data";
+import { dataTable, serverPaging, tableEditing, charts, calendar, fileUpload, tree, treeExplorer } from "./data";
 import { languages, customComponents } from "./advanced";
+import { richText, rememberView } from "./latest";
 
 export const examples = {
   introduction,
@@ -18,11 +19,14 @@ export const examples = {
   validation,
   "conditional-fields": conditionalFields,
   "form-values": formValues,
+  "rich-text": richText,
   "repeatable-entries": repeatableEntries,
   "cards-alerts": cardsAlerts,
   "tabs-accordion": tabsAccordion,
   "modal-carousel": modalCarousel,
   "data-table": dataTable,
+  "server-paging": serverPaging,
+  "remember-view": rememberView,
   "table-editing": tableEditing,
   charts,
   calendar,

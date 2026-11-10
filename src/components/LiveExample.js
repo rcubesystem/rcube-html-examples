@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useDynamicTag, DynamicTag } from "rcube-html";
 
 /*
  * Runs one example exactly as its "Full page" code would:
  * - helpersCode (module-level code such as a mock API) runs once and returns helperNames
  * - actionsCode is the body of `actions: (api) => ({ ... })`, compiled once
+ * - onLoadCode runs once after the first render with `form` (as the page's useEffect does)
  * Every action call is reported to onEvent(name, args) for the event log.
  */
 // provides: real imports the helper code uses (e.g. { libEs } for `import libEs from "rcube-html/lang/lang_es"`)
@@ -34,6 +35,14 @@ function Live({ example, onEvent }) {
       ]));
     },
   });
+
+  const formRef = useRef(form);
+  formRef.current = form;
+  useEffect(() => {
+    if (!example.onLoadCode) return undefined;
+    const t = setTimeout(() => new Function("form", example.onLoadCode)(formRef.current), 0);
+    return () => clearTimeout(t);
+  }, [example]);
 
   return (
     <div className="docs-live">

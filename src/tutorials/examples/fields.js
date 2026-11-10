@@ -11,6 +11,7 @@ export const inputFields = {
       body: [
         "`InputField` draws an `<input>`. Pick the kind with `props.type`: `text` (default), `email`, `password`, `number`, `date`, `tel`, `color`, `checkbox`, ...",
         "Every field needs a `name` — it is the key of its value. `label` and `placeholder` are the texts. `uppercase` / `lowercase` change letters while typing, and `mask` formats digits (`#` = one digit).",
+        "`hint` (every field) is a help text under it; the error message takes its place while there is one.",
       ],
     },
   ],
@@ -26,7 +27,7 @@ export const inputFields = {
         { type: "InputField", id: "password", props: { type: "password", name: "password", label: "Password", onChange: "fieldChanged()" } },
       ] },
       { type: "column", id: "c-phone", props: { className: "col-12 col-md-6" }, children: [
-        { type: "InputField", id: "phone", props: { type: "tel", name: "phone", label: "Phone (mask)", mask: "(###) ###-####", placeholder: "(555) 123-4567", onChange: "fieldChanged()" } },
+        { type: "InputField", id: "phone", props: { type: "tel", name: "phone", label: "Phone (mask)", mask: "(###) ###-####", placeholder: "(555) 123-4567", hint: "Digits only — the mask adds the rest.", onChange: "fieldChanged()" } },
       ] },
       { type: "column", id: "c-number", props: { className: "col-6 col-md-3" }, children: [
         { type: "InputField", id: "quantity", props: { type: "number", name: "quantity", label: "Quantity", min: 1, max: 10, onChange: "fieldChanged()" } },

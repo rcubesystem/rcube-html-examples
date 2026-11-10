@@ -10,7 +10,7 @@ const indent = (text, spaces) => text.split("\n").map((line) => (line ? " ".repe
 
 // The complete page.js a reader can paste into app/<name>/page.js
 const pageCode = (example) => {
-  const lines = ['"use client";', 'import { useDynamicTag, DynamicTag } from "rcube-html";'];
+  const lines = ['"use client";', ...(example.onLoadCode ? ['import { useEffect } from "react";'] : []), 'import { useDynamicTag, DynamicTag } from "rcube-html";'];
   if (example.imports) lines.push(example.imports.trim());
   lines.push("");
   if (example.pagePreamble) lines.push(example.pagePreamble.trim(), "");
@@ -27,6 +27,8 @@ const pageCode = (example) => {
     "  const form = useDynamicTag({",
     ...options,
     "  });",
+    // onLoadCode: what runs once when the page opens (e.g. load a table's first page)
+    ...(example.onLoadCode ? ["  // once, when the page opens", "  useEffect(() => {", indent(example.onLoadCode.trim(), 4), "  }, []); // eslint-disable-line react-hooks/exhaustive-deps"] : []),
     "  return <DynamicTag form={form} />;",
     "}",
   );

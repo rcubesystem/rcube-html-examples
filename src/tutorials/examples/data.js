@@ -17,6 +17,8 @@ export const dataTable = {
         "`columns` say what to show: each has a `key` (the row field), a `title`, and options such as `sortable`, `format` (`currency`, `number`, `percent`, `date`, `boolean`), `badge` (colors by value), `link` and `total`.",
         "`rows` is the data. Table options switch features on: `searchable`, `pageSize`, `selectable`, `exportable` (CSV), `columnToggle`, and `stackBelow: \"md\"` shows cards on small screens.",
         "`rowRules` color whole rows by value; `hoverRow` / `hoverColumn` color what the mouse is over.",
+        "Thousands of rows? Let the server page, sort and search: see **Server paging** (`serverSide: true`).",
+        "The chosen row is highlighted (tint, bold, a bar at its start); `selectable: \"single\"` gives a radio per row. Tables can also remember each person's page, sort and search: see **Remembered views & the chosen row**.",
       ],
     },
   ],
@@ -57,12 +59,126 @@ pageChanged: ({ page, pageSize }) => console.log("Page", page, "of size", pageSi
     ["searchable / selectable / exportable / columnToggle", "Search box, checkboxes, CSV export, column chooser."],
     ["stackBelow", "Cards instead of a table below this screen size."],
     ["rowRules / hoverRow / hoverColumn / hoverCell", "Colors by value and on mouse over."],
+    ["selectable: \"single\" / selectedLook / highlightClicked", "A radio per row; the chosen row's colours; highlight the clicked row."],
+    ["sort / query / remember", "Starting sort and search; keep the person's view (see Remembered views)."],
   ],
   events: [
     ["onRowClick", "A row is clicked.", "`{ row, rowKey }`"],
     ["onSelectionChange", "Checkboxes change.", "`{ selected, rows }`"],
     ["onSortChange", "A heading is clicked.", "`{ sort: { key, dir } }` (or `null`)"],
     ["onPageChange", "Another page is shown.", "`{ page, pageSize }`"],
+  ],
+};
+
+export const serverPaging = {
+  sections: [
+    {
+      heading: "Let the server page, sort and search",
+      body: [
+        "With thousands of rows, don't send them all to the browser. Set `serverSide: true`: the table holds only the page shown, and the server pages, sorts and searches.",
+        "When the user changes page (page 3 straight from page 1 too), rows per page, sort or search, the table calls `onQueryChange` with `{ page, pageSize, sort, query }`. Your action asks the API for that page and answers with `api.setPageRows(id, { rows, totalRows, page })`.",
+        "Meanwhile the table shows a spinner over the dimmed rows and the pager waits; the search waits `searchDelay` ms (350) after the last key. If the call fails, `api.setTableLoading(id, false)` ends the spinner.",
+        "Here the API is a stand-in with 1,000 students (see helpers at the top of Full page.js) — replace `studentsApi.page` with a `fetch` to your server. The first page loads when the page opens (the `useEffect` at the end of Full page.js).",
+      ],
+    },
+    {
+      heading: "The server's side",
+      body: [
+        "The API filters by the search text, sorts by `sort.key` / `sort.dir`, and answers one page: `{ rows, total, page }`. Send the page number it actually answered (e.g. the last page when the list got shorter).",
+        "Totals (`total: \"sum\"`), CSV export and \"select all\" work on the page shown; export everything from the server with a toolbar button.",
+      ],
+      code: `// e.g. GET /api/students?page=3&pageSize=25&q=lee&sort=name&dir=asc
+app.get("/api/students", async (req, res) => {
+  const { page = 1, pageSize = 25, q = "", sort = "name", dir = "asc" } = req.query;
+  const { rows, total } = await db.students.search({ q, sort, dir, offset: (page - 1) * pageSize, limit: pageSize });
+  res.json({ rows, total, page: Number(page) });
+});`,
+    },
+  ],
+  wide: true,
+  helpersCode: `// ---- A stand-in for your API: 1,000 students, paged / sorted / searched "on the server" ----
+const FIRST = ["Aisha", "Ben", "Carla", "Dev", "Elena", "Farid", "Grace", "Hugo", "Ines", "Jamal", "Kim", "Leo", "Maya", "Noah", "Omar", "Priya"];
+const LAST = ["Khan", "Lee", "Garcia", "Patel", "Novak", "Haddad", "Okafor", "Brown", "Silva", "Wong", "Ivanova", "Moreau"];
+const GRADES = ["Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5"];
+const studentsDb = Array.from({ length: 1000 }, (_, i) => ({
+  id: 1000 + i, name: FIRST[i % FIRST.length] + " " + LAST[(i * 7) % LAST.length], grade: GRADES[(i * 3) % GRADES.length],
+  attendance: 70 + ((i * 37) % 31), average: 50 + ((i * 53) % 51), active: i % 9 !== 0,
+}));
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+let failNext = false;
+const studentsApi = {
+  // e.g. fetch("/api/students?" + new URLSearchParams({ page, pageSize, q: query, sort: sort?.key || "", dir: sort?.dir || "" })).then((r) => r.json())
+  page: async ({ page, pageSize, sort, query }) => {
+    await wait(400);
+    if (failNext) { failNext = false; throw new Error("The server didn't answer (simulated)"); }
+    const q = (query || "").toLowerCase();
+    let list = q ? studentsDb.filter((s) => (s.name + " " + s.grade + " " + s.id).toLowerCase().includes(q)) : studentsDb.slice();
+    if (sort) list.sort((a, b) => (a[sort.key] > b[sort.key] ? 1 : a[sort.key] < b[sort.key] ? -1 : 0) * (sort.dir === "desc" ? -1 : 1));
+    const pages = Math.max(1, Math.ceil(list.length / pageSize));
+    const p = Math.min(page, pages);
+    return { rows: list.slice((p - 1) * pageSize, p * pageSize), total: list.length, page: p };
+  },
+  failOnce: () => { failNext = true; },
+};
+// the last page the table asked for (for "Reload this page")
+let last = { page: 1, pageSize: 25, sort: null, query: "" };`,
+  helperNames: ["studentsApi", "last"],
+  schema: [
+    { type: "row", id: "row-buttons", children: [
+      { type: "column", id: "c-buttons", props: { className: "d-flex flex-wrap gap-2 mb-2" }, children: [
+        { type: "ButtonField", id: "reload", props: { text: "Reload this page", variant: "outline-primary", onClick: "reload()" } },
+        { type: "ButtonField", id: "fail", props: { text: "Make the next call fail", variant: "outline-danger", onClick: "failNext()" } },
+      ] },
+    ] },
+    { type: "Alert", id: "error", props: { variant: "danger", text: "", className: "d-none" } },
+    { type: "DataTable", id: "students", props: {
+      title: "Students (1,000 on the server)", rowKey: "id",
+      serverSide: true, rows: [], totalRows: 0, page: 1, loading: true,
+      pageSize: 25, pageSizeOptions: [25, 50, 100, 200], searchable: true, searchDelay: 350, stackBelow: "md", size: "sm",
+      columns: [
+        { key: "id", title: "ID", sortable: true, width: 80 },
+        { key: "name", title: "Name", sortable: true },
+        { key: "grade", title: "Grade", sortable: true },
+        { key: "attendance", title: "Attendance %", align: "end", sortable: true },
+        { key: "average", title: "Average", align: "end", sortable: true },
+        { key: "active", title: "Active", format: "boolean", align: "center" },
+      ],
+      rowRules: [{ when: { field: "average", lt: 60 }, color: "#b02a37" }],
+      onQueryChange: "loadPage()",
+    } },
+  ],
+  actionsCode: `// The table asks for a page: { page, pageSize, sort, query } (its spinner is on already)
+loadPage: async (query) => {
+  last = query;
+  try {
+    const answer = await studentsApi.page(query);
+    api.setPageRows("students", { rows: answer.rows, totalRows: answer.total, page: answer.page });
+    api.setNodeProps("error", { text: "", className: "d-none" });
+  } catch (error) {
+    api.setTableLoading("students", false);     // the previous page stays
+    api.setNodeProps("error", { text: error.message, className: "" });
+  }
+},
+reload: () => api.loadPage(last),
+failNext: () => studentsApi.failOnce(),`,
+  // the first page, when the page opens (Full page.js: a useEffect)
+  onLoadCode: `form.actions.loadPage({ page: 1, pageSize: 25, sort: null, query: "" });`,
+  props: [
+    ["serverSide", "The server pages, sorts and searches; `rows` is the page shown."],
+    ["totalRows / page", "The list's size and the page shown (from the server's answer): the pager uses them."],
+    ["loading", "Start with the spinner (until the first page arrives)."],
+    ["pageSize / pageSizeOptions", "Rows per page and the choices (e.g. 25 / 50 / 100 / 200)."],
+    ["searchable / searchDelay", "The search box; how long it waits after the last key (ms, 350)."],
+    ["api.setPageRows(id, { rows, totalRows, page })", "Show the server's page (ends the spinner)."],
+    ["api.setTableLoading(id, loading)", "Show / end the spinner yourself (e.g. after a failed call)."],
+  ],
+  events: [
+    ["onQueryChange", "Page, rows per page, sort or search changed.", "`{ page, pageSize, sort, query }`"],
+    ["onSearchChange", "The search text changed (after `searchDelay`).", "`{ query }`"],
+  ],
+  tips: [
+    "Sorting a column asks for page 1 again, and so do a new search and new rows per page.",
+    "Keep the filters outside the table (a class, a date range) in your own state and add them to the API call; when they change, ask for page 1.",
   ],
 };
 
@@ -290,7 +406,7 @@ const eventsApi = {
       ] },
     ] },
     { type: "Calendar", id: "team-calendar", props: {
-      view: "week", views: ["day", "week", "month", "year", "agenda"], height: 640,
+      view: "week", views: ["day", "week", "month", "year", "agenda"], height: 640, sidebarToggle: true,
       scrollToHour: 8, workingHours: { start: 9, end: 17, days: [1, 2, 3, 4, 5] },
       calendars: [
         { id: "work", name: "Work", color: "#2a78d6" },
@@ -300,6 +416,9 @@ const eventsApi = {
       events: [],
       onRangeChange: "loadEvents()", onViewChange: "viewChanged()", onEventClick: "eventClicked()", onSlotClick: "slotClicked()",
       onEventCreate: "eventCreated()", onEventUpdate: "eventUpdated()", onEventDelete: "eventDeleted()", onCalendarToggle: "calendarToggled()",
+      onSidebarToggle: "sidebarToggled()",
+      // your buttons in the calendar's header (the same shape as a table's)
+      toolbarActions: [{ text: "+ Customer call", variant: "outline-success", onClick: "addViaApi()" }],
     } },
   ],
   actionsCode: `// On first render and whenever the visible range changes: { view, date, start, end }
@@ -318,6 +437,7 @@ eventDeleted: ({ event, scope, series, occurrence }) => (scope === "one"
   ? eventsApi.save({ ...series, recurrence: { ...series.recurrence, exceptions: [...(series.recurrence.exceptions || []), occurrence] } })
   : eventsApi.remove(event.id)),
 calendarToggled: ({ calendarId, hidden }) => console.log(calendarId, hidden ? "hidden" : "shown"),
+sidebarToggled: ({ open }) => console.log("Side panel", open ? "shown" : "hidden"),
 // Buttons outside the calendar
 showMonth: () => api.setCalendarView("team-calendar", "month"),
 goToday: () => api.calendarToday("team-calendar"),
@@ -339,6 +459,8 @@ addViaApi: async () => {
     ["firstDay / weekends", "Week starts on (0 = Sunday); `false` hides Sat / Sun."],
     ["editable / selectable / eventEditor / autoUpdate", "Drag & edit, drag-select, built-in editor, apply changes itself."],
     ["sidebar / searchable / keyboardShortcuts", "Mini month + calendars, search box, T / D / W / M / Y / A / J / K / C keys."],
+    ["sidebarToggle / sidebarOpen", "A ☰ button before Today shows / hides the side panel; `sidebarOpen` fixes it open / closed (unset: open on large screens, closed on small)."],
+    ["toolbar / toolbarActions", "`false` hides the header; your buttons `{ text, variant, icon, onClick }` → `(event, { calendar, view, date })`."],
   ],
   events: [
     ["onRangeChange", "First render and every view / date change.", "`{ calendar, view, date, start, end }` (`end` exclusive)"],
@@ -348,6 +470,7 @@ addViaApi: async () => {
     ["onEventUpdate", "Moved, resized or edited.", "`{ event, previous, change }`"],
     ["onEventDelete", "Deleted.", "`{ event, scope }` (+ `series`, `occurrence` for one repeat)"],
     ["onViewChange / onCalendarToggle", "View button / calendar checkbox.", "`{ view, previousView }` / `{ calendarId, hidden }`"],
+    ["onSidebarToggle", "The ☰ button shows / hides the side panel.", "`{ open }`"],
   ],
   tips: [
     "Other actions: `setCalendarEvents`, `addCalendarEvent`, `updateCalendarEvent`, `removeCalendarEvent`, `setCalendarView`, `setCalendarDate`, `calendarNext` / `calendarPrev` / `calendarToday`, `getCalendarRange`, `setCalendarLoading`, `toggleCalendar`.",
@@ -361,7 +484,14 @@ export const fileUpload = {
       body: [
         "`FileUploadField` is a form field: users drop files on it, browse, or paste. `accept`, `maxSize`, `maxFiles` and `maxTotalSize` reject wrong files with a reason.",
         "Uploading is your action: `onUpload` gets `{ file, onProgress, signal }`, sends the file and returns the server's answer. Call `onProgress(percent)` for the progress bar; `signal` tells you the user pressed Cancel. Throw an error to mark the file as failed (the user can retry). Or set `uploadUrl` and the field posts the file itself.",
-        "On Submit the field must have finished uploading; its value is the list of files (`[{ name, size, status, url, response }]`).",
+        "On Submit the field must have finished uploading; its value is the list of files (`[{ name, size, status, title, url, response }]`).",
+      ],
+    },
+    {
+      heading: "A title for each file",
+      body: [
+        "Each field has an optional **title** box above the drop zone (`fileTitle`, on by default). Type a title, then add files: they get it (and the box clears). The list shows the title above the file name.",
+        "`onUpload` receives it as `title` (save it with the file); the built-in uploader posts it as the form field `title`. `fileTitleMax` limits it (50), `fileTitleLabel` / `fileTitlePlaceholder` change the texts, `fileTitle: false` hides the box (the avatar below). Saved files in `defaultFiles` / `setFieldValue` can carry a `title` too.",
       ],
     },
   ],
@@ -387,7 +517,7 @@ const fakeUpload = ({ file, onProgress, signal }, failRate = 0) => new Promise((
     { type: "row", id: "row-uploads", props: { className: "g-3" }, children: [
       { type: "column", id: "c-docs", props: { className: "col-12 col-lg-6" }, children: [
         { type: "FileUploadField", id: "docs", props: {
-          name: "documents", label: "Documents", required: true,
+          name: "documents", label: "Documents", required: true, fileTitleMax: 50, fileTitlePlaceholder: "Optional, e.g. Signed contract",
           accept: ".pdf,.doc,.docx,.txt,image/*", maxSize: "5MB", maxFiles: 4, parallel: 2,
           hint: "PDF, Word, text or images · up to 5 MB · max 4 files",
           onUpload: "uploadFile()", onValidate: "checkName()", onFilesAdded: "filesAdded()", onFileRejected: "fileRejected()",
@@ -401,7 +531,7 @@ const fakeUpload = ({ file, onProgress, signal }, failRate = 0) => new Promise((
           onUpload: "uploadPhoto()",
         } },
         { type: "FileUploadField", id: "avatar", props: {
-          name: "avatar", label: "Avatar (one file, compact)", multiple: false, compact: true, accept: "image/png,image/jpeg", maxSize: "2MB",
+          name: "avatar", label: "Avatar (one file, compact)", multiple: false, compact: true, fileTitle: false, accept: "image/png,image/jpeg", maxSize: "2MB",
           onUpload: "uploadPhoto()",
         } },
       ] },
@@ -416,8 +546,8 @@ const fakeUpload = ({ file, onProgress, signal }, failRate = 0) => new Promise((
     ] },
   ],
   submit: true,
-  actionsCode: `// Receives { file, name, size, type, onProgress, signal }; returns the server's answer
-uploadFile: (payload) => fakeUpload(payload, 0.2),
+  actionsCode: `// Receives { file, name, size, type, title, onProgress, signal }; returns the server's answer (save title with it)
+uploadFile: (payload) => { console.log("Uploading", payload.name, payload.title ? "titled " + payload.title : "(no title)"); return fakeUpload(payload, 0.2); },
 uploadPhoto: (payload) => fakeUpload(payload),
 // Return a message to reject a file ("" = OK)
 checkName: ({ name }) => (/draft/i.test(name) ? "Drafts are not accepted." : ""),
@@ -430,7 +560,7 @@ allDone: ({ files, failed }) => console.log(files.length, "uploaded,", failed.le
 removeFile: async ({ file }) => { console.log("Delete on server:", file.name); return true; },
 uploadPhotosNow: () => api.uploadFiles("photos"),
 loadSaved: () => api.setFieldValue("documents", [
-  { id: "srv-1", name: "contract.pdf", size: 482133, type: "application/pdf", url: "#contract" },
+  { id: "srv-1", name: "contract.pdf", size: 482133, type: "application/pdf", url: "#contract", title: "Signed contract" },
   { id: "srv-2", name: "invoice-1042.pdf", size: 91022, type: "application/pdf", url: "#invoice" },
 ]),
 clearDocs: () => api.clearFiles("documents"),`,
@@ -440,11 +570,12 @@ clearDocs: () => api.clearFiles("documents"),`,
     ["onUpload or uploadUrl", "Your upload action, or the built-in POST (`uploadFieldName`, `uploadHeaders`, `uploadData`)."],
     ["autoUpload / parallel / retries", "Upload at once or on a button; uploads at a time; automatic retries."],
     ["variant / compact / dropAnywhere / paste", "`list` or `grid`; small zone; drop anywhere on the page; paste files."],
-    ["defaultFiles", "Files already on the server `[{ name, size, url }]`."],
+    ["defaultFiles", "Files already on the server `[{ name, size, url, title }]`."],
+    ["fileTitle / fileTitleMax / fileTitleLabel / fileTitlePlaceholder", "The optional title box (on by default; `false` hides it), its length (50) and texts."],
     ["api.uploadFiles / clearFiles / removeFile / retryFile / openFilePicker / getFiles(name)", "Control it from code."],
   ],
   events: [
-    ["onUpload", "Each file to upload.", "`{ file, name, size, type, onProgress, signal }` → return the answer"],
+    ["onUpload", "Each file to upload.", "`{ file, name, size, type, title, onProgress, signal }` → return the answer"],
     ["onValidate", "Before a file is added.", "`{ file, name, size, type }` → return a message to reject"],
     ["onFilesAdded / onFileRejected", "Files were added / refused.", "`{ files, source }` / `{ file, reason, message }`"],
     ["onUploadComplete / onUploadError", "One upload finished / failed.", "`{ file, response }` / `{ file, error }`"],
@@ -516,12 +647,14 @@ export const tree = {
       checkboxes: true, cascadeCheck: true, showLines: true, showCount: true,
       draggable: true, editable: true, searchable: false,
       filters: [{ id: "js", label: ".js only", when: { field: "ext", equals: "js" } }],
+      // "text" / "onClick" like every button ("label" / "action" still work)
       contextMenu: [
-        { label: "Rename", command: "rename" },
-        { label: "New file here", action: "newFileHere()", when: { field: "branch", equals: true } },
+        { text: "Rename", command: "rename" },
+        { text: "New file here", onClick: "newFileHere()", when: { field: "branch", equals: true } },
         { divider: true },
-        { label: "Delete", action: "deleteNode()" },
+        { text: "Delete", onClick: "deleteNode()" },
       ],
+      toolbarActions: [{ text: "Delete selected", variant: "outline-danger", onClick: "deleteSelected()", needsSelection: true }],
       onSelect: "selected()", onExpand: "toggled()", onCollapse: "toggled()", onCheck: "checked()", onActivate: "opened()",
       onMove: "moved()", onRename: "renamed()", onNodeFocus: "focused()",
     } },
@@ -584,7 +717,8 @@ showChecked: () => {
     ["checkboxes / cascadeCheck", "Checkboxes; folders check their children."],
     ["showLines / showIcons / showCount", "Guide lines, icons, child counts."],
     ["draggable / editable", "Drag to move; rename with F2."],
-    ["contextMenu", "`{ label, action }` or `{ label, command: \"rename\" | \"open\" | \"expand\" | \"reload\" | \"delete\" }`, `when`, `divider`."],
+    ["contextMenu", "`{ text, onClick }` or `{ text, command: \"rename\" | \"open\" | \"expand\" | \"reload\" | \"delete\" }`, `when`, `divider` (`label` / `action` still work)."],
+    ["toolbar / toolbarActions", "Your buttons above the tree `{ text, variant, onClick, needsSelection }` → `(event, { tree, selected, checked, nodes })`."],
     ["filters / searchable", "Filter chips (`when` on node fields, `ext` is filled in) and a search box."],
   ],
   events: [

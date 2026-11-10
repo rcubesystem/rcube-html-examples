@@ -42,9 +42,9 @@ Uses Next.js 16 (App Router), React 18.3, React-Bootstrap 2.10 and Bootstrap 5.3
 |---|---|
 | Getting started | Introduction, Schema basics, Events & actions |
 | Text & layout | Text & HTML tags, Change elements at runtime |
-| Form fields | Input fields, Selects & dependent selects, Radios / checkboxes / slider / textarea, Validation & submit, Conditional fields, Read & set values, Repeatable entries |
+| Form fields | Input fields, Selects & dependent selects, Radios / checkboxes / slider / textarea, Validation & submit, Conditional fields, Read & set values, Rich text editor, Repeatable entries |
 | Containers | Cards / alerts / tooltips / popovers, Tabs & accordion, Modal & carousel |
-| Data components | Data table, Editable table & row actions, Charts, Calendar, File upload (drag & drop), Tree, File explorer (lazy loading) |
+| Data components | Data table, Server paging, Remembered views & the chosen row, Editable table & row actions, Charts, Calendar, File upload (drag & drop), Tree, File explorer (lazy loading) |
 | Advanced | Languages, Custom components |
 
 ## Adding a tutorial
