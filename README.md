@@ -26,28 +26,59 @@ npm run preview    # build + serve out/ with the Firebase emulator (http://127.0
 
 ## Run every example on your computer
 
-Download the starter app files individually — every file from the `starter`
-folder, keeping the same file structure as in that folder. Then go to the
-local folder where you set up the same starter app and run the commands
-below. You need Node.js 20 or 22.
+**[starter-app/](https://github.com/rcubesystem/rcube-html-examples/tree/main/starter-app)** is a ready-to-run
+Next.js app with every example on its own page, plus `My page` (a form to change and play with). You need Node.js 20
+or 22. Get it in one of these ways — none needs a file download, so they also work on work computers that block
+downloads:
 
-### Starter files
-
-Download each file and keep the same folder structure as the `starter` folder:
-
-- `package.json` → [download](/downloads/starter/package.json)
-- `app/layout.js` → [download](/downloads/starter/app/layout.js)
-- `app/page.js` → [download](/downloads/starter/app/page.js)
-- … (list the rest of the `starter/` files here)
-
-Then, in your local starter folder:
+**With git** (copies only the `starter-app` folder):
 
 ```bash
+git clone --depth 1 --filter=blob:none --sparse https://github.com/rcubesystem/rcube-html-examples.git
+cd rcube-html-examples
+git sparse-checkout set starter-app
+cd starter-app
 npm install
 npm run dev
 ```
-open http://localhost:3000.
+
+**With npm only** (no git):
+
+```bash
+npx degit rcubesystem/rcube-html-examples/starter-app rcube-html-starter
+cd rcube-html-starter
+npm install
+npm run dev
+```
+
+Open http://localhost:3000: the home page links to every example. Change any `app/examples/<name>/page.js` (or
+`app/my-page/page.js`) and save: the page updates by itself.
+
+**If GitHub is blocked too**, make the same app yourself:
+
+```bash
+npx create-next-app@latest my-rcube-app --js --app --no-src-dir --no-tailwind --yes
+cd my-rcube-app
+npm install rcube-html
+npm run dev
+```
+
+1. In `app/layout.js`, add `import "rcube-html/styles.css";` under the other imports.
+2. Replace `app/page.js` with any tutorial's **Full page.js** (the Code box on its page) and open http://localhost:3000.
 3. More examples: one folder each, e.g. `app/validation/page.js` → http://localhost:3000/validation.
+
+### How the starter app is made
+
+Don't edit `starter-app/` by hand: `scripts/build-starter.mjs` makes it fresh before every `npm run dev` and
+`npm run build` (or on its own: `npm run starter`), so it always matches the tutorials. It is made from:
+
+- `starter/` — the hand-written files (README, layout, home page, styles, `ClientOnly.js`, next.config.js),
+- each tutorial's **Full page.js** (`src/tutorials/pageCode.js`, the same code the site shows),
+- this site's `next`, `react` and `rcube-html` versions (its `package.json`).
+
+`starter/` alone is not a runnable app (it has no `package.json` and no example pages). Commit `starter-app/` after
+changing a tutorial or `starter/`, so GitHub has the latest. The same app is also written as a zip to
+`public/downloads/rcube-html-starter.zip` (generated, not committed).
 
 ## Publish
 

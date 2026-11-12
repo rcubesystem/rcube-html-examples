@@ -1,5 +1,6 @@
-// Builds the downloadable starter app: public/downloads/rcube-html-starter.zip (served by the site, linked from the
-// Introduction). Runs before `npm run dev` and `npm run build` (predev / prebuild), or on its own: `npm run starter`.
+// Builds the starter app twice: public/downloads/rcube-html-starter.zip (served by the site) and the folder
+// starter-app/ (committed, so it can be fetched from GitHub). Runs before `npm run dev` and `npm run build`
+// (predev / prebuild), or on its own: `npm run starter`.
 //
 // The zip holds one folder, rcube-html-starter/:
 //   starter/ (hand-written: README, layout, home page, styles, next.config.js, gitignore -> .gitignore)
@@ -9,7 +10,7 @@
 //   app/my-page/page.js      the Introduction's form, to start changing
 //
 //   node scripts/build-starter.mjs [--dir <folder>]   --dir also writes the files there (to try them without unzipping)
-import { mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { register } from "node:module";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -77,13 +78,24 @@ mkdirSync(path.dirname(outFile), { recursive: true });
 const entries = [...files].sort(([a], [b]) => a.localeCompare(b)).map(([name, text]) => ({ name: `${NAME}/${name}`, data: Buffer.from(text, "utf8") }));
 writeFileSync(outFile, zipFiles(entries));
 
-const dirFlag = process.argv.indexOf("--dir");
-if (dirFlag > 0 && process.argv[dirFlag + 1]) {
-  const target = path.resolve(process.argv[dirFlag + 1]);
+const writeDir = (target) => {
   for (const [name, text] of files) {
     mkdirSync(path.dirname(path.join(target, name)), { recursive: true });
     writeFileSync(path.join(target, name), text);
   }
+};
+
+// starter-app/: the same app as a folder, committed to GitHub, so people can get it without the zip
+// (git sparse checkout or npx degit — see the README). Made fresh each time: never edit it by hand, edit starter/.
+const appDir = path.join(root, "starter-app");
+rmSync(appDir, { recursive: true, force: true });
+writeDir(appDir);
+console.log(`[starter] ${path.relative(root, appDir)}/: the same files, for GitHub`);
+
+const dirFlag = process.argv.indexOf("--dir");
+if (dirFlag > 0 && process.argv[dirFlag + 1]) {
+  const target = path.resolve(process.argv[dirFlag + 1]);
+  writeDir(target);
   console.log(`[starter] also written to ${target}`);
 }
 console.log(`[starter] ${path.relative(root, outFile)}: ${files.size} files, ${list.length} examples, ${(statSync(outFile).size / 1024).toFixed(0)} KB`);

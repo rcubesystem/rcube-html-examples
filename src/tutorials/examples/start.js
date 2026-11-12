@@ -18,36 +18,44 @@ export const introduction = {
       ],
     },
     {
-    heading: "Run every example on your computer",
-    body: [
-      "Download the starter app files individually — every file from the `starter` folder, keeping the same file structure as in that folder. Then go to the local folder where you set up the same starter app and run the commands below. You need Node.js 20 or 22.",
-    ],
-    files: {
-      heading: "Starter files",
-      note: "Download each file and keep the same folder structure as the `starter` folder:",
-      // Populate from your real starter/ tree — e.g.
-      items: [
-        // { path: "package.json", href: "/downloads/starter/package.json" },
-        // { path: "app/layout.js", href: "/downloads/starter/app/layout.js" },
-        // { path: "app/page.js", href: "/downloads/starter/app/page.js" },
-        // ...
+      heading: "Run every example on your computer",
+      body: [
+        "The starter app is a small Next.js app with all the examples of these tutorials, each on its own page, plus `My page` — a form to change and play with. It is the `starter-app` folder of the rcube-html-examples repository on GitHub. You need Node.js 20 or 22.",
+        "Get it in one of the three ways below — no file download needed, so they also work on work computers that block downloads. Then open http://localhost:3000: the home page links to every example. Change any `app/examples/<name>/page.js` (or `app/my-page/page.js`) and save: the page updates by itself.",
+      ],
+      links: [
+        { href: "https://github.com/rcubesystem/rcube-html-examples/tree/main/starter-app", label: "The starter app on GitHub" },
+        { href: "https://github.com/rcubesystem/rcube-html-examples", label: "The whole repository" },
       ],
     },
-    code: "npm install\nnpm run dev",
-  },
-  {
-    heading: "Can't download the files? Make the same app with npm",
-    body: [
-      "Many work computers block file downloads. You don't need the starter files: npm (which comes with Node.js) can create an empty Next.js app, and you paste the examples into it.",
-    ],
-    list: [
-      "Run the commands below in a terminal. They create a folder `my-rcube-app` with a new Next.js app, add rcube-html and start it.",
-      "In `app/layout.js`, add `import \"rcube-html/styles.css\";` under the other imports.",
-      "Replace everything in `app/page.js` with any tutorial's Full page.js (in the Code box of its page), save, and open http://localhost:3000.",
-      "For more examples, give each one its own folder: `app/validation/page.js` opens at http://localhost:3000/validation.",
-    ],
-    code: "npx create-next-app@latest my-rcube-app --js --app --no-src-dir --no-tailwind --yes\ncd my-rcube-app\nnpm install rcube-html\nnpm run dev",
-  },
+    {
+      heading: "Way 1: with git",
+      body: [
+        "If git is installed, copy only the `starter-app` folder (a sparse checkout skips the rest of the repository), then install and start it:",
+      ],
+      code: "git clone --depth 1 --filter=blob:none --sparse https://github.com/rcubesystem/rcube-html-examples.git\ncd rcube-html-examples\ngit sparse-checkout set starter-app\ncd starter-app\nnpm install\nnpm run dev",
+    },
+    {
+      heading: "Way 2: with npm only (no git)",
+      body: [
+        "`degit` (run through npx) copies the `starter-app` folder from GitHub into a new folder `rcube-html-starter`, without git:",
+      ],
+      code: "npx degit rcubesystem/rcube-html-examples/starter-app rcube-html-starter\ncd rcube-html-starter\nnpm install\nnpm run dev",
+    },
+    {
+      heading: "Way 3: make the same app yourself",
+      body: [
+        "If GitHub is blocked too, npm can create an empty Next.js app, and you paste the examples into it:",
+      ],
+      list: [
+        "Run the commands below. They create a folder `my-rcube-app` with a new Next.js app, add rcube-html and start it.",
+        "In `app/layout.js`, add `import \"rcube-html/styles.css\";` under the other imports.",
+        "Replace everything in `app/page.js` with any tutorial's Full page.js (in the Code box of its page), save, and open http://localhost:3000.",
+        "For more examples, give each one its own folder: `app/validation/page.js` opens at http://localhost:3000/validation.",
+        "If a button does nothing right after the page appears, wait a moment: the first time a page opens in `npm run dev`, Next.js is still compiling its JavaScript.",
+      ],
+      code: "npx create-next-app@latest my-rcube-app --js --app --no-src-dir --no-tailwind --yes\ncd my-rcube-app\nnpm install rcube-html\nnpm run dev",
+    },
     {
       heading: "1. Install",
       body: ["In a Next.js (or any React) app:"],

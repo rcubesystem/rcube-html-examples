@@ -94,6 +94,14 @@ export default function TutorialPage({ slug }) {
               {section.download.note && <span className="small text-body-secondary">{section.download.note}</span>}
             </p>
           )}
+          {/* links shown as buttons (e.g. the starter app on GitHub); tracked as link_click, location "section-link" */}
+          {section.links && (
+            <p className="d-flex flex-wrap align-items-center gap-2 my-3" data-ga-location="section-link">
+              {section.links.map((link, i) => (
+                <a key={link.href} className={`btn ${i === 0 ? "btn-primary" : "btn-outline-secondary"}`} href={link.href} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>
+              ))}
+            </p>
+          )}
           {section.list && <ul>{section.list.map((item, i) => <li key={i}><Inline text={item} /></li>)}</ul>}
           {section.code && <CodeBlock code={section.code} />}
         </section>
