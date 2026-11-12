@@ -51,12 +51,25 @@ files.set("package.json", `${JSON.stringify({
 }, null, 2)}\n`);
 
 // ---- one page per tutorial, and the list for the home page
+// The tutorial's Full page.js, its component drawn in the browser only (app/ClientOnly.js): buttons in server-sent
+// HTML do nothing until the page's JavaScript has loaded, so the form appears once it works
+const browserOnly = (code, clientOnlyPath, title) => {
+  const marker = "export default function Page() {";
+  if (!code.includes(marker)) throw new Error(`build-starter: ${title}: no "${marker}" in its page code`);
+  return `${code.replace(marker, "function Example() {").replace(/^(import [^\n]+\n)(?!import )/m, `$1import ClientOnly from "${clientOnlyPath}";\n`)}
+
+// Drawn in the browser only, so its buttons work as soon as it appears (see app/ClientOnly.js)
+export default function Page() {
+  return <ClientOnly><Example /></ClientOnly>;
+}
+`;
+};
 const list = topics.filter((t) => examples[t.slug]).map(({ slug, group, title, summary }) => ({ slug, group, title, summary }));
 for (const { slug, title } of list) {
-  files.set(`app/examples/${slug}/page.js`, `// ${title} — https://rcube-html.com/${slug === "introduction" ? "" : slug}\n${pageCode(examples[slug])}\n`);
+  files.set(`app/examples/${slug}/page.js`, `// ${title} — https://rcube-html.com/${slug === "introduction" ? "" : slug}\n${browserOnly(pageCode(examples[slug]), "../../ClientOnly", title)}`);
 }
 files.set("app/examples.js", `// The examples in app/examples/ (the home page lists them). Made by the rcube-html site's build.\nexport const groups = ${JSON.stringify(groups.filter((g) => list.some((e) => e.group === g)), null, 2)};\n\nexport const examples = ${JSON.stringify(list, null, 2)};\n`);
-files.set("app/my-page/page.js", `// My page — change the schema below and save: the browser updates by itself.\n// Every example's code is in app/examples/<name>/page.js; copy what you need from there.\n${pageCode(examples.introduction)}\n`);
+files.set("app/my-page/page.js", `// My page — change the schema below and save: the browser updates by itself.\n// Every example's code is in app/examples/<name>/page.js; copy what you need from there.\n${browserOnly(pageCode(examples.introduction), "../ClientOnly", "My page")}`);
 
 // ---- write the zip (and the folder, with --dir)
 const outFile = path.join(root, "public/downloads", `${NAME}.zip`);

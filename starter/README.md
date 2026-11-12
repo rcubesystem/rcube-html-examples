@@ -22,9 +22,14 @@ app/
   my-page/page.js        a sign-up form to change and play with — start here
   examples/<name>/page.js   one page per tutorial (the same code as "Full page.js" on the site)
   examples.js            the list shown on the home page
+  ClientOnly.js          draws the examples in the browser only (see below)
 ```
 
 Edit any `page.js` and save: the browser updates by itself.
+
+Each example page is the tutorial's **Full page.js**, with its form drawn through `<ClientOnly>`: you see
+"Loading example…" for a moment (longer the first time a page is opened in `npm run dev`, while it compiles), then the
+form — and its buttons work as soon as it appears.
 
 ## Add your own page
 
