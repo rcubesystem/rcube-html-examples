@@ -50,7 +50,7 @@ pageChanged: ({ page, pageSize }) => console.log("Page", page, "of size", pageSi
     ["columns[].key / title / width / align", "Which row field, its heading, width and alignment (`start` / `center` / `end`)."],
     ["columns[].sortable", "Click the heading to sort."],
     ["columns[].format / currency / decimals", "`currency`, `number`, `percent`, `date`, `boolean`."],
-    ["columns[].badge", "`{ value: \"bootstrap color\" }` — show the value as a badge."],
+    ["columns[].badge", "`{ value: \"colour\" }` (primary, secondary, success, danger, warning, info, light, dark) — show the value as a badge."],
     ["columns[].link / template", "Link with `{field}` placeholders; text like `\"{first} {last}\"`."],
     ["columns[].total", "Footer total: `sum`, `avg`, `min`, `max`, `count`."],
     ["columns[].hideBelow", "Hide the column on small screens (`md`, `lg`, ...)."],
@@ -125,12 +125,12 @@ let last = { page: 1, pageSize: 25, sort: null, query: "" };`,
   helperNames: ["studentsApi", "last"],
   schema: [
     { type: "row", id: "row-buttons", children: [
-      { type: "column", id: "c-buttons", props: { className: "d-flex flex-wrap gap-2 mb-2" }, children: [
+      { type: "column", id: "c-buttons", props: { className: "rc-d-flex rc-flex-wrap rc-gap-2 rc-mb-2" }, children: [
         { type: "ButtonField", id: "reload", props: { text: "Reload this page", variant: "outline-primary", onClick: "reload()" } },
         { type: "ButtonField", id: "fail", props: { text: "Make the next call fail", variant: "outline-danger", onClick: "failNext()" } },
       ] },
     ] },
-    { type: "Alert", id: "error", props: { variant: "danger", text: "", className: "d-none" } },
+    { type: "Alert", id: "error", props: { variant: "danger", text: "", className: "rc-d-none" } },
     { type: "DataTable", id: "students", props: {
       title: "Students (1,000 on the server)", rowKey: "id",
       serverSide: true, rows: [], totalRows: 0, page: 1, loading: true,
@@ -153,7 +153,7 @@ loadPage: async (query) => {
   try {
     const answer = await studentsApi.page(query);
     api.setPageRows("students", { rows: answer.rows, totalRows: answer.total, page: answer.page });
-    api.setNodeProps("error", { text: "", className: "d-none" });
+    api.setNodeProps("error", { text: "", className: "rc-d-none" });
   } catch (error) {
     api.setTableLoading("students", false);     // the previous page stays
     api.setNodeProps("error", { text: error.message, className: "" });
@@ -227,7 +227,7 @@ export const tableEditing = {
       onCellChange: "cellChanged()",
     } },
     { type: "row", id: "row-buttons", children: [
-      { type: "column", id: "c-buttons", props: { className: "d-flex gap-2 justify-content-end" }, children: [
+      { type: "column", id: "c-buttons", props: { className: "rc-d-flex rc-gap-2 rc-justify-content-end" }, children: [
         { type: "ButtonField", id: "add-sample", props: { text: "Add a row from code", variant: "outline-primary", onClick: "addSample()" } },
         { type: "ButtonField", id: "submit", props: { type: "submit", text: "Submit (validates Qty)", onClick: "runValidation()" } },
       ] },
@@ -273,20 +273,20 @@ export const charts = {
   wide: true,
   schema: [
     { type: "row", id: "row-controls", children: [
-      { type: "column", id: "c-type", props: { className: "col-12 col-md-4" }, children: [
+      { type: "column", id: "c-type", props: { className: "rc-col-12 rc-col-md-4" }, children: [
         { type: "SelectField", id: "type", props: { name: "chartType", label: "Chart type", defaultValue: "bar", onChange: "typeChanged()",
           options: [{ label: "Bar", value: "bar" }, { label: "Line", value: "line" }, { label: "Area", value: "area" }, { label: "Pie", value: "pie" }, { label: "Donut", value: "donut" }] } },
       ] },
-      { type: "column", id: "c-slider", props: { className: "col-12 col-md-4" }, children: [
+      { type: "column", id: "c-slider", props: { className: "rc-col-12 rc-col-md-4" }, children: [
         { type: "SliderField", id: "march", props: { name: "march", label: "March online sales", min: 0, max: 100, defaultValue: 38, valueSuffix: "K", onChange: "marchChanged()" } },
       ] },
-      { type: "column", id: "c-switches", props: { className: "col-12 col-md-4 d-flex gap-3 align-items-center" }, children: [
+      { type: "column", id: "c-switches", props: { className: "rc-col-12 rc-col-md-4 rc-d-flex rc-gap-3 rc-align-items-center" }, children: [
         { type: "InputField", id: "stacked", props: { type: "checkbox", name: "stacked", label: "Stacked", onChange: "stackedChanged()" } },
         { type: "InputField", id: "labels", props: { type: "checkbox", name: "labels", label: "Values", onChange: "labelsChanged()" } },
       ] },
     ] },
     { type: "row", id: "row-buttons", children: [
-      { type: "column", id: "c-buttons", props: { className: "d-flex flex-wrap gap-2 mb-3" }, children: [
+      { type: "column", id: "c-buttons", props: { className: "rc-d-flex rc-flex-wrap rc-gap-2 rc-mb-3" }, children: [
         { type: "ButtonField", id: "random", props: { text: "Randomize", onClick: "randomize()" } },
         { type: "ButtonField", id: "add", props: { text: "+ Add month", onClick: "addMonth()" } },
         { type: "ButtonField", id: "best", props: { text: "Highlight best month", variant: "outline-success", onClick: "highlightBest()" } },
@@ -398,7 +398,7 @@ const eventsApi = {
   helperNames: ["eventsApi"],
   schema: [
     { type: "row", id: "row-buttons", children: [
-      { type: "column", id: "c-buttons", props: { className: "d-flex flex-wrap gap-2 mb-3" }, children: [
+      { type: "column", id: "c-buttons", props: { className: "rc-d-flex rc-flex-wrap rc-gap-2 rc-mb-3" }, children: [
         { type: "ButtonField", id: "month", props: { text: "Month view", variant: "outline-primary", onClick: "showMonth()" } },
         { type: "ButtonField", id: "today", props: { text: "Today", variant: "outline-secondary", onClick: "goToday()" } },
         { type: "ButtonField", id: "personal", props: { text: "Show / hide Personal", variant: "outline-secondary", onClick: "togglePersonal()" } },
@@ -514,8 +514,8 @@ const fakeUpload = ({ file, onProgress, signal }, failRate = 0) => new Promise((
 });`,
   helperNames: ["fakeUpload"],
   schema: [
-    { type: "row", id: "row-uploads", props: { className: "g-3" }, children: [
-      { type: "column", id: "c-docs", props: { className: "col-12 col-lg-6" }, children: [
+    { type: "row", id: "row-uploads", props: { className: "rc-g-3" }, children: [
+      { type: "column", id: "c-docs", props: { className: "rc-col-12 rc-col-lg-6" }, children: [
         { type: "FileUploadField", id: "docs", props: {
           name: "documents", label: "Documents", required: true, fileTitleMax: 50, fileTitlePlaceholder: "Optional, e.g. Signed contract",
           accept: ".pdf,.doc,.docx,.txt,image/*", maxSize: "5MB", maxFiles: 4, parallel: 2,
@@ -524,7 +524,7 @@ const fakeUpload = ({ file, onProgress, signal }, failRate = 0) => new Promise((
           onUploadComplete: "uploaded()", onUploadError: "uploadFailed()", onAllComplete: "allDone()", onRemove: "removeFile()",
         } },
       ] },
-      { type: "column", id: "c-photos", props: { className: "col-12 col-lg-6" }, children: [
+      { type: "column", id: "c-photos", props: { className: "rc-col-12 rc-col-lg-6" }, children: [
         { type: "FileUploadField", id: "photos", props: {
           name: "photos", label: "Photos (upload when you press the button)", accept: "image/*", variant: "grid",
           autoUpload: false, maxTotalSize: "20MB", title: "Drop photos here", buttonText: "Choose photos",
@@ -537,7 +537,7 @@ const fakeUpload = ({ file, onProgress, signal }, failRate = 0) => new Promise((
       ] },
     ] },
     { type: "row", id: "row-buttons", children: [
-      { type: "column", id: "c-buttons", props: { className: "d-flex flex-wrap gap-2 justify-content-end" }, children: [
+      { type: "column", id: "c-buttons", props: { className: "rc-d-flex rc-flex-wrap rc-gap-2 rc-justify-content-end" }, children: [
         { type: "ButtonField", id: "upload-photos", props: { text: "Upload photos", variant: "outline-primary", onClick: "uploadPhotosNow()" } },
         { type: "ButtonField", id: "saved", props: { text: "Load saved documents", variant: "outline-secondary", onClick: "loadSaved()" } },
         { type: "ButtonField", id: "clear", props: { text: "Clear documents", variant: "outline-danger", onClick: "clearDocs()" } },
@@ -622,19 +622,19 @@ export const tree = {
   wide: true,
   schema: [
     { type: "row", id: "row-controls", children: [
-      { type: "column", id: "c-name", props: { className: "col-12 col-md-4" }, children: [
+      { type: "column", id: "c-name", props: { className: "rc-col-12 rc-col-md-4" }, children: [
         { type: "InputField", id: "item-name", props: { name: "itemName", label: "Item name", placeholder: "Header.js — end with / for a folder" } },
       ] },
-      { type: "column", id: "c-find", props: { className: "col-12 col-md-4" }, children: [
+      { type: "column", id: "c-find", props: { className: "rc-col-12 rc-col-md-4" }, children: [
         { type: "InputField", id: "find", props: { name: "find", label: "Find", placeholder: "type to filter", onChange: "findChanged()" } },
       ] },
-      { type: "column", id: "c-view", props: { className: "col-12 col-md-4" }, children: [
+      { type: "column", id: "c-view", props: { className: "rc-col-12 rc-col-md-4" }, children: [
         { type: "SelectField", id: "view", props: { name: "view", label: "View", defaultValue: "tree", onChange: "viewChanged()",
           options: [{ label: "Tree", value: "tree" }, { label: "Columns", value: "columns" }, { label: "Explorer", value: "explorer" }] } },
       ] },
     ] },
     { type: "row", id: "row-buttons", children: [
-      { type: "column", id: "c-buttons", props: { className: "d-flex flex-wrap gap-2 mb-2" }, children: [
+      { type: "column", id: "c-buttons", props: { className: "rc-d-flex rc-flex-wrap rc-gap-2 rc-mb-2" }, children: [
         { type: "ButtonField", id: "add", props: { text: "+ Add to selected folder", variant: "outline-success", onClick: "addItem()" } },
         { type: "ButtonField", id: "rename", props: { text: "Rename selected", variant: "outline-primary", onClick: "renameSelected()" } },
         { type: "ButtonField", id: "delete", props: { text: "Delete selected", variant: "outline-danger", onClick: "deleteSelected()" } },
@@ -658,7 +658,7 @@ export const tree = {
       onSelect: "selected()", onExpand: "toggled()", onCollapse: "toggled()", onCheck: "checked()", onActivate: "opened()",
       onMove: "moved()", onRename: "renamed()", onNodeFocus: "focused()",
     } },
-    { type: "P", id: "status", props: { className: "small text-body-secondary mt-2", text: "Select, check, drag, double-click or right-click a node." } },
+    { type: "P", id: "status", props: { className: "rc-small rc-text-body-secondary rc-mt-2", text: "Select, check, drag, double-click or right-click a node." } },
   ],
   helpersCode: `const PROJECT = "project";`,
   helperNames: ["PROJECT"],

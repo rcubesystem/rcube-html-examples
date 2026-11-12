@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { groups, topics } from "@/tutorials/topics";
 import { examples } from "@/tutorials/examples";
+import { track } from "@/lib/analytics";
 
 // Everything searchable about a topic: title, summary, keywords, explanations, props, events, schema types
 const searchTextOf = (topic) => {
@@ -48,8 +49,16 @@ export default function Sidebar({ open }) {
   const matches = index.filter(({ text }) => words.every((w) => text.includes(w))).map(({ topic }) => topic);
   const current = pathname === "/" ? "introduction" : pathname.replace(/^\//, "");
 
+  // Google Analytics: what people search for in the menu (once they stop typing for a second), and how many results
+  useEffect(() => {
+    if (q.length < 2) return undefined;
+    const timer = setTimeout(() => track("search", { search_term: q.slice(0, 100), results: matches.length }), 1000);
+    return () => clearTimeout(timer);
+  }, [q]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
-    <nav className={`docs-sidebar p-2 ${open ? "open" : ""}`} aria-label="Table of contents">
+    // data-ga-*: what lib/analytics.js reports for a menu click (menu_click)
+    <nav className={`docs-sidebar p-2 ${open ? "open" : ""}`} aria-label="Table of contents" data-ga-location="sidebar" data-ga-search={q}>
       <div className="p-1 position-sticky top-0 bg-body-tertiary" style={{ zIndex: 1 }}>
         <input ref={inputRef} type="search" className="form-control form-control-sm" value={query}
           placeholder="Search examples…  ( / )" aria-label="Search examples"
@@ -65,7 +74,8 @@ export default function Sidebar({ open }) {
             {list.map((topic) => (
               <Link key={topic.slug} href={topic.slug === "introduction" ? "/" : `/${topic.slug}`}
                 className={`docs-link ${current === topic.slug ? "active" : ""}`}
-                aria-current={current === topic.slug ? "page" : undefined}>
+                aria-current={current === topic.slug ? "page" : undefined}
+                data-ga-item={topic.slug} data-ga-title={topic.title} data-ga-group={group}>
                 <Highlight text={topic.title} query={q} />
                 {q && <small><Highlight text={topic.summary} query={q} /></small>}
               </Link>

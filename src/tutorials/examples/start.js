@@ -5,7 +5,7 @@ export const introduction = {
     {
       heading: "What is rcube-html?",
       body: [
-        "rcube-html builds React + Bootstrap pages from a schema: a plain list of objects that says what to show — rows, columns, text, form fields, tables, charts, a calendar, file uploads, trees and more.",
+        "rcube-html builds React pages from a schema: a plain list of objects that says what to show — rows, columns, text, form fields, tables, charts, a calendar, file uploads, trees and more.",
         "You write the schema (it is JSON, so it can also come from an API or a database) and a few small functions called actions. The library does the rest: layout, validation, error messages, values, events and translation.",
       ],
     },
@@ -20,12 +20,15 @@ export const introduction = {
     {
       heading: "1. Install",
       body: ["In a Next.js (or any React) app:"],
-      code: "npm install rcube-html react-bootstrap bootstrap",
+      code: "npm install rcube-html",
     },
     {
-      heading: "2. Add Bootstrap's CSS once",
-      body: ["In Next.js, import it in `app/layout.js`:"],
-      code: "import \"bootstrap/dist/css/bootstrap.min.css\";",
+      heading: "2. Add its stylesheet once",
+      body: [
+        "rcube-html draws its own buttons, fields, tables and dialogs — no Bootstrap needed. In Next.js, import its CSS in `app/layout.js` (without it, the library adds the same CSS itself when the page loads):",
+        "Its colours and corners are CSS variables (`--rc-primary`, `--rc-border-radius`, ...): set them on `:root` to match your site. On a page with Bootstrap 5.3 they follow Bootstrap's colours by themselves; in Liferay, map them to Clay's.",
+      ],
+      code: "import \"rcube-html/styles.css\";",
     },
     {
       heading: "3. Write a schema and render it",
@@ -42,16 +45,16 @@ export const introduction = {
       ] },
     ] },
     { type: "row", id: "row-fields", children: [
-      { type: "column", id: "col-name", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "col-name", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "InputField", id: "first", props: { name: "firstName", label: "First name", required: true, uppercase: true } },
       ] },
-      { type: "column", id: "col-email", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "col-email", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "InputField", id: "email", props: { type: "email", name: "email", label: "Email", required: true, lowercase: true,
           pattern: "[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}", patternMessage: "Please enter a valid email address." } },
       ] },
     ] },
     { type: "row", id: "row-buttons", children: [
-      { type: "column", id: "col-buttons", props: { className: "d-flex justify-content-end gap-2" }, children: [
+      { type: "column", id: "col-buttons", props: { className: "rc-d-flex rc-justify-content-end rc-gap-2" }, children: [
         { type: "ButtonField", id: "clear", props: { text: "Clear", onClick: "clearForm()" } },
         { type: "ButtonField", id: "submit", props: { type: "submit", text: "Submit", onClick: "runValidation()" } },
       ] },
@@ -85,13 +88,13 @@ export const schemaBasics = {
         "A schema is an array of nodes. Every node is an object with a `type` and a unique `id`.",
         "Layout nodes (`row`, `column`, containers like `Card` or `Tabs`) have `children`: a list of more nodes. Other nodes have `props`: the settings for that element (its text, label, color, ...).",
       ],
-      code: "{ type: \"row\", id: \"row-1\", props: { className: \"mb-3\" }, children: [\n  { type: \"column\", id: \"col-1\", children: [\n    { type: \"H4\", id: \"title\", props: { text: \"Hello\" } }\n  ] }\n]}",
+      code: "{ type: \"row\", id: \"row-1\", props: { className: \"rc-mb-3\" }, children: [\n  { type: \"column\", id: \"col-1\", children: [\n    { type: \"H4\", id: \"title\", props: { text: \"Hello\" } }\n  ] }\n]}",
     },
     {
       heading: "Rows and columns",
       body: [
-        "`row` and `column` are Bootstrap's grid. Columns share the row equally; give a column `className: \"col-12 col-md-8\"` to set its width per screen size. Rows at the top level are wrapped in a Bootstrap `Container`.",
-        "Any node can have `props.className` and `props.style` — use Bootstrap classes such as `p-3`, `bg-light`, `text-center`, `border` and `rounded`.",
+        "`row` and `column` are a 12-column grid. Columns share the row equally; give a column `span: { xs: 12, md: 8 }` (or `span: 6`, `span: \"auto\"`) to set its width per screen size, and a row `gap: 3` for the space between columns. Rows at the top level are wrapped in a container.",
+        "Any node can have `props.className` and `props.style` — rcube-html's classes carry Bootstrap's names with `rc-` in front: `rc-p-3`, `rc-bg-body-tertiary`, `rc-text-center`, `rc-border`, `rc-rounded`, `rc-d-flex`, `rc-gap-2`, `rc-col-md-6`, .... On a page that has Bootstrap, its own classes work too.",
       ],
     },
     {
@@ -102,24 +105,24 @@ export const schemaBasics = {
     },
   ],
   schema: [
-    { type: "row", id: "row-header", props: { className: "mb-3" }, children: [
-      { type: "column", id: "col-header", props: { className: "col-12 bg-primary-subtle rounded p-3" }, children: [
-        { type: "H4", id: "title", props: { text: "Page title", className: "mb-1" } },
-        { type: "P", id: "subtitle", props: { text: "A row with one full-width column.", className: "mb-0 text-body-secondary" } },
+    { type: "row", id: "row-header", props: { className: "rc-mb-3" }, children: [
+      { type: "column", id: "col-header", props: { className: "rc-col-12 rc-bg-primary-subtle rc-rounded rc-p-3" }, children: [
+        { type: "H4", id: "title", props: { text: "Page title", className: "rc-mb-1" } },
+        { type: "P", id: "subtitle", props: { text: "A row with one full-width column.", className: "rc-mb-0 rc-text-body-secondary" } },
       ] },
     ] },
-    { type: "row", id: "row-body", props: { className: "g-3 mb-3" }, children: [
-      { type: "column", id: "col-main", props: { className: "col-12 col-md-8" }, children: [
-        { type: "DIV", id: "main-box", props: { className: "border rounded p-3 h-100", children: "Main column (col-md-8): two thirds of the width on medium screens and up." } },
+    { type: "row", id: "row-body", props: { className: "rc-g-3 rc-mb-3" }, children: [
+      { type: "column", id: "col-main", props: { className: "rc-col-12 rc-col-md-8" }, children: [
+        { type: "DIV", id: "main-box", props: { className: "rc-border rc-rounded rc-p-3 rc-h-100", children: "Main column (col-md-8): two thirds of the width on medium screens and up." } },
       ] },
-      { type: "column", id: "col-side", props: { className: "col-12 col-md-4" }, children: [
-        { type: "DIV", id: "side-box", props: { className: "border rounded p-3 h-100 bg-body-tertiary", children: "Side column (col-md-4)." } },
+      { type: "column", id: "col-side", props: { className: "rc-col-12 rc-col-md-4" }, children: [
+        { type: "DIV", id: "side-box", props: { className: "rc-border rc-rounded rc-p-3 rc-h-100 rc-bg-body-tertiary", children: "Side column (col-md-4)." } },
       ] },
     ] },
-    { type: "row", id: "row-three", props: { className: "g-3 mb-3 text-center" }, children: [
-      { type: "column", id: "col-a", children: [{ type: "DIV", id: "box-a", props: { className: "border rounded p-2", children: "Equal" } }] },
-      { type: "column", id: "col-b", children: [{ type: "DIV", id: "box-b", props: { className: "border rounded p-2", children: "Equal" } }] },
-      { type: "column", id: "col-c", children: [{ type: "DIV", id: "box-c", props: { className: "border rounded p-2", children: "Equal" } }] },
+    { type: "row", id: "row-three", props: { className: "rc-g-3 rc-mb-3 rc-text-center" }, children: [
+      { type: "column", id: "col-a", children: [{ type: "DIV", id: "box-a", props: { className: "rc-border rc-rounded rc-p-2", children: "Equal" } }] },
+      { type: "column", id: "col-b", children: [{ type: "DIV", id: "box-b", props: { className: "rc-border rc-rounded rc-p-2", children: "Equal" } }] },
+      { type: "column", id: "col-c", children: [{ type: "DIV", id: "box-c", props: { className: "rc-border rc-rounded rc-p-2", children: "Equal" } }] },
     ] },
     { type: "row", id: "row-button", children: [
       { type: "column", id: "col-button", children: [
@@ -132,7 +135,8 @@ export const schemaBasics = {
     ["type", "The kind of node: layout (`row`, `column`), text (`H4`, `P`, `DIV`), field, container, table, chart, ..."],
     ["id", "Unique per schema; used by actions and as React key."],
     ["children", "Nested nodes (rows, columns and containers)."],
-    ["props.className / props.style", "Bootstrap classes or inline styles for that element."],
+    ["props.className / props.style", "Classes (`rc-…`, or your own) or inline styles for that element."],
+    ["props.span / props.gap", "A column's width (`6`, `\"auto\"`, `{ xs: 12, md: 6 }`) / a row's space between columns (`0`–`5`)."],
     ["props.text", "The text of text nodes (`H1`–`H6`, `P`, `SPAN`, ...). `DIV` uses `props.children`."],
   ],
   events: [
@@ -166,21 +170,21 @@ export const eventsActions = {
   ],
   schema: [
     { type: "row", id: "row-fields", children: [
-      { type: "column", id: "col-zip", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "col-zip", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "InputField", id: "zip", props: { name: "zip", label: "ZIP code", mask: "#####", placeholder: "5 digits",
           onChange: "zipChanged()", onBlur: "zipBlurred()", onFocus: "zipFocused()" } },
       ] },
-      { type: "column", id: "col-color", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "col-color", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "SelectField", id: "color", props: { name: "color", label: "Favorite color", options: ["Red", "Green", "Blue"], onChange: "colorChanged()" } },
       ] },
     ] },
     { type: "row", id: "row-result", children: [
       { type: "column", id: "col-result", children: [
-        { type: "P", id: "result", props: { className: "alert alert-info py-2", text: "Type a ZIP code or pick a color." } },
+        { type: "P", id: "result", props: { className: "rc-alert rc-alert-info rc-py-2", text: "Type a ZIP code or pick a color." } },
       ] },
     ] },
     { type: "row", id: "row-buttons", children: [
-      { type: "column", id: "col-buttons", props: { className: "d-flex gap-2" }, children: [
+      { type: "column", id: "col-buttons", props: { className: "rc-d-flex rc-gap-2" }, children: [
         { type: "ButtonField", id: "fill", props: { text: "Fill with demo values", onClick: "fillDemo()" } },
         { type: "ButtonField", id: "clear", props: { text: "Clear", onClick: "clearForm()" } },
       ] },

@@ -10,27 +10,27 @@ export const cardsAlerts = {
     {
       heading: "Containers hold other nodes",
       body: [
-        "Containers draw a Bootstrap component and put their `children` inside it. Children can be anything — text, buttons, rows and form fields. Fields inside a container still validate and submit normally.",
+        "Containers draw a component (a card, alert, tabs, ...) and put their `children` inside it. Children can be anything — text, buttons, rows and form fields. Fields inside a container still validate and submit normally.",
         "`Card` has `header`, `title`, `footer` (and `imgSrc`) in props and its children in the body. `Alert` shows `heading` and `text`; with `dismissible: true` the × button hides it, and `api.showNode(id)` brings it back.",
         "`Tooltip` and `Popover` wrap their children and show `text` on hover / click.",
       ],
     },
   ],
   schema: [
-    { type: "row", id: "row-1", props: { className: "g-3" }, children: [
-      { type: "column", id: "c-card", props: { className: "col-12 col-md-6" }, children: [
+    { type: "row", id: "row-1", props: { className: "rc-g-3" }, children: [
+      { type: "column", id: "c-card", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "Card", id: "profile-card", props: { header: "Profile", title: "Jane Doe", footer: "Last login: today" }, children: [
           { type: "P", id: "card-text", props: { text: "Cards can hold any nodes, including fields:" } },
           { type: "InputField", id: "card-email", props: { type: "email", name: "cardEmail", label: "Email" } },
         ] },
       ] },
-      { type: "column", id: "c-alerts", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-alerts", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "Alert", id: "notice", props: { variant: "warning", heading: "Heads up!", text: "Close me with ×, then press \"Show alert again\".", dismissible: true, onClose: "alertClosed()" } },
         { type: "Alert", id: "info", props: { variant: "info", text: "A plain info alert." } },
       ] },
     ] },
-    { type: "row", id: "row-2", props: { className: "mt-3" }, children: [
-      { type: "column", id: "c-overlays", props: { className: "d-flex flex-wrap gap-2 align-items-start" }, children: [
+    { type: "row", id: "row-2", props: { className: "rc-mt-3" }, children: [
+      { type: "column", id: "c-overlays", props: { className: "rc-d-flex rc-flex-wrap rc-gap-2 rc-align-items-start" }, children: [
         { type: "ButtonField", id: "show-alert", props: { text: "Show alert again", onClick: "showAlert()" } },
         { type: "Tooltip", id: "tip", props: { text: "I'm a tooltip", placement: "top" }, children: [
           { type: "ButtonField", id: "tip-btn", props: { text: "Hover me (tooltip)", variant: "outline-secondary" } },
@@ -82,7 +82,7 @@ export const tabsAccordion = {
       ] },
     ] },
     { type: "row", id: "row-tab-buttons", children: [
-      { type: "column", id: "c-tab-buttons", props: { className: "d-flex gap-2 mb-4" }, children: [
+      { type: "column", id: "c-tab-buttons", props: { className: "rc-d-flex rc-gap-2 rc-mb-4" }, children: [
         { type: "ButtonField", id: "go-address", props: { text: "Go to Address", variant: "outline-primary", "data-tabs": "profile-tabs", "data-key": "address", onClick: "selectTab()" } },
         { type: "ButtonField", id: "go-notes", props: { text: "Go to Notes (from code)", variant: "outline-primary", onClick: "openNotes()" } },
         { type: "ButtonField", id: "submit", props: { type: "submit", text: "Submit", onClick: "runValidation()" } },
@@ -137,9 +137,9 @@ export const modalCarousel = {
   ],
   schema: [
     { type: "row", id: "row-modal", children: [
-      { type: "column", id: "c-modal", props: { className: "d-flex gap-2 mb-2" }, children: [
+      { type: "column", id: "c-modal", props: { className: "rc-d-flex rc-gap-2 rc-mb-2" }, children: [
         { type: "ButtonField", id: "open", props: { text: "Edit profile (modal)", variant: "primary", "data-modal": "edit-modal", onClick: "openModal()" } },
-        { type: "P", id: "saved", props: { className: "mb-0 align-self-center text-body-secondary", text: "" } },
+        { type: "P", id: "saved", props: { className: "rc-mb-0 rc-align-self-center rc-text-body-secondary", text: "" } },
       ] },
     ] },
     {
@@ -153,13 +153,13 @@ export const modalCarousel = {
         { type: "ButtonField", id: "save", props: { text: "Save", onClick: "saveProfile()" } },
       ],
     },
-    { type: "row", id: "row-carousel", props: { className: "mt-3" }, children: [
+    { type: "row", id: "row-carousel", props: { className: "rc-mt-3" }, children: [
       { type: "column", id: "c-carousel", children: [
         { type: "Carousel", id: "hero", props: { interval: 4000 }, items: [
           { src: slide("#2a78d6", "Slide one"), alt: "Slide one", caption: "Image slide", text: "With a caption" },
           { src: slide("#1baf7a", "Slide two"), alt: "Slide two", caption: "Second slide" },
           { children: [
-            { type: "DIV", id: "node-slide", props: { className: "p-5 text-center bg-body-tertiary", style: { height: 260 }, children: "A slide made of schema nodes" } },
+            { type: "DIV", id: "node-slide", props: { className: "rc-p-5 rc-text-center rc-bg-body-tertiary", style: { height: 260 }, children: "A slide made of schema nodes" } },
           ] },
         ] },
       ] },

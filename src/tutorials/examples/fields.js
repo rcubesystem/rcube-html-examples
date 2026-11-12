@@ -1,7 +1,7 @@
 // Form fields: inputs, selects, choices, validation, conditional fields, values, repeatable entries
 
 const result = (text) => ({ type: "row", id: "row-result", children: [
-  { type: "column", id: "col-result", children: [{ type: "P", id: "result", props: { className: "alert alert-secondary py-2 small mb-0", text } }] },
+  { type: "column", id: "col-result", children: [{ type: "P", id: "result", props: { className: "rc-alert rc-alert-secondary rc-py-2 rc-small rc-mb-0", text } }] },
 ] });
 
 export const inputFields = {
@@ -17,28 +17,28 @@ export const inputFields = {
   ],
   schema: [
     { type: "row", id: "row-1", children: [
-      { type: "column", id: "c-text", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-text", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "InputField", id: "full-name", props: { name: "fullName", label: "Full name (uppercase)", placeholder: "Jane Doe", uppercase: true, onChange: "fieldChanged()" } },
       ] },
-      { type: "column", id: "c-email", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-email", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "InputField", id: "email", props: { type: "email", name: "email", label: "Email (lowercase)", lowercase: true, onChange: "fieldChanged()" } },
       ] },
-      { type: "column", id: "c-password", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-password", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "InputField", id: "password", props: { type: "password", name: "password", label: "Password", onChange: "fieldChanged()" } },
       ] },
-      { type: "column", id: "c-phone", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-phone", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "InputField", id: "phone", props: { type: "tel", name: "phone", label: "Phone (mask)", mask: "(###) ###-####", placeholder: "(555) 123-4567", hint: "Digits only — the mask adds the rest.", onChange: "fieldChanged()" } },
       ] },
-      { type: "column", id: "c-number", props: { className: "col-6 col-md-3" }, children: [
+      { type: "column", id: "c-number", props: { className: "rc-col-6 rc-col-md-3" }, children: [
         { type: "InputField", id: "quantity", props: { type: "number", name: "quantity", label: "Quantity", min: 1, max: 10, onChange: "fieldChanged()" } },
       ] },
-      { type: "column", id: "c-date", props: { className: "col-6 col-md-3" }, children: [
+      { type: "column", id: "c-date", props: { className: "rc-col-6 rc-col-md-3" }, children: [
         { type: "InputField", id: "start", props: { type: "date", name: "startDate", label: "Start date", onChange: "fieldChanged()" } },
       ] },
-      { type: "column", id: "c-color", props: { className: "col-6 col-md-3" }, children: [
+      { type: "column", id: "c-color", props: { className: "rc-col-6 rc-col-md-3" }, children: [
         { type: "InputField", id: "theme", props: { type: "color", name: "themeColor", label: "Color", onChange: "fieldChanged()" } },
       ] },
-      { type: "column", id: "c-check", props: { className: "col-6 col-md-3 d-flex align-items-center" }, children: [
+      { type: "column", id: "c-check", props: { className: "rc-col-6 rc-col-md-3 rc-d-flex rc-align-items-center" }, children: [
         { type: "InputField", id: "agree", props: { type: "checkbox", name: "agree", label: "I agree", onChange: "fieldChanged()" } },
       ] },
     ] },
@@ -77,17 +77,17 @@ export const selectFields = {
   ],
   schema: [
     { type: "row", id: "row-1", children: [
-      { type: "column", id: "c-size", props: { className: "col-12 col-md-4" }, children: [
+      { type: "column", id: "c-size", props: { className: "rc-col-12 rc-col-md-4" }, children: [
         { type: "SelectField", id: "size", props: { name: "size", label: "Size (strings)", options: ["Small", "Medium", "Large"], onChange: "selectChanged()" } },
       ] },
-      { type: "column", id: "c-plan", props: { className: "col-12 col-md-4" }, children: [
+      { type: "column", id: "c-plan", props: { className: "rc-col-12 rc-col-md-4" }, children: [
         { type: "SelectField", id: "plan", props: { name: "plan", label: "Plan (label / value)", placeholder: "Choose a plan",
           options: [{ label: "Free — $0", value: "free" }, { label: "Pro — $9", value: "pro" }, { label: "Team — $29", value: "team" }], onChange: "selectChanged()" } },
       ] },
-      { type: "column", id: "c-country", props: { className: "col-12 col-md-4" }, children: [
+      { type: "column", id: "c-country", props: { className: "rc-col-12 rc-col-md-4" }, children: [
         { type: "SelectField", id: "country", props: { name: "country", label: "Country", options: ["USA", "India", "Germany"], onChange: "selectChanged()" } },
       ] },
-      { type: "column", id: "c-city", props: { className: "col-12 col-md-4" }, children: [
+      { type: "column", id: "c-city", props: { className: "rc-col-12 rc-col-md-4" }, children: [
         { type: "SelectField", id: "city", props: { name: "city", label: "City (follows Country)", onChange: "selectChanged()",
           optionsFrom: { field: "country", waitingText: "Select a country first", emptyText: "No cities for {value}",
             map: { USA: ["New York", "Chicago", "Austin"], India: ["Chennai", "Mumbai", "Delhi"], Germany: ["Berlin", "Munich"] } } } },
@@ -95,7 +95,7 @@ export const selectFields = {
     ] },
     result("Pick something."),
     { type: "row", id: "row-buttons", children: [
-      { type: "column", id: "col-buttons", props: { className: "d-flex gap-2 mt-3" }, children: [
+      { type: "column", id: "col-buttons", props: { className: "rc-d-flex rc-gap-2 rc-mt-3" }, children: [
         { type: "ButtonField", id: "set-city", props: { text: "Set Germany → Munich from code", onClick: "setCity()" } },
       ] },
     ] },
@@ -127,20 +127,20 @@ export const choiceFields = {
   ],
   schema: [
     { type: "row", id: "row-1", children: [
-      { type: "column", id: "c-radio", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-radio", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "RadioGroupField", id: "delivery", props: { name: "delivery", label: "Delivery", options: ["Standard", "Express", "Pick up"], onChange: "choiceChanged()" } },
       ] },
-      { type: "column", id: "c-checks", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-checks", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "CheckboxGroupField", id: "toppings", props: { name: "toppings", label: "Toppings", options: ["Cheese", "Olives", "Peppers", "Onions"], onChange: "choiceChanged()" } },
       ] },
-      { type: "column", id: "c-radio-stacked", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-radio-stacked", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "RadioGroupField", id: "size", props: { name: "size", label: "Size (stacked)", inline: false,
           options: [{ label: "Small (8\")", value: "S" }, { label: "Medium (12\")", value: "M" }, { label: "Large (16\")", value: "L" }], onChange: "choiceChanged()" } },
       ] },
-      { type: "column", id: "c-slider", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-slider", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "SliderField", id: "spice", props: { name: "spice", label: "Spice level", min: 0, max: 10, step: 1, defaultValue: 3, valueSuffix: " / 10", onChange: "choiceChanged()" } },
       ] },
-      { type: "column", id: "c-notes", props: { className: "col-12" }, children: [
+      { type: "column", id: "c-notes", props: { className: "rc-col-12" }, children: [
         { type: "TextareaField", id: "notes", props: { name: "notes", label: "Notes", rows: 3, placeholder: "Anything else?", onBlur: "choiceChanged()" } },
       ] },
     ] },
@@ -172,34 +172,34 @@ export const validation = {
   ],
   schema: [
     { type: "row", id: "row-1", children: [
-      { type: "column", id: "c-name", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-name", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "InputField", id: "name", props: { name: "name", label: "Name", required: true, requiredMessage: "Please tell us your name." } },
       ] },
-      { type: "column", id: "c-email", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-email", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "InputField", id: "email", props: { type: "email", name: "email", label: "Email", required: true,
           pattern: "[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}", patternMessage: "That doesn't look like an email address." } },
       ] },
-      { type: "column", id: "c-age", props: { className: "col-6 col-md-3" }, children: [
+      { type: "column", id: "c-age", props: { className: "rc-col-6 rc-col-md-3" }, children: [
         { type: "InputField", id: "age", props: { type: "number", name: "age", label: "Age", required: true, min: 18, max: 99, rangeMessage: "Age must be 18 to 99." } },
       ] },
-      { type: "column", id: "c-shoe", props: { className: "col-6 col-md-3" }, children: [
+      { type: "column", id: "c-shoe", props: { className: "rc-col-6 rc-col-md-3" }, children: [
         { type: "InputField", id: "shoe", props: { type: "number", name: "shoeSize", label: "Shoe size", allowedValues: [7, 8, 9, 10, 11], allowedValuesMessage: "We stock sizes 7–11." } },
       ] },
-      { type: "column", id: "c-birth", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-birth", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "InputField", id: "birth", props: { type: "date", name: "birthDate", label: "Date of birth", required: true, beforeToday: true, maxYearsAgo: 120 } },
       ] },
-      { type: "column", id: "c-zip", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-zip", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "InputField", id: "zip", props: { name: "zip", label: "ZIP code", mask: "#####", pattern: "\\d{5}", patternMessage: "Five digits, please." } },
       ] },
-      { type: "column", id: "c-topics", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-topics", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "CheckboxGroupField", id: "topics", props: { name: "topics", label: "Topics", required: true, options: ["News", "Tips", "Offers"] } },
       ] },
-      { type: "column", id: "c-terms", props: { className: "col-12" }, children: [
+      { type: "column", id: "c-terms", props: { className: "rc-col-12" }, children: [
         { type: "InputField", id: "terms", props: { type: "checkbox", name: "terms", label: "I accept the terms", required: true } },
       ] },
     ] },
     { type: "row", id: "row-buttons", children: [
-      { type: "column", id: "col-buttons", props: { className: "d-flex justify-content-end gap-2" }, children: [
+      { type: "column", id: "col-buttons", props: { className: "rc-d-flex rc-justify-content-end rc-gap-2" }, children: [
         { type: "ButtonField", id: "clear", props: { text: "Clear", onClick: "clearForm()" } },
         { type: "ButtonField", id: "check", props: { text: "Check without submitting", variant: "outline-secondary", onClick: "checkOnly()" } },
         { type: "ButtonField", id: "submit", props: { type: "submit", text: "Submit", onClick: "runValidation()" } },
@@ -244,30 +244,30 @@ export const conditionalFields = {
   ],
   schema: [
     { type: "row", id: "row-1", children: [
-      { type: "column", id: "c-contact", props: { className: "col-12" }, children: [
+      { type: "column", id: "c-contact", props: { className: "rc-col-12" }, children: [
         { type: "RadioGroupField", id: "contact-by", props: { name: "contactBy", label: "How should we contact you?", required: true, options: ["Email", "Phone", "Post"] } },
       ] },
-      { type: "column", id: "c-email", visibleWhen: { field: "contactBy", equals: "Email" }, props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-email", visibleWhen: { field: "contactBy", equals: "Email" }, props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "InputField", id: "email", props: { type: "email", name: "email", label: "Email", required: true } },
       ] },
-      { type: "column", id: "c-phone", visibleWhen: { field: "contactBy", equals: "Phone" }, props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-phone", visibleWhen: { field: "contactBy", equals: "Phone" }, props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "InputField", id: "phone", props: { type: "tel", name: "phone", label: "Phone", required: true, mask: "(###) ###-####" } },
         { type: "SelectField", id: "best-time", props: { name: "bestTime", label: "Best time to call", options: ["Morning", "Afternoon", "Evening"] } },
       ] },
-      { type: "column", id: "c-address", visibleWhen: { field: "contactBy", equals: "Post" }, props: { className: "col-12" }, children: [
+      { type: "column", id: "c-address", visibleWhen: { field: "contactBy", equals: "Post" }, props: { className: "rc-col-12" }, children: [
         { type: "TextareaField", id: "address", props: { name: "address", label: "Postal address", rows: 2, required: true } },
       ] },
     ] },
     { type: "row", id: "row-2", children: [
-      { type: "column", id: "c-extras", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-extras", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "CheckboxGroupField", id: "extras", props: { name: "extras", label: "Extras", options: ["Newsletter", "Special offers"] } },
       ] },
-      { type: "column", id: "c-offer", visibleWhen: { field: "extras", includesAny: ["Special offers"] }, props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-offer", visibleWhen: { field: "extras", includesAny: ["Special offers"] }, props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "SelectField", id: "offer-type", props: { name: "offerType", label: "Offers about", required: true, options: ["Books", "Music", "Travel"] } },
       ] },
     ] },
     { type: "row", id: "row-buttons", children: [
-      { type: "column", id: "col-buttons", props: { className: "d-flex justify-content-end" }, children: [
+      { type: "column", id: "col-buttons", props: { className: "rc-d-flex rc-justify-content-end" }, children: [
         { type: "ButtonField", id: "submit", props: { type: "submit", text: "Submit", onClick: "runValidation()" } },
       ] },
     ] },
@@ -304,21 +304,21 @@ export const formValues = {
   optionsCode: `data: { firstName: "Jane", plan: "Pro", newsletter: true },   // starting values (resetForm returns here)`,
   schema: [
     { type: "row", id: "row-1", children: [
-      { type: "column", id: "c-first", props: { className: "col-12 col-md-4" }, children: [
+      { type: "column", id: "c-first", props: { className: "rc-col-12 rc-col-md-4" }, children: [
         { type: "InputField", id: "first", props: { name: "firstName", label: "First name" } },
       ] },
-      { type: "column", id: "c-last", props: { className: "col-12 col-md-4" }, children: [
+      { type: "column", id: "c-last", props: { className: "rc-col-12 rc-col-md-4" }, children: [
         { type: "InputField", id: "last", props: { name: "lastName", label: "Last name" } },
       ] },
-      { type: "column", id: "c-plan", props: { className: "col-12 col-md-4" }, children: [
+      { type: "column", id: "c-plan", props: { className: "rc-col-12 rc-col-md-4" }, children: [
         { type: "SelectField", id: "plan", props: { name: "plan", label: "Plan", options: ["Free", "Pro", "Team"] } },
       ] },
-      { type: "column", id: "c-news", props: { className: "col-12" }, children: [
+      { type: "column", id: "c-news", props: { className: "rc-col-12" }, children: [
         { type: "InputField", id: "newsletter", props: { type: "checkbox", name: "newsletter", label: "Newsletter" } },
       ] },
     ] },
     { type: "row", id: "row-buttons", children: [
-      { type: "column", id: "col-buttons", props: { className: "d-flex flex-wrap gap-2 mb-3" }, children: [
+      { type: "column", id: "col-buttons", props: { className: "rc-d-flex rc-flex-wrap rc-gap-2 rc-mb-3" }, children: [
         { type: "ButtonField", id: "fill", props: { text: "setFormData", onClick: "fillAll()" } },
         { type: "ButtonField", id: "one", props: { text: "setFieldValue (plan)", onClick: "setPlan()" } },
         { type: "ButtonField", id: "read", props: { text: "getFormData", variant: "outline-primary", onClick: "readData()" } },
@@ -329,7 +329,7 @@ export const formValues = {
     ] },
     { type: "row", id: "row-output", children: [
       { type: "column", id: "col-output", children: [
-        { type: "DIV", id: "output", props: { className: "border rounded p-2 bg-body-tertiary font-monospace small", children: "Values appear here." } },
+        { type: "DIV", id: "output", props: { className: "rc-border rc-rounded rc-p-2 rc-bg-body-tertiary rc-font-monospace rc-small", children: "Values appear here." } },
       ] },
     ] },
   ],
@@ -364,17 +364,17 @@ export const repeatableEntries = {
   optionsCode: `repeatable: true,`,
   schema: [
     { type: "row", id: "row-contact", children: [
-      { type: "column", id: "c-name", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-name", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "InputField", id: "name", props: { name: "name", label: "Contact name", required: true } },
       ] },
-      { type: "column", id: "c-email", props: { className: "col-12 col-md-6" }, children: [
+      { type: "column", id: "c-email", props: { className: "rc-col-12 rc-col-md-6" }, children: [
         { type: "InputField", id: "email", props: { type: "email", name: "email", label: "Email", required: true } },
       ] },
     ] },
   ],
   buttons: [
     { type: "row", id: "row-buttons", children: [
-      { type: "column", id: "col-buttons", props: { className: "d-flex justify-content-between mt-2" }, children: [
+      { type: "column", id: "col-buttons", props: { className: "rc-d-flex rc-justify-content-between rc-mt-2" }, children: [
         { type: "ButtonField", id: "add", props: { text: "+ Add another contact", variant: "outline-primary", onClick: "addCopy()" } },
         { type: "ButtonField", id: "submit", props: { type: "submit", text: "Submit", onClick: "runValidation()" } },
       ] },

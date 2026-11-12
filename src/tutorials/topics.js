@@ -6,13 +6,16 @@ export const groups = ["Getting started", "Text & layout", "Form fields", "Conta
 export const topics = [
   { slug: "introduction", group: "Getting started", title: "Introduction",
     summary: "What rcube-html is, how to install it and how to build your first schema-driven form.",
-    keywords: "install setup quick start useDynamicTag DynamicTag bootstrap next.js" },
+    keywords: "install setup quick start useDynamicTag DynamicTag styles.css css variables liferay next.js" },
   { slug: "schema-basics", group: "Getting started", title: "Schema basics",
     summary: "Rows, columns, ids, props and children: how a schema describes a page.",
     keywords: "row column id type props children className layout grid nodes" },
   { slug: "events-actions", group: "Getting started", title: "Events & actions",
     summary: "Name an action in the schema (onChange, onClick, ...) and write it in your page.",
     keywords: "onChange onBlur onFocus onClick actions api context built-in runValidation clearForm" },
+  { slug: "styles-themes", group: "Getting started", title: "Styles & themes",
+    summary: "The stylesheet, your colours as CSS variables, Liferay / Clay, dark mode, and the grid's span and gap.",
+    keywords: "styles.css css variables theme colors --rc-primary dark data-rc-theme liferay clay bootstrap span gap grid rc- classes utilities" },
 
   { slug: "html-tags", group: "Text & layout", title: "Text & HTML tags",
     summary: "Headings, paragraphs, links, images, lists, badges, progress bars and more.",

@@ -152,7 +152,7 @@ export default function TutorialPage({ slug }) {
       <h2 className="h5 mt-4">Code</h2>
       <p className="small text-body-secondary mb-2">
         Copy <strong>Full page.js</strong> into <code className="docs-inline-code">app/your-page/page.js</code> of a Next.js app (with
-        <code className="docs-inline-code">rcube-html</code>, <code className="docs-inline-code">react-bootstrap</code> and Bootstrap&apos;s CSS installed) — it runs as is.
+        <code className="docs-inline-code">rcube-html</code> installed and <code className="docs-inline-code">rcube-html/styles.css</code> imported in its layout) — it runs as is.
         Or copy only the schema and keep your own page.
       </p>
       <ul className="nav nav-tabs mb-0">
@@ -197,7 +197,7 @@ export default function TutorialPage({ slug }) {
         </>
       )}
 
-      <nav className="d-flex justify-content-between border-top pt-3 mt-5" aria-label="More tutorials">
+      <nav className="d-flex justify-content-between border-top pt-3 mt-5" aria-label="More tutorials" data-ga-location="pager">
         {prev ? <Link href={href(prev)}>← {prev.title}</Link> : <span />}
         {next ? <Link href={href(next)}>{next.title} →</Link> : <span />}
       </nav>

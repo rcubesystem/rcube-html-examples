@@ -31,11 +31,11 @@ export const richText = {
       source: true, onChange: "detailsChanged()",
     } },
     { type: "ButtonField", id: "show", props: { text: "Show it below", variant: "outline-primary", onClick: "showIt()" } },
-    { type: "ButtonField", id: "fill", props: { text: "Set a value from code", variant: "outline-secondary", className: "ms-2", onClick: "fillIt()" } },
-    { type: "H6", id: "preview-h", props: { text: "Shown with RichText (cleaned again):", className: "mt-3" } },
+    { type: "ButtonField", id: "fill", props: { text: "Set a value from code", variant: "outline-secondary", className: "rc-ms-2", onClick: "fillIt()" } },
+    { type: "H6", id: "preview-h", props: { text: "Shown with RichText (cleaned again):", className: "rc-mt-3" } },
     { type: "RichText", id: "preview", props: { html: "", emptyText: "Nothing yet — press “Show it below”." } },
   ],
-  buttons: [{ type: "ButtonField", id: "submit", props: { type: "submit", text: "Submit", onClick: "runValidation()", className: "mt-3" } }],
+  buttons: [{ type: "ButtonField", id: "submit", props: { type: "submit", text: "Submit", onClick: "runValidation()", className: "rc-mt-3" } }],
   actionsCode: `// your tool: the editor is handed over
 shout: (event, { editor }) => editor.setHtml(editor.getHtml().toUpperCase().replace(/<(\\/?)([A-Z0-9]+)/g, (m, s, t) => "<" + s + t.toLowerCase())),
 detailsChanged: (event, { value }) => console.log("HTML now:", value),
@@ -85,7 +85,7 @@ const ROWS = ${JSON.stringify(ORDERS)};
 const views = { readView, saveView };`,
   helperNames: ["ROWS", "views"],
   schema: [
-    { type: "SelectField", id: "status", props: { name: "status", label: "Status", placeholder: "Every status", options: ["Paid", "Due", "Overdue"], onChange: "statusChanged()", className: "mb-2", style: { maxWidth: 240 } } },
+    { type: "SelectField", id: "status", props: { name: "status", label: "Status", placeholder: "Every status", options: ["Paid", "Due", "Overdue"], onChange: "statusChanged()", className: "rc-mb-2", style: { maxWidth: 240 } } },
     { type: "DataTable", id: "orders", props: {
       remember: "demo-orders", onViewReset: "viewReset()",
       rowKey: "id", rows: ORDERS, selectable: "single", sortable: true, searchable: true, pageSize: 5, pageSizeOptions: [5, 10, 25], size: "sm",

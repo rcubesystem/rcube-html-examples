@@ -1,4 +1,6 @@
+// Bootstrap: only for this site's own pages (menu, code boxes); the examples are drawn by rcube-html and its stylesheet
 import "bootstrap/dist/css/bootstrap.min.css";
+import "rcube-html/styles.css";
 import "./globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import DocsShell from "@/components/DocsShell";

@@ -6,11 +6,13 @@ import { cardsAlerts, tabsAccordion, modalCarousel } from "./containers";
 import { dataTable, serverPaging, tableEditing, charts, calendar, fileUpload, tree, treeExplorer } from "./data";
 import { languages, customComponents } from "./advanced";
 import { richText, rememberView } from "./latest";
+import { stylesThemes } from "./styles";
 
 export const examples = {
   introduction,
   "schema-basics": schemaBasics,
   "events-actions": eventsActions,
+  "styles-themes": stylesThemes,
   "html-tags": htmlTags,
   "element-dynamics": elementDynamics,
   "input-fields": inputFields,

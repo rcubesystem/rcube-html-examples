@@ -96,7 +96,7 @@ body {
   padding: 1rem;
   background: var(--bs-body-bg);
 }
-.docs-live .container { max-width: none; padding-left: 0; padding-right: 0; }
+.docs-live .rc-container { max-width: none; padding-left: 0; padding-right: 0; }
 .docs-log {
   max-height: 340px;
   overflow-y: auto;

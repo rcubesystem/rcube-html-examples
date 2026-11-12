@@ -34,7 +34,7 @@ npm run deploy     # next build + firebase deploy --only hosting -> https://rcub
 
 Needs the Firebase CLI (`npm install -g firebase-tools`) and `firebase login` once.
 
-Uses Next.js 16 (App Router), React 18.3, React-Bootstrap 2.10 and Bootstrap 5.3 — the same versions as salampro.
+Uses Next.js 16 (App Router), React 19.3, React-Bootstrap 2.10 and Bootstrap 5.3 — the same versions as salampro.
 
 ## Topics
 
