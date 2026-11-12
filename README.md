@@ -24,32 +24,29 @@ npm run build      # static site in out/
 npm run preview    # build + serve out/ with the Firebase emulator (http://127.0.0.1:5000)
 ```
 
-## The downloadable starter app
+## Run every example on your computer
 
-The Introduction links to `/downloads/rcube-html-starter.zip`: a Next.js app with every example on its own page,
-ready for `npm install` and `npm run dev`. It is made by `scripts/build-starter.mjs` before every `npm run dev` and
-`npm run build` (or on its own: `npm run starter`) from:
+Download the starter app files individually — every file from the `starter`
+folder, keeping the same file structure as in that folder. Then go to the
+local folder where you set up the same starter app and run the commands
+below. You need Node.js 20 or 22.
 
-- `starter/` — the hand-written files (README, layout, home page, styles),
-- each tutorial's **Full page.js** (`src/tutorials/pageCode.js`, the same code the site shows),
-- this site's `next`, `react` and `rcube-html` versions.
+### Starter files
 
-So the download always matches the tutorials. `public/downloads/` is generated (not committed).
+Download each file and keep the same folder structure as the `starter` folder:
 
-### No download? Make the starter with npm
+- `package.json` → [download](/downloads/starter/package.json)
+- `app/layout.js` → [download](/downloads/starter/app/layout.js)
+- `app/page.js` → [download](/downloads/starter/app/page.js)
+- … (list the rest of the `starter/` files here)
 
-Some work computers block file downloads (zip files included). The Introduction also shows how to get the same app
-with npm only:
+Then, in your local starter folder:
 
 ```bash
-npx create-next-app@latest my-rcube-app --js --app --no-src-dir --no-tailwind --yes
-cd my-rcube-app
-npm install rcube-html
+npm install
 npm run dev
 ```
-
-1. In `app/layout.js`, add `import "rcube-html/styles.css";` under the other imports.
-2. Replace `app/page.js` with any tutorial's **Full page.js** (the Code box on its page) and open http://localhost:3000.
+open http://localhost:3000.
 3. More examples: one folder each, e.g. `app/validation/page.js` → http://localhost:3000/validation.
 
 ## Publish
