@@ -24,6 +24,18 @@ npm run build      # static site in out/
 npm run preview    # build + serve out/ with the Firebase emulator (http://127.0.0.1:5000)
 ```
 
+## The downloadable starter app
+
+The Introduction links to `/downloads/rcube-html-starter.zip`: a Next.js app with every example on its own page,
+ready for `npm install` and `npm run dev`. It is made by `scripts/build-starter.mjs` before every `npm run dev` and
+`npm run build` (or on its own: `npm run starter`) from:
+
+- `starter/` — the hand-written files (README, layout, home page, styles),
+- each tutorial's **Full page.js** (`src/tutorials/pageCode.js`, the same code the site shows),
+- this site's `next`, `react` and `rcube-html` versions.
+
+So the download always matches the tutorials. `public/downloads/` is generated (not committed).
+
 ## Publish
 
 The site is a static export hosted on Firebase Hosting (project `rcube-html`, see `firebase.json` and `.firebaserc`):

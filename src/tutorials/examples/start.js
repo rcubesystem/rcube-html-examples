@@ -18,6 +18,20 @@ export const introduction = {
       ],
     },
     {
+      heading: "Run every example on your computer",
+      body: [
+        "Download the starter app: a small Next.js app with all the examples of these tutorials, each on its own page, plus `My page` — a form to change and play with. You need Node.js 20 or 22.",
+      ],
+      download: { href: "/downloads/rcube-html-starter.zip", label: "Download the starter app (.zip)", note: "rcube-html-starter.zip · about 50 KB" },
+      list: [
+        "Unzip it: you get a folder `rcube-html-starter`.",
+        "Open a terminal in that folder and run the two commands below.",
+        "Open http://localhost:3000 — the home page links to every example.",
+        "Change any `app/examples/<name>/page.js` (or `app/my-page/page.js`) and save: the page updates by itself.",
+      ],
+      code: "npm install\nnpm run dev",
+    },
+    {
       heading: "1. Install",
       body: ["In a Next.js (or any React) app:"],
       code: "npm install rcube-html",

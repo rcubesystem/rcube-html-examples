@@ -5,35 +5,7 @@ import { topics, topicBySlug } from "@/tutorials/topics";
 import { examples } from "@/tutorials/examples";
 import LiveExample from "./LiveExample";
 import CodeBlock, { Inline } from "./CodeBlock";
-
-const indent = (text, spaces) => text.split("\n").map((line) => (line ? " ".repeat(spaces) + line : line)).join("\n");
-
-// The complete page.js a reader can paste into app/<name>/page.js
-const pageCode = (example) => {
-  const lines = ['"use client";', ...(example.onLoadCode ? ['import { useEffect } from "react";'] : []), 'import { useDynamicTag, DynamicTag } from "rcube-html";'];
-  if (example.imports) lines.push(example.imports.trim());
-  lines.push("");
-  if (example.pagePreamble) lines.push(example.pagePreamble.trim(), "");
-  if (example.helpersCode) lines.push(example.helpersCode.trim(), "");
-  lines.push(`const schema = ${JSON.stringify(example.schema, null, 2)};`, "");
-  if (example.buttons) lines.push(`const buttons = ${JSON.stringify(example.buttons, null, 2)};`, "");
-  const options = ["    schema,"];
-  if (example.buttons) options.push("    buttons,");
-  if (example.optionsCode) options.push(indent(example.optionsCode.trim(), 4));
-  if (example.submit) options.push('    onSubmit: (entries) => console.log("Submitted:", entries),');
-  if (example.actionsCode?.trim()) options.push("    actions: (api) => ({", indent(example.actionsCode.trim(), 6), "    }),");
-  lines.push(
-    "export default function Page() {",
-    "  const form = useDynamicTag({",
-    ...options,
-    "  });",
-    // onLoadCode: what runs once when the page opens (e.g. load a table's first page)
-    ...(example.onLoadCode ? ["  // once, when the page opens", "  useEffect(() => {", indent(example.onLoadCode.trim(), 4), "  }, []); // eslint-disable-line react-hooks/exhaustive-deps"] : []),
-    "  return <DynamicTag form={form} />;",
-    "}",
-  );
-  return lines.join("\n");
-};
+import { indent, pageCode } from "@/tutorials/pageCode";
 
 // "zipChanged" -> ["onChange", "onBlur"] by scanning the schema for "zipChanged()"
 const eventNamesOf = (schema) => {
@@ -115,6 +87,13 @@ export default function TutorialPage({ slug }) {
         <section key={section.heading} className="mb-4">
           <h2 className="h5 mt-4">{section.heading}</h2>
           {(section.body || []).map((paragraph, i) => <p key={i} className="mb-2"><Inline text={paragraph} /></p>)}
+          {/* a file to download (e.g. the starter app); the click is tracked as link_click, location "download" */}
+          {section.download && (
+            <p className="d-flex flex-wrap align-items-center gap-2 my-3" data-ga-location="download">
+              <a className="btn btn-primary" href={section.download.href} download>⬇ {section.download.label}</a>
+              {section.download.note && <span className="small text-body-secondary">{section.download.note}</span>}
+            </p>
+          )}
           {section.list && <ul>{section.list.map((item, i) => <li key={i}><Inline text={item} /></li>)}</ul>}
           {section.code && <CodeBlock code={section.code} />}
         </section>

@@ -79,8 +79,9 @@ export const rememberView = {
   wide: true,
   provides: { configureViewStore, readView, saveView },
   imports: `import { configureViewStore, readView, saveView } from "rcube-html";`,
-  helpersCode: `// once signed in: whose choices these are (here a demo person)
-configureViewStore({ namespace: "demo.school", user: "demo", days: 7 });
+  helpersCode: `// once signed in: whose choices these are (here a demo person) — in the browser only (Next.js also runs this
+// file on the server, where there is no window / localStorage)
+if (typeof window !== "undefined") configureViewStore({ namespace: "demo.school", user: "demo", days: 7 });
 const ROWS = ${JSON.stringify(ORDERS)};
 const views = { readView, saveView };`,
   helperNames: ["ROWS", "views"],

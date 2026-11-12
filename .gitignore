@@ -5,5 +5,7 @@ out/
 *.log
 .env*
 .DS_Store
+# the downloadable starter app: made by scripts/build-starter.mjs before dev / build
+public/downloads/
 # local links to .agents/skills (made by the skills installer on each machine)
 .claude/

@@ -5,7 +5,10 @@
   "description": "Tutorials and copy-ready examples for rcube-html: forms, tables, charts, calendar, file upload, trees and more.",
   "author": "Riyaz Hameed <riyaz.mohamed@gmail.com>",
   "scripts": {
+    "starter": "node scripts/build-starter.mjs",
+    "predev": "node scripts/build-starter.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/build-starter.mjs",
     "build": "next build",
     "preview": "next build && firebase emulators:start --only hosting",
     "deploy": "next build && firebase deploy --only hosting"
