@@ -36,6 +36,22 @@ ready for `npm install` and `npm run dev`. It is made by `scripts/build-starter.
 
 So the download always matches the tutorials. `public/downloads/` is generated (not committed).
 
+### No download? Make the starter with npm
+
+Some work computers block file downloads (zip files included). The Introduction also shows how to get the same app
+with npm only:
+
+```bash
+npx create-next-app@latest my-rcube-app --js --app --no-src-dir --no-tailwind --yes
+cd my-rcube-app
+npm install rcube-html
+npm run dev
+```
+
+1. In `app/layout.js`, add `import "rcube-html/styles.css";` under the other imports.
+2. Replace `app/page.js` with any tutorial's **Full page.js** (the Code box on its page) and open http://localhost:3000.
+3. More examples: one folder each, e.g. `app/validation/page.js` → http://localhost:3000/validation.
+
 ## Publish
 
 The site is a static export hosted on Firebase Hosting (project `rcube-html`, see `firebase.json` and `.firebaserc`):

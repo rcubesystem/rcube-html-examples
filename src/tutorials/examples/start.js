@@ -20,7 +20,7 @@ export const introduction = {
     {
       heading: "Run every example on your computer",
       body: [
-        "Download the starter app: a small Next.js app with all the examples of these tutorials, each on its own page, plus `My page` — a form to change and play with. You need Node.js 20 or 22.",
+        "Download the starter app: a small Next.js app with all the examples of these tutorials, each on its own page, plus `My page` — a form to change and play with. You need Node.js 20 or 22. (Downloads blocked on your computer? See the next section.)",
       ],
       download: { href: "/downloads/rcube-html-starter.zip", label: "Download the starter app (.zip)", note: "rcube-html-starter.zip · about 50 KB" },
       list: [
@@ -30,6 +30,20 @@ export const introduction = {
         "Change any `app/examples/<name>/page.js` (or `app/my-page/page.js`) and save: the page updates by itself.",
       ],
       code: "npm install\nnpm run dev",
+    },
+    {
+      heading: "Can't download the zip? Make the same app with npm",
+      body: [
+        "Many work computers block file downloads. You don't need the zip: npm (which comes with Node.js) can create an empty Next.js app, and you paste the examples into it.",
+      ],
+      list: [
+        "Run the commands below in a terminal. They create a folder `my-rcube-app` with a new Next.js app, add rcube-html and start it.",
+        "In `app/layout.js`, add `import \"rcube-html/styles.css\";` under the other imports.",
+        "Replace everything in `app/page.js` with any tutorial's Full page.js (in the Code box of its page), save, and open http://localhost:3000.",
+        "For more examples, give each one its own folder: `app/validation/page.js` opens at http://localhost:3000/validation.",
+        "If a button does nothing right after the page appears, wait a moment: the first time a page opens in `npm run dev`, Next.js is still compiling its JavaScript.",
+      ],
+      code: "npx create-next-app@latest my-rcube-app --js --app --no-src-dir --no-tailwind --yes\ncd my-rcube-app\nnpm install rcube-html\nnpm run dev",
     },
     {
       heading: "1. Install",
