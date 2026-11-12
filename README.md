@@ -2,7 +2,7 @@
 
 **Examples for rcube-html: An Open-Source, JSON-Driven HTML Page Renderer.**
 
-Tutorials and copy-ready examples for [rcube-html](https://www.npmjs.com/package/rcube-html) — schema-driven React + Bootstrap forms, tables, charts, calendar, file upload and trees.
+Tutorials and copy-ready examples for [rcube-html](https://www.npmjs.com/package/rcube-html) — schema-driven React forms, tables, charts, calendar, file upload and trees. It works with any CSS framework (Bootstrap, Tailwind, Clay, your own CSS or none) for building responsive pages.
 
 **Live site: [rcube-html.com](https://rcube-html.com/)**
 
@@ -26,18 +26,18 @@ npm run preview    # build + serve out/ with the Firebase emulator (http://127.0
 
 ## Run every example on your computer
 
-**[starter-app/](https://github.com/rcubesystem/rcube-html-examples/tree/main/starter-app)** is a ready-to-run
+**[starter/](https://github.com/rcubesystem/rcube-html-examples/tree/main/starter)** is a ready-to-run
 Next.js app with every example on its own page, plus `My page` (a form to change and play with). You need Node.js 20
 or 22. Get it in one of these ways — none needs a file download, so they also work on work computers that block
 downloads:
 
-**With git** (copies only the `starter-app` folder):
+**With git** (copies only the `starter` folder):
 
 ```bash
 git clone --depth 1 --filter=blob:none --sparse https://github.com/rcubesystem/rcube-html-examples.git
 cd rcube-html-examples
-git sparse-checkout set starter-app
-cd starter-app
+git sparse-checkout set starter
+cd starter
 npm install
 npm run dev
 ```
@@ -45,7 +45,7 @@ npm run dev
 **With npm only** (no git):
 
 ```bash
-npx degit rcubesystem/rcube-html-examples/starter-app rcube-html-starter
+npx degit rcubesystem/rcube-html-examples/starter rcube-html-starter
 cd rcube-html-starter
 npm install
 npm run dev
@@ -69,16 +69,16 @@ npm run dev
 
 ### How the starter app is made
 
-Don't edit `starter-app/` by hand: `scripts/build-starter.mjs` makes it fresh before every `npm run dev` and
-`npm run build` (or on its own: `npm run starter`), so it always matches the tutorials. It is made from:
+`starter/` has two kinds of files:
 
-- `starter/` — the hand-written files (README, layout, home page, styles, `ClientOnly.js`, next.config.js),
-- each tutorial's **Full page.js** (`src/tutorials/pageCode.js`, the same code the site shows),
-- this site's `next`, `react` and `rcube-html` versions (its `package.json`).
+- **hand-written** — edit these: `README.md`, `.gitignore`, `next.config.js`, `app/layout.js`, `app/page.js`,
+  `app/globals.css`, `app/ClientOnly.js`;
+- **made by `scripts/build-starter.mjs`** — never edit these by hand, they are rewritten before every `npm run dev`
+  and `npm run build` (or on its own: `npm run starter`): `package.json` (this site's `next`, `react` and
+  `rcube-html` versions), `app/examples.js`, `app/examples/<name>/page.js` (each tutorial's **Full page.js**, from
+  `src/tutorials/pageCode.js`) and `app/my-page/page.js`.
 
-`starter/` alone is not a runnable app (it has no `package.json` and no example pages). Commit `starter-app/` after
-changing a tutorial or `starter/`, so GitHub has the latest. The same app is also written as a zip to
-`public/downloads/rcube-html-starter.zip` (generated, not committed).
+So the starter always matches the tutorials. Commit `starter/` after changing a tutorial, so GitHub has the latest.
 
 ## Publish
 

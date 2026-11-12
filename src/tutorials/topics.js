@@ -6,7 +6,7 @@ export const groups = ["Getting started", "Text & layout", "Form fields", "Conta
 export const topics = [
   { slug: "introduction", group: "Getting started", title: "Introduction",
     summary: "What rcube-html is, how to install it and how to build your first schema-driven form.",
-    keywords: "install setup quick start download zip starter app run locally npm run dev useDynamicTag DynamicTag styles.css css variables liferay next.js" },
+    keywords: "install setup quick start starter app github git degit run locally npm run dev useDynamicTag DynamicTag styles.css css variables liferay next.js" },
   { slug: "schema-basics", group: "Getting started", title: "Schema basics",
     summary: "Rows, columns, ids, props and children: how a schema describes a page.",
     keywords: "row column id type props children className layout grid nodes" },

@@ -20,27 +20,27 @@ export const introduction = {
     {
       heading: "Run every example on your computer",
       body: [
-        "The starter app is a small Next.js app with all the examples of these tutorials, each on its own page, plus `My page` — a form to change and play with. It is the `starter-app` folder of the rcube-html-examples repository on GitHub. You need Node.js 20 or 22.",
+        "The starter app is a small Next.js app with all the examples of these tutorials, each on its own page, plus `My page` — a form to change and play with. It is the `starter` folder of the rcube-html-examples repository on GitHub. You need Node.js 20 or 22.",
         "Get it in one of the three ways below — no file download needed, so they also work on work computers that block downloads. Then open http://localhost:3000: the home page links to every example. Change any `app/examples/<name>/page.js` (or `app/my-page/page.js`) and save: the page updates by itself.",
       ],
       links: [
-        { href: "https://github.com/rcubesystem/rcube-html-examples/tree/main/starter-app", label: "The starter app on GitHub" },
+        { href: "https://github.com/rcubesystem/rcube-html-examples/tree/main/starter", label: "The starter app on GitHub" },
         { href: "https://github.com/rcubesystem/rcube-html-examples", label: "The whole repository" },
       ],
     },
     {
       heading: "Way 1: with git",
       body: [
-        "If git is installed, copy only the `starter-app` folder (a sparse checkout skips the rest of the repository), then install and start it:",
+        "If git is installed, copy only the `starter` folder (a sparse checkout skips the rest of the repository), then install and start it:",
       ],
-      code: "git clone --depth 1 --filter=blob:none --sparse https://github.com/rcubesystem/rcube-html-examples.git\ncd rcube-html-examples\ngit sparse-checkout set starter-app\ncd starter-app\nnpm install\nnpm run dev",
+      code: "git clone --depth 1 --filter=blob:none --sparse https://github.com/rcubesystem/rcube-html-examples.git\ncd rcube-html-examples\ngit sparse-checkout set starter\ncd starter\nnpm install\nnpm run dev",
     },
     {
       heading: "Way 2: with npm only (no git)",
       body: [
-        "`degit` (run through npx) copies the `starter-app` folder from GitHub into a new folder `rcube-html-starter`, without git:",
+        "`degit` (run through npx) copies the `starter` folder from GitHub into a new folder `rcube-html-starter`, without git:",
       ],
-      code: "npx degit rcubesystem/rcube-html-examples/starter-app rcube-html-starter\ncd rcube-html-starter\nnpm install\nnpm run dev",
+      code: "npx degit rcubesystem/rcube-html-examples/starter rcube-html-starter\ncd rcube-html-starter\nnpm install\nnpm run dev",
     },
     {
       heading: "Way 3: make the same app yourself",
@@ -64,7 +64,7 @@ export const introduction = {
     {
       heading: "2. Add its stylesheet once",
       body: [
-        "rcube-html draws its own buttons, fields, tables and dialogs — no Bootstrap needed. In Next.js, import its CSS in `app/layout.js` (without it, the library adds the same CSS itself when the page loads):",
+        "rcube-html draws its own buttons, fields, tables and dialogs, and works with any CSS framework — Bootstrap, Tailwind, Clay, your own CSS or none — for building responsive pages. In Next.js, import its CSS in `app/layout.js` (without it, the library adds the same CSS itself when the page loads):",
         "Its colours and corners are CSS variables (`--rc-primary`, `--rc-border-radius`, ...): set them on `:root` to match your site. On a page with Bootstrap 5.3 they follow Bootstrap's colours by themselves; in Liferay, map them to Clay's.",
       ],
       code: "import \"rcube-html/styles.css\";",

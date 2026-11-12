@@ -11,7 +11,7 @@ export const stylesThemes = {
     {
       heading: "Its own stylesheet",
       body: [
-        "rcube-html draws its own buttons, fields, tables, pager, dropdowns, dialogs and tabs, with classes that start with `rc-` (`rc-btn rc-btn-primary`, `rc-input`, `rc-table`, …). It needs no Bootstrap, so the same schema runs in a Bootstrap app, inside Liferay next to Clay, or on a page with no CSS framework at all.",
+        "rcube-html draws its own buttons, fields, tables, pager, dropdowns, dialogs and tabs, with classes that start with `rc-` (`rc-btn rc-btn-primary`, `rc-input`, `rc-table`, …). It works with any CSS framework for building responsive pages: the same schema runs in a Bootstrap or Tailwind app, inside Liferay next to Clay, with your own CSS, or on a page with no CSS framework at all.",
         "Import its stylesheet once (in Next.js, in `app/layout.js`). Without the import the library adds the same CSS itself the first time it loads in the browser — the import is better, because the CSS is in the page before anything draws.",
       ],
       code: `import "rcube-html/styles.css";`,

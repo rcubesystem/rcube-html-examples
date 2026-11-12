@@ -87,13 +87,6 @@ export default function TutorialPage({ slug }) {
         <section key={section.heading} className="mb-4">
           <h2 className="h5 mt-4">{section.heading}</h2>
           {(section.body || []).map((paragraph, i) => <p key={i} className="mb-2"><Inline text={paragraph} /></p>)}
-          {/* a file to download (e.g. the starter app); the click is tracked as link_click, location "download" */}
-          {section.download && (
-            <p className="d-flex flex-wrap align-items-center gap-2 my-3" data-ga-location="download">
-              <a className="btn btn-primary" href={section.download.href} download>⬇ {section.download.label}</a>
-              {section.download.note && <span className="small text-body-secondary">{section.download.note}</span>}
-            </p>
-          )}
           {/* links shown as buttons (e.g. the starter app on GitHub); tracked as link_click, location "section-link" */}
           {section.links && (
             <p className="d-flex flex-wrap align-items-center gap-2 my-3" data-ga-location="section-link">
