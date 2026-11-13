@@ -1,0 +1,197 @@
+<!doctype html>
+<!-- Selects & dependent selects — https://rcube-html.com/select-fields -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Selects & dependent selects — rcube-html</title>
+</head>
+<body style="margin: 0">
+  <main style="max-width: 960px; margin: 2rem auto; padding: 0 1rem">
+    <h1 style="font: 600 1.5rem system-ui, sans-serif">Selects & dependent selects</h1>
+    <div id="example">Loading…</div>
+  </main>
+  <script src="../rcube-html/rcube-html.core.js"></script>
+  <script>
+    const schema = [
+      {
+        "type": "row",
+        "id": "row-1",
+        "children": [
+          {
+            "type": "column",
+            "id": "c-size",
+            "props": {
+              "className": "rc-col-12 rc-col-md-4"
+            },
+            "children": [
+              {
+                "type": "SelectField",
+                "id": "size",
+                "props": {
+                  "name": "size",
+                  "label": "Size (strings)",
+                  "options": [
+                    "Small",
+                    "Medium",
+                    "Large"
+                  ],
+                  "onChange": "selectChanged()"
+                }
+              }
+            ]
+          },
+          {
+            "type": "column",
+            "id": "c-plan",
+            "props": {
+              "className": "rc-col-12 rc-col-md-4"
+            },
+            "children": [
+              {
+                "type": "SelectField",
+                "id": "plan",
+                "props": {
+                  "name": "plan",
+                  "label": "Plan (label / value)",
+                  "placeholder": "Choose a plan",
+                  "options": [
+                    {
+                      "label": "Free — $0",
+                      "value": "free"
+                    },
+                    {
+                      "label": "Pro — $9",
+                      "value": "pro"
+                    },
+                    {
+                      "label": "Team — $29",
+                      "value": "team"
+                    }
+                  ],
+                  "onChange": "selectChanged()"
+                }
+              }
+            ]
+          },
+          {
+            "type": "column",
+            "id": "c-country",
+            "props": {
+              "className": "rc-col-12 rc-col-md-4"
+            },
+            "children": [
+              {
+                "type": "SelectField",
+                "id": "country",
+                "props": {
+                  "name": "country",
+                  "label": "Country",
+                  "options": [
+                    "USA",
+                    "India",
+                    "Germany"
+                  ],
+                  "onChange": "selectChanged()"
+                }
+              }
+            ]
+          },
+          {
+            "type": "column",
+            "id": "c-city",
+            "props": {
+              "className": "rc-col-12 rc-col-md-4"
+            },
+            "children": [
+              {
+                "type": "SelectField",
+                "id": "city",
+                "props": {
+                  "name": "city",
+                  "label": "City (follows Country)",
+                  "onChange": "selectChanged()",
+                  "optionsFrom": {
+                    "field": "country",
+                    "waitingText": "Select a country first",
+                    "emptyText": "No cities for {value}",
+                    "map": {
+                      "USA": [
+                        "New York",
+                        "Chicago",
+                        "Austin"
+                      ],
+                      "India": [
+                        "Chennai",
+                        "Mumbai",
+                        "Delhi"
+                      ],
+                      "Germany": [
+                        "Berlin",
+                        "Munich"
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "id": "row-result",
+        "children": [
+          {
+            "type": "column",
+            "id": "col-result",
+            "children": [
+              {
+                "type": "P",
+                "id": "result",
+                "props": {
+                  "className": "rc-alert rc-alert-secondary rc-py-2 rc-small rc-mb-0",
+                  "text": "Pick something."
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "id": "row-buttons",
+        "children": [
+          {
+            "type": "column",
+            "id": "col-buttons",
+            "props": {
+              "className": "rc-d-flex rc-gap-2 rc-mt-3"
+            },
+            "children": [
+              {
+                "type": "ButtonField",
+                "id": "set-city",
+                "props": {
+                  "text": "Set Germany → Munich from code",
+                  "onClick": "setCity()"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ];
+
+    RcubeHtml.mount("#example", {
+      schema,
+      // the actions the schema names, e.g. "onClick": "save()"
+      actions: (api) => ({
+        selectChanged: (event, { name, value }) => api.setNodeProps("result", { text: name + " = " + (value || "(empty)") }),
+        // A dependent value can be set together with its parent; the city is applied once its options exist
+        setCity: () => api.setFormData({ country: "Germany", city: "Munich" }),
+      }),
+    });
+  </script>
+</body>
+</html>

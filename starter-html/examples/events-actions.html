@@ -1,0 +1,134 @@
+<!doctype html>
+<!-- Events & actions — https://rcube-html.com/events-actions -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Events & actions — rcube-html</title>
+</head>
+<body style="margin: 0">
+  <main style="max-width: 960px; margin: 2rem auto; padding: 0 1rem">
+    <h1 style="font: 600 1.5rem system-ui, sans-serif">Events & actions</h1>
+    <div id="example">Loading…</div>
+  </main>
+  <script src="../rcube-html/rcube-html.core.js"></script>
+  <script>
+    const schema = [
+      {
+        "type": "row",
+        "id": "row-fields",
+        "children": [
+          {
+            "type": "column",
+            "id": "col-zip",
+            "props": {
+              "className": "rc-col-12 rc-col-md-6"
+            },
+            "children": [
+              {
+                "type": "InputField",
+                "id": "zip",
+                "props": {
+                  "name": "zip",
+                  "label": "ZIP code",
+                  "mask": "#####",
+                  "placeholder": "5 digits",
+                  "onChange": "zipChanged()",
+                  "onBlur": "zipBlurred()",
+                  "onFocus": "zipFocused()"
+                }
+              }
+            ]
+          },
+          {
+            "type": "column",
+            "id": "col-color",
+            "props": {
+              "className": "rc-col-12 rc-col-md-6"
+            },
+            "children": [
+              {
+                "type": "SelectField",
+                "id": "color",
+                "props": {
+                  "name": "color",
+                  "label": "Favorite color",
+                  "options": [
+                    "Red",
+                    "Green",
+                    "Blue"
+                  ],
+                  "onChange": "colorChanged()"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "id": "row-result",
+        "children": [
+          {
+            "type": "column",
+            "id": "col-result",
+            "children": [
+              {
+                "type": "P",
+                "id": "result",
+                "props": {
+                  "className": "rc-alert rc-alert-info rc-py-2",
+                  "text": "Type a ZIP code or pick a color."
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "id": "row-buttons",
+        "children": [
+          {
+            "type": "column",
+            "id": "col-buttons",
+            "props": {
+              "className": "rc-d-flex rc-gap-2"
+            },
+            "children": [
+              {
+                "type": "ButtonField",
+                "id": "fill",
+                "props": {
+                  "text": "Fill with demo values",
+                  "onClick": "fillDemo()"
+                }
+              },
+              {
+                "type": "ButtonField",
+                "id": "clear",
+                "props": {
+                  "text": "Clear",
+                  "onClick": "clearForm()"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ];
+
+    RcubeHtml.mount("#example", {
+      schema,
+      // the actions the schema names, e.g. "onClick": "save()"
+      actions: (api) => ({
+        zipChanged: (event, { name, value }) => api.setNodeProps("result", { text: name + " is now " + value }),
+        zipBlurred: (event, { value }) => api.setNodeProps("result", { text: "Left the ZIP field with " + (value || "nothing") }),
+        zipFocused: () => api.setNodeProps("result", { text: "Typing a ZIP code..." }),
+        colorChanged: (event, { value }) => api.setNodeProps("result", { text: "Color: " + value, style: { color: value.toLowerCase() } }),
+        fillDemo: () => api.setFormData({ zip: "90210", color: "Blue" }),
+      }),
+    });
+  </script>
+</body>
+</html>

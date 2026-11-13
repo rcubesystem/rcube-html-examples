@@ -13,7 +13,7 @@ export const examples = [
     "slug": "introduction",
     "group": "Getting started",
     "title": "Introduction",
-    "summary": "What rcube-html is, how to install it and how to build your first schema-driven form."
+    "summary": "What rcube-html is, how to install it, the starters for React, Angular, Vue, HTML and JSP, and your first schema-driven form."
   },
   {
     "slug": "schema-basics",
@@ -31,7 +31,13 @@ export const examples = [
     "slug": "styles-themes",
     "group": "Getting started",
     "title": "Styles & themes",
-    "summary": "The stylesheet, your colours as CSS variables, Liferay / Clay, dark mode, and the grid's span and gap."
+    "summary": "The stylesheet, your colours as CSS variables, a CMS theme, dark mode, and the grid's span and gap."
+  },
+  {
+    "slug": "angular-vue-jsp",
+    "group": "Getting started",
+    "title": "Angular, Vue, JSP & plain HTML",
+    "summary": "The same schema outside React: the <rcube-form> element in Angular, Vue, JSP and server pages, and plain JavaScript."
   },
   {
     "slug": "html-tags",

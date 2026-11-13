@@ -1,11 +1,32 @@
 "use client";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { topics, topicBySlug } from "@/tutorials/topics";
 import { examples } from "@/tutorials/examples";
 import LiveExample from "./LiveExample";
-import CodeBlock, { Inline } from "./CodeBlock";
-import { indent, pageCode } from "@/tutorials/pageCode";
+import CodeBlock, { Inline, languageOf } from "./CodeBlock";
+import { indent } from "@/tutorials/pageCode";
+import { FRAMEWORKS, frameworkFiles, jspSchemaJson, pascal } from "@/tutorials/frameworkCode";
+
+// The framework the reader picked: remembered for every page (only in this browser; a blocked storage just forgets)
+const FRAMEWORK_KEY = "rcube-html.framework";
+const readFramework = () => {
+  try {
+    const saved = window.localStorage.getItem(FRAMEWORK_KEY);
+    return FRAMEWORKS.some((f) => f.key === saved) ? saved : "react";
+  } catch {
+    return "react";
+  }
+};
+
+// What to do with the code, per framework
+const howTo = (framework, slug) => ({
+  react: <>Copy <strong>Full page.js</strong> into <code className="docs-inline-code">app/your-page/page.js</code> of a Next.js app (with <code className="docs-inline-code">rcube-html</code> installed and <code className="docs-inline-code">rcube-html/styles.css</code> imported in its layout) — it runs as is. Or copy only the schema and keep your own page.</>,
+  angular: <>Copy <strong>{slug}.component.ts</strong> into an Angular app, next to <code className="docs-inline-code">rcube-form.component.ts</code> (from <code className="docs-inline-code">node_modules/rcube-html/integrations/angular/</code>), and give it a route. The Angular starter has every example set up.</>,
+  vue: <>Copy <strong>{pascal(slug)}.vue</strong> into a Vue 3 app (Vite) with <code className="docs-inline-code">rcube-html</code> installed, and use it like any component. The Vue starter has every example set up.</>,
+  html: <>Save <strong>{slug}.html</strong> and open it in the browser — it loads rcube-html from the CDN. Offline or at work, point the <code className="docs-inline-code">&lt;script&gt;</code> at your copy of <code className="docs-inline-code">rcube-html/dist/browser/</code>, as the HTML starter does.</>,
+  jsp: <>Put the schema in <strong>WEB-INF/schemas/{slug}.json</strong>, the page in your web app, <code className="docs-inline-code">rcube-form.tag</code> in <code className="docs-inline-code">WEB-INF/tags/rcube/</code> and the script in <code className="docs-inline-code">static/rcube-html/</code>. The JSP starter (Maven) has every example set up.</>,
+})[framework];
 
 // "zipChanged" -> ["onChange", "onBlur"] by scanning the schema for "zipChanged()"
 const eventNamesOf = (schema) => {
@@ -51,6 +72,14 @@ export default function TutorialPage({ slug }) {
   const topic = topicBySlug(slug);
   const example = examples[slug];
   const [tab, setTab] = useState("schema");
+  const [framework, setFrameworkState] = useState("react");
+  // after the first draw, so the server's HTML (React) and the browser's agree
+  useEffect(() => { setFrameworkState(readFramework()); }, []);
+  const setFramework = (key) => {
+    setFrameworkState(key);
+    setTab((current) => (current === "schema" || current === "actions" ? current : "file0"));
+    try { window.localStorage.setItem(FRAMEWORK_KEY, key); } catch { /* remembered for this page only */ }
+  };
   const [log, setLog] = useState([]);
   const counter = useRef(0);
   const triggers = useMemo(() => (example ? eventNamesOf([example.schema, example.buttons || []]) : {}), [example]);
@@ -68,12 +97,15 @@ export default function TutorialPage({ slug }) {
   const next = topics[index + 1];
   const href = (t) => (t.slug === "introduction" ? "/" : `/${t.slug}`);
 
-  const schemaText = JSON.stringify(example.buttons ? { schema: example.schema, buttons: example.buttons } : example.schema, null, 2);
+  const schemaText = framework === "jsp" ? jspSchemaJson(example) : JSON.stringify(example.buttons ? { schema: example.schema, buttons: example.buttons } : example.schema, null, 2);
+  const files = frameworkFiles(framework, example, { slug, title: topic.title });
   const tabs = [
-    ["schema", "Schema (JSON)", schemaText],
-    ...(example.actionsCode?.trim() ? [["actions", "Actions", `actions: (api) => ({\n${indent(example.actionsCode.trim(), 2)}\n}),`]] : []),
-    ...(example.extraCode || []).map((c, i) => [`extra${i}`, c.title, c.code]),
-    ["page", "Full page.js", pageCode(example)],
+    ["schema", framework === "jsp" ? `${slug}.json` : "Schema (JSON)", schemaText, "json"],
+    ...(example.actionsCode?.trim() ? [["actions", "Actions", `actions: (api) => ({\n${indent(example.actionsCode.trim(), 2)}\n}),`, "jsx"]] : []),
+    // the components of the custom components tutorial: React with JSX, or React.createElement elsewhere
+    ...(framework === "react" ? (example.extraCode || []).map((c, i) => [`extra${i}`, c.title, c.code, "jsx"]) : example.elementCode ? [["components", "Components", example.elementCode, "jsx"]] : []),
+    // the page's files (JSP's schema file is the first tab)
+    ...files.filter((f) => !f.name.endsWith(".json")).map((f, i) => [`file${i}`, framework === "react" ? "Full page.js" : f.name, f.code, languageOf(f.code, f.name)]),
   ];
   const activeTab = tabs.find(([key]) => key === tab) || tabs[0];
 
@@ -130,11 +162,17 @@ export default function TutorialPage({ slug }) {
       </div>
 
       <h2 className="h5 mt-4">Code</h2>
-      <p className="small text-body-secondary mb-2">
-        Copy <strong>Full page.js</strong> into <code className="docs-inline-code">app/your-page/page.js</code> of a Next.js app (with
-        <code className="docs-inline-code">rcube-html</code> installed and <code className="docs-inline-code">rcube-html/styles.css</code> imported in its layout) — it runs as is.
-        Or copy only the schema and keep your own page.
-      </p>
+      {/* the same example for each kind of app: the schema stays the same, only the page around it changes */}
+      <div className="d-flex flex-wrap align-items-center gap-2 mb-2" role="group" aria-label="Code for" data-ga-location="framework-switch">
+        <span className="small text-body-secondary me-1">Code for</span>
+        {FRAMEWORKS.map((f) => (
+          <button key={f.key} type="button" aria-pressed={framework === f.key}
+            className={`btn btn-sm ${framework === f.key ? "btn-primary" : "btn-outline-secondary"}`}
+            onClick={() => setFramework(f.key)}>{f.label}</button>
+        ))}
+        {framework !== "react" && <Link className="small ms-1" href="/angular-vue-jsp">How to set it up</Link>}
+      </div>
+      <p className="small text-body-secondary mb-2">{howTo(framework, slug)}</p>
       <ul className="nav nav-tabs mb-0">
         {tabs.map(([key, label]) => (
           <li key={key} className="nav-item">
@@ -142,7 +180,7 @@ export default function TutorialPage({ slug }) {
           </li>
         ))}
       </ul>
-      <CodeBlock code={activeTab[2]} />
+      <CodeBlock code={activeTab[2]} language={activeTab[3]} />
 
       {example.props?.length > 0 && (
         <>

@@ -1,0 +1,133 @@
+[
+  {
+    "type": "row",
+    "id": "row-uploads",
+    "props": {
+      "className": "rc-g-3"
+    },
+    "children": [
+      {
+        "type": "column",
+        "id": "c-docs",
+        "props": {
+          "className": "rc-col-12 rc-col-lg-6"
+        },
+        "children": [
+          {
+            "type": "FileUploadField",
+            "id": "docs",
+            "props": {
+              "name": "documents",
+              "label": "Documents",
+              "required": true,
+              "fileTitleMax": 50,
+              "fileTitlePlaceholder": "Optional, e.g. Signed contract",
+              "accept": ".pdf,.doc,.docx,.txt,image/*",
+              "maxSize": "5MB",
+              "maxFiles": 4,
+              "parallel": 2,
+              "hint": "PDF, Word, text or images · up to 5 MB · max 4 files",
+              "onUpload": "uploadFile()",
+              "onValidate": "checkName()",
+              "onFilesAdded": "filesAdded()",
+              "onFileRejected": "fileRejected()",
+              "onUploadComplete": "uploaded()",
+              "onUploadError": "uploadFailed()",
+              "onAllComplete": "allDone()",
+              "onRemove": "removeFile()"
+            }
+          }
+        ]
+      },
+      {
+        "type": "column",
+        "id": "c-photos",
+        "props": {
+          "className": "rc-col-12 rc-col-lg-6"
+        },
+        "children": [
+          {
+            "type": "FileUploadField",
+            "id": "photos",
+            "props": {
+              "name": "photos",
+              "label": "Photos (upload when you press the button)",
+              "accept": "image/*",
+              "variant": "grid",
+              "autoUpload": false,
+              "maxTotalSize": "20MB",
+              "title": "Drop photos here",
+              "buttonText": "Choose photos",
+              "onUpload": "uploadPhoto()"
+            }
+          },
+          {
+            "type": "FileUploadField",
+            "id": "avatar",
+            "props": {
+              "name": "avatar",
+              "label": "Avatar (one file, compact)",
+              "multiple": false,
+              "compact": true,
+              "fileTitle": false,
+              "accept": "image/png,image/jpeg",
+              "maxSize": "2MB",
+              "onUpload": "uploadPhoto()"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "row",
+    "id": "row-buttons",
+    "children": [
+      {
+        "type": "column",
+        "id": "c-buttons",
+        "props": {
+          "className": "rc-d-flex rc-flex-wrap rc-gap-2 rc-justify-content-end"
+        },
+        "children": [
+          {
+            "type": "ButtonField",
+            "id": "upload-photos",
+            "props": {
+              "text": "Upload photos",
+              "variant": "outline-primary",
+              "onClick": "uploadPhotosNow()"
+            }
+          },
+          {
+            "type": "ButtonField",
+            "id": "saved",
+            "props": {
+              "text": "Load saved documents",
+              "variant": "outline-secondary",
+              "onClick": "loadSaved()"
+            }
+          },
+          {
+            "type": "ButtonField",
+            "id": "clear",
+            "props": {
+              "text": "Clear documents",
+              "variant": "outline-danger",
+              "onClick": "clearDocs()"
+            }
+          },
+          {
+            "type": "ButtonField",
+            "id": "submit",
+            "props": {
+              "type": "submit",
+              "text": "Submit",
+              "onClick": "runValidation()"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

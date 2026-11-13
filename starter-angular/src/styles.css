@@ -1,0 +1,5 @@
+/* rcube-html's stylesheet (the forms also add it themselves when it's missing) */
+@import "rcube-html/styles.css";
+
+body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #212529; }
+a { color: #0d6efd; }

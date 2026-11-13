@@ -1,0 +1,124 @@
+[
+  {
+    "type": "row",
+    "id": "row-stats",
+    "props": {
+      "className": "rc-g-3"
+    },
+    "children": [
+      {
+        "type": "column",
+        "id": "c-s1",
+        "props": {
+          "className": "rc-col-6 rc-col-md-4"
+        },
+        "children": [
+          {
+            "type": "Stat",
+            "id": "stat-users",
+            "props": {
+              "label": "Users",
+              "value": "1,284",
+              "trend": "+12%"
+            }
+          }
+        ]
+      },
+      {
+        "type": "column",
+        "id": "c-s2",
+        "props": {
+          "className": "rc-col-6 rc-col-md-4"
+        },
+        "children": [
+          {
+            "type": "Stat",
+            "id": "stat-orders",
+            "props": {
+              "label": "Orders",
+              "value": "342",
+              "trend": "-3%"
+            }
+          }
+        ]
+      },
+      {
+        "type": "column",
+        "id": "c-s3",
+        "props": {
+          "className": "rc-col-12 rc-col-md-4"
+        },
+        "children": [
+          {
+            "type": "Stat",
+            "id": "stat-revenue",
+            "props": {
+              "label": "Revenue",
+              "value": "$18.2K",
+              "trend": "+8%"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "row",
+    "id": "row-panel",
+    "children": [
+      {
+        "type": "column",
+        "id": "c-panel",
+        "children": [
+          {
+            "type": "Panel",
+            "id": "feedback",
+            "props": {
+              "title": "Feedback (a custom container)"
+            },
+            "children": [
+              {
+                "type": "RatingField",
+                "id": "rating",
+                "props": {
+                  "name": "rating",
+                  "label": "How did we do?",
+                  "required": true,
+                  "onChange": "ratingChanged()"
+                }
+              },
+              {
+                "type": "TextareaField",
+                "id": "comment",
+                "props": {
+                  "name": "comment",
+                  "label": "Comment",
+                  "rows": 2
+                }
+              }
+            ]
+          },
+          {
+            "type": "ButtonField",
+            "id": "send",
+            "props": {
+              "type": "submit",
+              "text": "Send",
+              "onClick": "runValidation()"
+            }
+          },
+          {
+            "type": "ButtonField",
+            "id": "bump",
+            "props": {
+              "text": "Update a Stat from code",
+              "variant": "outline-secondary",
+              "className": "rc-ms-2",
+              "onClick": "bumpUsers()"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

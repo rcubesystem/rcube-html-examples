@@ -1,0 +1,89 @@
+[
+  {
+    "type": "Tree",
+    "id": "files",
+    "props": {
+      "title": "demo-bucket",
+      "view": "explorer",
+      "views": [
+        "explorer",
+        "tree",
+        "columns"
+      ],
+      "contentView": "details",
+      "rootLabel": "demo-bucket",
+      "height": 440,
+      "nodes": [],
+      "lazyRoot": true,
+      "pageSize": 50,
+      "loadMore": "scroll",
+      "selectionMode": "multiple",
+      "searchMode": "server",
+      "searchPlaceholder": "Search the whole bucket…",
+      "filters": [
+        {
+          "id": "pdf",
+          "label": "PDF",
+          "when": {
+            "field": "ext",
+            "equals": "pdf"
+          }
+        },
+        {
+          "id": "images",
+          "label": "Images",
+          "when": {
+            "field": "ext",
+            "in": [
+              "jpg",
+              "png"
+            ]
+          }
+        }
+      ],
+      "columns": [
+        {
+          "key": "label",
+          "title": "Name"
+        },
+        {
+          "key": "size",
+          "title": "Size",
+          "format": "bytes",
+          "width": "110px",
+          "align": "end"
+        },
+        {
+          "key": "modified",
+          "title": "Modified",
+          "format": "datetime",
+          "width": "180px"
+        }
+      ],
+      "contextMenu": [
+        {
+          "label": "Open",
+          "command": "open"
+        },
+        {
+          "label": "Copy path",
+          "action": "copyPath()"
+        },
+        {
+          "label": "Reload",
+          "command": "reload",
+          "when": {
+            "field": "branch",
+            "equals": true
+          }
+        }
+      ],
+      "onLoadChildren": "loadChildren()",
+      "onSearch": "search()",
+      "onNavigate": "navigated()",
+      "onActivate": "openFile()",
+      "onSelect": "selected()",
+      "onScrollEnd": "scrolledToEnd()"
+    }
+  }
+]

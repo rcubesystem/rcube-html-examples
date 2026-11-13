@@ -1,0 +1,67 @@
+<%-- Made by the rcube-html site's build (scripts/build-starters.mjs): don't edit by hand. --%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>rcube-html examples (JSP)</title>
+  <meta name="description" content="Every rcube-html example as a JSP page: dynamic forms, dynamic content, data tables, charts, calendar, tree and file upload from JSON.">
+  <meta name="keywords" content="rcube-html, starter, sample application, simple application, examples, dynamic forms, dynamic content, JSON forms, data table, charts, calendar, tree view, file upload, JSP, Java, Maven, JSP tag, JSP, Java, Maven, JSP tag">
+</head>
+<body style="margin: 0; font-family: system-ui, sans-serif">
+  <main style="max-width: 960px; margin: 2rem auto; padding: 0 1rem">
+    <h1>rcube-html examples</h1>
+    <p>Every example from <a href="https://rcube-html.com/">rcube-html.com</a> as a JSP page: the schema in
+      <code>WEB-INF/schemas/&lt;name&gt;.json</code>, the page in <code>examples/&lt;name&gt;.jsp</code>. Start with
+      <a href="my-page.jsp">My page</a>.</p>
+    <h2 style="font-size: 1.1rem; margin-top: 1.5rem">Getting started</h2>
+    <ul>
+      <li><a href="examples/introduction.jsp">Introduction</a> — What rcube-html is, how to install it, the starters for React, Angular, Vue, HTML and JSP, and your first schema-driven form.</li>
+      <li><a href="examples/schema-basics.jsp">Schema basics</a> — Rows, columns, ids, props and children: how a schema describes a page.</li>
+      <li><a href="examples/events-actions.jsp">Events &amp; actions</a> — Name an action in the schema (onChange, onClick, ...) and write it in your page.</li>
+      <li><a href="examples/styles-themes.jsp">Styles &amp; themes</a> — The stylesheet, your colours as CSS variables, a CMS theme, dark mode, and the grid's span and gap.</li>
+      <li><a href="examples/angular-vue-jsp.jsp">Angular, Vue, JSP &amp; plain HTML</a> — The same schema outside React: the &lt;rcube-form&gt; element in Angular, Vue, JSP and server pages, and plain JavaScript.</li>
+    </ul>
+    <h2 style="font-size: 1.1rem; margin-top: 1.5rem">Text &amp; layout</h2>
+    <ul>
+      <li><a href="examples/html-tags.jsp">Text &amp; HTML tags</a> — Headings, paragraphs, links, images, lists, badges, progress bars and more.</li>
+      <li><a href="examples/element-dynamics.jsp">Change elements at runtime</a> — Change text, colors and classes, or hide, show and remove any element by its id.</li>
+    </ul>
+    <h2 style="font-size: 1.1rem; margin-top: 1.5rem">Form fields</h2>
+    <ul>
+      <li><a href="examples/input-fields.jsp">Input fields</a> — Text, email, password, number, date, phone with a mask, color and checkbox inputs.</li>
+      <li><a href="examples/select-fields.jsp">Selects &amp; dependent selects</a> — Drop-down lists, and a second list whose options follow the first one.</li>
+      <li><a href="examples/choice-fields.jsp">Radios, checkboxes, slider, textarea</a> — Pick one, pick many, slide to a number or type a longer text.</li>
+      <li><a href="examples/validation.jsp">Validation &amp; submit</a> — Required fields, patterns, ranges, dates and custom messages; submit only when valid.</li>
+      <li><a href="examples/conditional-fields.jsp">Conditional fields</a> — Show a field only when another field has a certain value.</li>
+      <li><a href="examples/form-values.jsp">Read &amp; set values</a> — Fill the form from code, read what the user typed, reset or clear it.</li>
+      <li><a href="examples/rich-text.jsp">Rich text editor</a> — A formatting toolbar you choose, your own tools, an HTML Source view; the value is cleaned HTML.</li>
+      <li><a href="examples/repeatable-entries.jsp">Repeatable entries</a> — Let the user add the same group of fields several times (e.g. several contacts).</li>
+    </ul>
+    <h2 style="font-size: 1.1rem; margin-top: 1.5rem">Containers</h2>
+    <ul>
+      <li><a href="examples/cards-alerts.jsp">Cards, alerts, tooltips, popovers</a> — Boxes and messages that hold other elements, including form fields.</li>
+      <li><a href="examples/tabs-accordion.jsp">Tabs &amp; accordion</a> — Split a long form into tabs or collapsible panels; errors open the right tab.</li>
+      <li><a href="examples/modal-carousel.jsp">Modal &amp; carousel</a> — Pop-up dialogs with fields, and sliding image / content carousels.</li>
+    </ul>
+    <h2 style="font-size: 1.1rem; margin-top: 1.5rem">Data components</h2>
+    <ul>
+      <li><a href="examples/data-table.jsp">Data table</a> — Sorting, search, paging, selection, formats, totals, CSV export and colors.</li>
+      <li><a href="examples/server-paging.jsp">Server paging</a> — Thousands of rows: the server pages, sorts and searches; the table asks for one page at a time.</li>
+      <li><a href="examples/remember-view.jsp">Remembered views &amp; the chosen row</a> — Tables keep each person's page, sort, search and filters for a week, with Reset; a radio per row and a highlighted chosen row.</li>
+      <li><a href="examples/table-editing.jsp">Editable table &amp; row actions</a> — Edit cells, validate them, add / remove rows and add your own buttons to each row.</li>
+      <li><a href="examples/charts.jsp">Charts</a> — Bar, line, area, pie and donut charts whose data changes from fields and buttons.</li>
+      <li><a href="examples/calendar.jsp">Calendar</a> — Day, week, month, year and schedule views; load events from an API on every view change.</li>
+      <li><a href="examples/file-upload.jsp">File upload (drag &amp; drop)</a> — Drop, browse or paste files; validate them and upload with progress, cancel and retry.</li>
+      <li><a href="examples/tree.jsp">Tree</a> — A folder tree with checkboxes, drag &amp; drop, rename, context menu and buttons that change it.</li>
+      <li><a href="examples/tree-explorer.jsp">File explorer (lazy loading)</a> — An S3-style explorer: folders load from an API page by page as you scroll, with server search.</li>
+    </ul>
+    <h2 style="font-size: 1.1rem; margin-top: 1.5rem">Advanced</h2>
+    <ul>
+      <li><a href="examples/languages.jsp">Languages</a> — Write @keys instead of text and switch the whole form between languages.</li>
+      <li><a href="examples/custom-components.jsp">Custom components</a> — Add your own React component and use it in schemas by name.</li>
+    </ul>
+  </main>
+</body>
+</html>

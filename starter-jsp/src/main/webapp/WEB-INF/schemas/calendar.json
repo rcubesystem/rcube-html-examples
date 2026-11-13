@@ -1,0 +1,115 @@
+[
+  {
+    "type": "row",
+    "id": "row-buttons",
+    "children": [
+      {
+        "type": "column",
+        "id": "c-buttons",
+        "props": {
+          "className": "rc-d-flex rc-flex-wrap rc-gap-2 rc-mb-3"
+        },
+        "children": [
+          {
+            "type": "ButtonField",
+            "id": "month",
+            "props": {
+              "text": "Month view",
+              "variant": "outline-primary",
+              "onClick": "showMonth()"
+            }
+          },
+          {
+            "type": "ButtonField",
+            "id": "today",
+            "props": {
+              "text": "Today",
+              "variant": "outline-secondary",
+              "onClick": "goToday()"
+            }
+          },
+          {
+            "type": "ButtonField",
+            "id": "personal",
+            "props": {
+              "text": "Show / hide Personal",
+              "variant": "outline-secondary",
+              "onClick": "togglePersonal()"
+            }
+          },
+          {
+            "type": "ButtonField",
+            "id": "add",
+            "props": {
+              "text": "+ Add event via API",
+              "variant": "outline-success",
+              "onClick": "addViaApi()"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Calendar",
+    "id": "team-calendar",
+    "props": {
+      "view": "week",
+      "views": [
+        "day",
+        "week",
+        "month",
+        "year",
+        "agenda"
+      ],
+      "height": 640,
+      "sidebarToggle": true,
+      "scrollToHour": 8,
+      "workingHours": {
+        "start": 9,
+        "end": 17,
+        "days": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "calendars": [
+        {
+          "id": "work",
+          "name": "Work",
+          "color": "#2a78d6"
+        },
+        {
+          "id": "team",
+          "name": "Team",
+          "color": "#1baf7a"
+        },
+        {
+          "id": "personal",
+          "name": "Personal",
+          "color": "#eb6834"
+        }
+      ],
+      "events": [],
+      "onRangeChange": "loadEvents()",
+      "onViewChange": "viewChanged()",
+      "onEventClick": "eventClicked()",
+      "onSlotClick": "slotClicked()",
+      "onEventCreate": "eventCreated()",
+      "onEventUpdate": "eventUpdated()",
+      "onEventDelete": "eventDeleted()",
+      "onCalendarToggle": "calendarToggled()",
+      "onSidebarToggle": "sidebarToggled()",
+      "toolbarActions": [
+        {
+          "text": "+ Customer call",
+          "variant": "outline-success",
+          "onClick": "addViaApi()"
+        }
+      ]
+    }
+  }
+]

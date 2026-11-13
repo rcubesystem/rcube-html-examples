@@ -1,0 +1,294 @@
+[
+  {
+    "type": "row",
+    "id": "row-pick",
+    "props": {
+      "gap": 3,
+      "className": "rc-mb-3 rc-align-items-end"
+    },
+    "children": [
+      {
+        "type": "column",
+        "id": "c-pick",
+        "props": {
+          "span": {
+            "xs": 12,
+            "md": 6
+          }
+        },
+        "children": [
+          {
+            "type": "SelectField",
+            "id": "look",
+            "props": {
+              "name": "look",
+              "label": "Look",
+              "className": "rc-mb-0",
+              "placeholder": "Default (this site's Bootstrap colours)",
+              "options": [
+                {
+                  "label": "CMS theme (blue, square corners)",
+                  "value": "cms"
+                },
+                {
+                  "label": "Teal, round corners",
+                  "value": "teal"
+                },
+                {
+                  "label": "Dark",
+                  "value": "dark"
+                }
+              ],
+              "onChange": "applyLook()"
+            }
+          }
+        ]
+      },
+      {
+        "type": "column",
+        "id": "c-pick-note",
+        "props": {
+          "span": {
+            "xs": 12,
+            "md": 6
+          }
+        },
+        "children": [
+          {
+            "type": "P",
+            "id": "look-note",
+            "props": {
+              "text": "Everything in the box below is rcube-html.",
+              "className": "rc-mb-0 rc-text-muted rc-small"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Card",
+    "id": "themed",
+    "props": {
+      "className": "theme-demo"
+    },
+    "children": [
+      {
+        "type": "row",
+        "id": "row-form",
+        "props": {
+          "gap": 3
+        },
+        "children": [
+          {
+            "type": "column",
+            "id": "c-left",
+            "props": {
+              "span": {
+                "xs": 12,
+                "md": 6
+              }
+            },
+            "children": [
+              {
+                "type": "InputField",
+                "id": "name",
+                "props": {
+                  "name": "name",
+                  "label": "Name",
+                  "required": true,
+                  "placeholder": "Jane Doe",
+                  "hint": "Press Check to see an error."
+                }
+              },
+              {
+                "type": "SelectField",
+                "id": "plan",
+                "props": {
+                  "name": "plan",
+                  "label": "Plan",
+                  "options": [
+                    "Basic",
+                    "Standard",
+                    "Premium"
+                  ]
+                }
+              },
+              {
+                "type": "InputField",
+                "id": "agree",
+                "props": {
+                  "name": "agree",
+                  "type": "checkbox",
+                  "label": "Send me the newsletter"
+                }
+              }
+            ]
+          },
+          {
+            "type": "column",
+            "id": "c-right",
+            "props": {
+              "span": {
+                "xs": 12,
+                "md": 6
+              }
+            },
+            "children": [
+              {
+                "type": "Alert",
+                "id": "note",
+                "props": {
+                  "variant": "info",
+                  "text": "An info alert. Its colours come from the theme."
+                }
+              },
+              {
+                "type": "column",
+                "id": "badges",
+                "props": {
+                  "className": "rc-d-flex rc-flex-wrap rc-gap-2 rc-mb-3"
+                },
+                "children": [
+                  {
+                    "type": "Badge",
+                    "id": "b1",
+                    "props": {
+                      "text": "Paid",
+                      "bg": "success"
+                    }
+                  },
+                  {
+                    "type": "Badge",
+                    "id": "b2",
+                    "props": {
+                      "text": "Due",
+                      "bg": "warning"
+                    }
+                  },
+                  {
+                    "type": "Badge",
+                    "id": "b3",
+                    "props": {
+                      "text": "Overdue",
+                      "bg": "danger"
+                    }
+                  },
+                  {
+                    "type": "Badge",
+                    "id": "b4",
+                    "props": {
+                      "text": "3 new",
+                      "bg": "primary",
+                      "pill": true
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "ProgressBar",
+                "id": "pb",
+                "props": {
+                  "now": 65,
+                  "showLabel": true,
+                  "className": "rc-mb-3"
+                }
+              },
+              {
+                "type": "column",
+                "id": "btns",
+                "props": {
+                  "className": "rc-d-flex rc-flex-wrap rc-gap-2"
+                },
+                "children": [
+                  {
+                    "type": "ButtonField",
+                    "id": "check",
+                    "props": {
+                      "text": "Check",
+                      "variant": "primary",
+                      "onClick": "runValidation()"
+                    }
+                  },
+                  {
+                    "type": "ButtonField",
+                    "id": "clear",
+                    "props": {
+                      "text": "Clear",
+                      "variant": "outline-secondary",
+                      "onClick": "clearForm()"
+                    }
+                  },
+                  {
+                    "type": "ButtonField",
+                    "id": "del",
+                    "props": {
+                      "text": "Delete",
+                      "variant": "outline-danger"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "DataTable",
+        "id": "orders",
+        "props": {
+          "title": "Orders",
+          "rowKey": "id",
+          "pageSize": 2,
+          "searchable": true,
+          "columnToggle": true,
+          "selectable": true,
+          "className": "rc-mt-3 rc-mb-0",
+          "columns": [
+            {
+              "key": "name",
+              "title": "Customer",
+              "sortable": true
+            },
+            {
+              "key": "status",
+              "title": "Status",
+              "badge": {
+                "Paid": "success",
+                "Due": "warning",
+                "Overdue": "danger"
+              }
+            },
+            {
+              "key": "amount",
+              "title": "Amount",
+              "format": "currency",
+              "align": "end",
+              "sortable": true
+            }
+          ],
+          "rows": [
+            {
+              "id": 1,
+              "name": "Aisha Khan",
+              "status": "Paid",
+              "amount": 120.5
+            },
+            {
+              "id": 2,
+              "name": "Ben Lee",
+              "status": "Due",
+              "amount": 80
+            },
+            {
+              "id": 3,
+              "name": "Carla Garcia",
+              "status": "Overdue",
+              "amount": 45.25
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

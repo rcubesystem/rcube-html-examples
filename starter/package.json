@@ -3,6 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "description": "Every rcube-html example as a Next.js app: npm install, then npm run dev.",
+  "keywords": [
+    "rcube-html",
+    "starter",
+    "sample-application",
+    "simple-application",
+    "examples",
+    "dynamic-forms",
+    "dynamic-content",
+    "json-forms",
+    "data-table",
+    "charts",
+    "calendar",
+    "tree-view",
+    "file-upload",
+    "react",
+    "next.js"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,7 +29,7 @@
     "next": "16.4.3",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "rcube-html": "^0.7.0"
+    "rcube-html": "^0.8.0"
   },
   "engines": {
     "node": "20.x || 22.x"

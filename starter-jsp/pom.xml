@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- rcube-html starter (JSP): every example as a JSP page.
+     mvn jetty:run   -> http://localhost:8080/
+     mvn package     -> target/rcube-html-starter.war (Tomcat 10+ or any Jakarta EE 10 server; Tomcat 9 works too) -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.example</groupId>
+  <artifactId>rcube-html-starter</artifactId>
+  <version>0.1.0</version>
+  <packaging>war</packaging>
+  <name>rcube-html starter (JSP)</name>
+  <description>Every rcube-html example as a JSP page — a sample application with dynamic forms, dynamic content, data
+    tables, charts, calendar, tree and file upload rendered from JSON schemas.</description>
+
+  <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jetty.version>12.1.15</jetty.version>
+  </properties>
+
+  <build>
+    <finalName>rcube-html-starter</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.4.0</version>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+      <!-- mvn jetty:run: a server with JSP, for trying the examples -->
+      <plugin>
+        <groupId>org.eclipse.jetty.ee10</groupId>
+        <artifactId>jetty-ee10-maven-plugin</artifactId>
+        <version>${jetty.version}</version>
+        <configuration>
+          <webApp>
+            <contextPath>/</contextPath>
+          </webApp>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <!-- mvn package -Pcheck: compiles every JSP (and the rcube-form tag) without a server -->
+    <profile>
+      <id>check</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.jetty.ee10</groupId>
+            <artifactId>jetty-ee10-jspc-maven-plugin</artifactId>
+            <version>${jetty.version}</version>
+            <executions>
+              <execution>
+                <id>jspc</id>
+                <goals><goal>jspc</goal></goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>

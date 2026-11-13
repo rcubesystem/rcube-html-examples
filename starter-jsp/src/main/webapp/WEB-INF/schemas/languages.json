@@ -1,0 +1,92 @@
+[
+  {
+    "type": "row",
+    "id": "row-lang",
+    "children": [
+      {
+        "type": "column",
+        "id": "c-lang",
+        "props": {
+          "className": "rc-d-flex rc-gap-2 rc-mb-3"
+        },
+        "children": [
+          {
+            "type": "ButtonField",
+            "id": "lang-en",
+            "props": {
+              "text": "English",
+              "variant": "outline-primary",
+              "data-lang": "en",
+              "onClick": "switchLanguage()"
+            }
+          },
+          {
+            "type": "ButtonField",
+            "id": "lang-es",
+            "props": {
+              "text": "Español",
+              "variant": "outline-primary",
+              "data-lang": "es",
+              "onClick": "switchLanguage()"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "row",
+    "id": "row-form",
+    "children": [
+      {
+        "type": "column",
+        "id": "c-form",
+        "children": [
+          {
+            "type": "H4",
+            "id": "title",
+            "props": {
+              "text": "@demo.title"
+            }
+          },
+          {
+            "type": "P",
+            "id": "hint",
+            "props": {
+              "text": "@demo.hint",
+              "className": "rc-text-body-secondary rc-small"
+            }
+          },
+          {
+            "type": "InputField",
+            "id": "name",
+            "props": {
+              "name": "name",
+              "label": "@demo.name",
+              "required": true
+            }
+          },
+          {
+            "type": "TextareaField",
+            "id": "message",
+            "props": {
+              "name": "message",
+              "label": "@demo.message",
+              "rows": 3,
+              "required": true
+            }
+          },
+          {
+            "type": "ButtonField",
+            "id": "send",
+            "props": {
+              "type": "submit",
+              "text": "@demo.send",
+              "onClick": "runValidation()"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

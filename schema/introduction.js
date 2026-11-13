@@ -1,4 +1,5 @@
-// Introduction — What rcube-html is, how to install it and how to build your first schema-driven form.
+// Introduction — What rcube-html is, how to install it, the starters for React, Angular, Vue, HTML and JSP, and
+//    your first schema-driven form.
 // Live example and explanation: https://rcube-html.com/
 // Group: Getting started
 //
@@ -10,6 +11,7 @@
 //   - Way 2: with npm only (no git)
 //   - Way 3: make the same app yourself
 //   - 1. Install
+//   - Load only what you use (optional)
 //   - 2. Add its stylesheet once
 //   - 3. Write a schema and render it
 //

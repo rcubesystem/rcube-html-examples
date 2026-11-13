@@ -1,0 +1,45 @@
+{
+  "name": "rcube-html-starter-angular",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Every rcube-html example as an Angular app: npm install, then npm start.",
+  "keywords": [
+    "rcube-html",
+    "starter",
+    "sample-application",
+    "simple-application",
+    "examples",
+    "dynamic-forms",
+    "dynamic-content",
+    "json-forms",
+    "data-table",
+    "charts",
+    "calendar",
+    "tree-view",
+    "file-upload",
+    "angular",
+    "angular-forms",
+    "web-component"
+  ],
+  "scripts": {
+    "start": "ng serve",
+    "build": "ng build"
+  },
+  "dependencies": {
+    "@angular/common": "^21.2.0",
+    "@angular/compiler": "^21.2.0",
+    "@angular/core": "^21.2.0",
+    "@angular/forms": "^21.2.0",
+    "@angular/platform-browser": "^21.2.0",
+    "@angular/router": "^21.2.0",
+    "rcube-html": "^0.8.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.8.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.2.0",
+    "@angular/cli": "^21.2.0",
+    "@angular/compiler-cli": "^21.2.0",
+    "typescript": "~5.9.0"
+  }
+}

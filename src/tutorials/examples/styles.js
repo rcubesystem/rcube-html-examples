@@ -11,7 +11,7 @@ export const stylesThemes = {
     {
       heading: "Its own stylesheet",
       body: [
-        "rcube-html draws its own buttons, fields, tables, pager, dropdowns, dialogs and tabs, with classes that start with `rc-` (`rc-btn rc-btn-primary`, `rc-input`, `rc-table`, …). It works with any CSS framework for building responsive pages: the same schema runs in a Bootstrap or Tailwind app, inside Liferay next to Clay, with your own CSS, or on a page with no CSS framework at all.",
+        "rcube-html draws its own buttons, fields, tables, pager, dropdowns, dialogs and tabs, with classes that start with `rc-` (`rc-btn rc-btn-primary`, `rc-input`, `rc-table`, …). It works with any CSS framework for building responsive pages: the same schema runs in a Bootstrap or Tailwind app, inside any CMS next to its theme, with your own CSS, or on a page with no CSS framework at all.",
         "Import its stylesheet once (in Next.js, in `app/layout.js`). Without the import the library adds the same CSS itself the first time it loads in the browser — the import is better, because the CSS is in the page before anything draws.",
       ],
       code: `import "rcube-html/styles.css";`,
@@ -31,9 +31,9 @@ export const stylesThemes = {
 }`,
     },
     {
-      heading: "In Liferay",
+      heading: "In a CMS",
       body: [
-        "Clay's `.btn`, `.form-control`, `.table` and `.row` never touch rcube-html (it uses none of them), and rcube-html's classes never touch Clay's. To make the forms look like the rest of the portal, map the variables to the theme's once — in the theme's CSS or a client extension:",
+        "A CMS theme's `.btn`, `.form-control`, `.table` and `.row` never touch rcube-html (it uses none of them), and rcube-html's classes never touch the theme's. To make the forms look like the rest of the site, map the variables to the theme's once — in the theme's CSS or the site's own stylesheet:",
       ],
       code: `:root {
   --rc-primary: var(--primary, #0b5fff);   --rc-primary-rgb: 11, 95, 255;
@@ -65,7 +65,7 @@ export const stylesThemes = {
     { type: "row", id: "row-pick", props: { gap: 3, className: "rc-mb-3 rc-align-items-end" }, children: [
       { type: "column", id: "c-pick", props: { span: { xs: 12, md: 6 } }, children: [
         { type: "SelectField", id: "look", props: { name: "look", label: "Look", className: "rc-mb-0", placeholder: "Default (this site's Bootstrap colours)",
-          options: [{ label: "Liferay (Clay colours)", value: "clay" }, { label: "Teal, round corners", value: "teal" }, { label: "Dark", value: "dark" }],
+          options: [{ label: "CMS theme (blue, square corners)", value: "cms" }, { label: "Teal, round corners", value: "teal" }, { label: "Dark", value: "dark" }],
           onChange: "applyLook()" } },
       ] },
       { type: "column", id: "c-pick-note", props: { span: { xs: 12, md: 6 } }, children: [
@@ -108,7 +108,7 @@ export const stylesThemes = {
 applyLook: (event, { value }) => {
   const box = document.querySelector(".theme-demo");
   const looks = {
-    clay: { "--rc-primary": "#0b5fff", "--rc-primary-rgb": "11, 95, 255", "--rc-success": "#287d3c", "--rc-success-rgb": "40, 125, 60",
+    cms: { "--rc-primary": "#0b5fff", "--rc-primary-rgb": "11, 95, 255", "--rc-success": "#287d3c", "--rc-success-rgb": "40, 125, 60",
       "--rc-warning": "#b95000", "--rc-warning-rgb": "185, 80, 0", "--rc-danger": "#da1414", "--rc-danger-rgb": "218, 20, 20",
       "--rc-info": "#2e5aac", "--rc-info-rgb": "46, 90, 172", "--rc-info-bg-subtle": "#eef2fa", "--rc-info-text": "#2e5aac", "--rc-info-border-subtle": "#89a7e0",
       "--rc-body-color": "#272833", "--rc-border-color": "#e7e7ed", "--rc-border-radius": ".25rem", "--rc-border-radius-sm": ".2rem",

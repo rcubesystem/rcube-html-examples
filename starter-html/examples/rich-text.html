@@ -1,0 +1,123 @@
+<!doctype html>
+<!-- Rich text editor — https://rcube-html.com/rich-text -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rich text editor — rcube-html</title>
+</head>
+<body style="margin: 0">
+  <main style="max-width: 960px; margin: 2rem auto; padding: 0 1rem">
+    <h1 style="font: 600 1.5rem system-ui, sans-serif">Rich text editor</h1>
+    <div id="example">Loading…</div>
+  </main>
+  <script src="../rcube-html/rcube-html.js"></script>
+  <script>
+    const schema = [
+      {
+        "type": "RichTextField",
+        "id": "details",
+        "props": {
+          "name": "details",
+          "label": "Details",
+          "required": true,
+          "maxLength": 500,
+          "minHeight": 140,
+          "placeholder": "Write here…",
+          "hint": "Bold, lists, links — or edit the HTML with Source.",
+          "defaultValue": "<p>Hello <b>world</b> — try the toolbar.</p>",
+          "toolbar": [
+            "bold",
+            "italic",
+            "underline",
+            "|",
+            "heading",
+            "bulletList",
+            "numberList",
+            "quote",
+            "|",
+            "link",
+            "clear",
+            "|",
+            {
+              "key": "sign",
+              "text": "Signature",
+              "title": "Insert my signature",
+              "html": "<p>— The school office</p>"
+            },
+            {
+              "key": "shout",
+              "text": "UPPER",
+              "title": "Upper-case the text",
+              "onClick": "shout()"
+            }
+          ],
+          "source": true,
+          "onChange": "detailsChanged()"
+        }
+      },
+      {
+        "type": "ButtonField",
+        "id": "show",
+        "props": {
+          "text": "Show it below",
+          "variant": "outline-primary",
+          "onClick": "showIt()"
+        }
+      },
+      {
+        "type": "ButtonField",
+        "id": "fill",
+        "props": {
+          "text": "Set a value from code",
+          "variant": "outline-secondary",
+          "className": "rc-ms-2",
+          "onClick": "fillIt()"
+        }
+      },
+      {
+        "type": "H6",
+        "id": "preview-h",
+        "props": {
+          "text": "Shown with RichText (cleaned again):",
+          "className": "rc-mt-3"
+        }
+      },
+      {
+        "type": "RichText",
+        "id": "preview",
+        "props": {
+          "html": "",
+          "emptyText": "Nothing yet — press “Show it below”."
+        }
+      }
+    ];
+
+    const buttons = [
+      {
+        "type": "ButtonField",
+        "id": "submit",
+        "props": {
+          "type": "submit",
+          "text": "Submit",
+          "onClick": "runValidation()",
+          "className": "rc-mt-3"
+        }
+      }
+    ];
+
+    RcubeHtml.mount("#example", {
+      schema,
+      buttons,
+      // the actions the schema names, e.g. "onClick": "save()"
+      actions: (api) => ({
+        // your tool: the editor is handed over
+        shout: (event, { editor }) => editor.setHtml(editor.getHtml().toUpperCase().replace(/<(\/?)([A-Z0-9]+)/g, (m, s, t) => "<" + s + t.toLowerCase())),
+        detailsChanged: (event, { value }) => console.log("HTML now:", value),
+        showIt: () => api.setNodeProps("preview", { html: api.getFormData().details }),
+        fillIt: () => api.setFieldValue("details", "<h4>Trip on Friday</h4><ul><li>Bring lunch</li><li>Wear the uniform</li></ul><script>alert(1)<\/script>"),
+      }),
+    });
+  </script>
+</body>
+</html>

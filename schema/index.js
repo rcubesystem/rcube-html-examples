@@ -4,6 +4,7 @@ import * as introduction from "./introduction";
 import * as schemaBasics from "./schema-basics";
 import * as eventsActions from "./events-actions";
 import * as stylesThemes from "./styles-themes";
+import * as angularVueJsp from "./angular-vue-jsp";
 import * as htmlTags from "./html-tags";
 import * as elementDynamics from "./element-dynamics";
 import * as inputFields from "./input-fields";
@@ -34,6 +35,7 @@ export const schemas = {
   "schema-basics": schemaBasics,
   "events-actions": eventsActions,
   "styles-themes": stylesThemes,
+  "angular-vue-jsp": angularVueJsp,
   "html-tags": htmlTags,
   "element-dynamics": elementDynamics,
   "input-fields": inputFields,

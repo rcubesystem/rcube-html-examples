@@ -1,0 +1,114 @@
+[
+  {
+    "type": "row",
+    "id": "row-buttons",
+    "children": [
+      {
+        "type": "column",
+        "id": "c-buttons",
+        "props": {
+          "className": "rc-d-flex rc-flex-wrap rc-gap-2 rc-mb-2"
+        },
+        "children": [
+          {
+            "type": "ButtonField",
+            "id": "reload",
+            "props": {
+              "text": "Reload this page",
+              "variant": "outline-primary",
+              "onClick": "reload()"
+            }
+          },
+          {
+            "type": "ButtonField",
+            "id": "fail",
+            "props": {
+              "text": "Make the next call fail",
+              "variant": "outline-danger",
+              "onClick": "failNext()"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Alert",
+    "id": "error",
+    "props": {
+      "variant": "danger",
+      "text": "",
+      "className": "rc-d-none"
+    }
+  },
+  {
+    "type": "DataTable",
+    "id": "students",
+    "props": {
+      "title": "Students (1,000 on the server)",
+      "rowKey": "id",
+      "serverSide": true,
+      "rows": [],
+      "totalRows": 0,
+      "page": 1,
+      "loading": true,
+      "pageSize": 25,
+      "pageSizeOptions": [
+        25,
+        50,
+        100,
+        200
+      ],
+      "searchable": true,
+      "searchDelay": 350,
+      "stackBelow": "md",
+      "size": "sm",
+      "columns": [
+        {
+          "key": "id",
+          "title": "ID",
+          "sortable": true,
+          "width": 80
+        },
+        {
+          "key": "name",
+          "title": "Name",
+          "sortable": true
+        },
+        {
+          "key": "grade",
+          "title": "Grade",
+          "sortable": true
+        },
+        {
+          "key": "attendance",
+          "title": "Attendance %",
+          "align": "end",
+          "sortable": true
+        },
+        {
+          "key": "average",
+          "title": "Average",
+          "align": "end",
+          "sortable": true
+        },
+        {
+          "key": "active",
+          "title": "Active",
+          "format": "boolean",
+          "align": "center"
+        }
+      ],
+      "rowRules": [
+        {
+          "when": {
+            "field": "average",
+            "lt": 60
+          },
+          "color": "#b02a37"
+        }
+      ],
+      "onQueryChange": "loadPage()"
+    }
+  }
+]

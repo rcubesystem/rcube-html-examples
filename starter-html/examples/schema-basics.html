@@ -1,0 +1,196 @@
+<!doctype html>
+<!-- Schema basics — https://rcube-html.com/schema-basics -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Schema basics — rcube-html</title>
+</head>
+<body style="margin: 0">
+  <main style="max-width: 960px; margin: 2rem auto; padding: 0 1rem">
+    <h1 style="font: 600 1.5rem system-ui, sans-serif">Schema basics</h1>
+    <div id="example">Loading…</div>
+  </main>
+  <script src="../rcube-html/rcube-html.core.js"></script>
+  <script>
+    const schema = [
+      {
+        "type": "row",
+        "id": "row-header",
+        "props": {
+          "className": "rc-mb-3"
+        },
+        "children": [
+          {
+            "type": "column",
+            "id": "col-header",
+            "props": {
+              "className": "rc-col-12 rc-bg-primary-subtle rc-rounded rc-p-3"
+            },
+            "children": [
+              {
+                "type": "H4",
+                "id": "title",
+                "props": {
+                  "text": "Page title",
+                  "className": "rc-mb-1"
+                }
+              },
+              {
+                "type": "P",
+                "id": "subtitle",
+                "props": {
+                  "text": "A row with one full-width column.",
+                  "className": "rc-mb-0 rc-text-body-secondary"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "id": "row-body",
+        "props": {
+          "className": "rc-g-3 rc-mb-3"
+        },
+        "children": [
+          {
+            "type": "column",
+            "id": "col-main",
+            "props": {
+              "className": "rc-col-12 rc-col-md-8"
+            },
+            "children": [
+              {
+                "type": "DIV",
+                "id": "main-box",
+                "props": {
+                  "className": "rc-border rc-rounded rc-p-3 rc-h-100",
+                  "children": "Main column (col-md-8): two thirds of the width on medium screens and up."
+                }
+              }
+            ]
+          },
+          {
+            "type": "column",
+            "id": "col-side",
+            "props": {
+              "className": "rc-col-12 rc-col-md-4"
+            },
+            "children": [
+              {
+                "type": "DIV",
+                "id": "side-box",
+                "props": {
+                  "className": "rc-border rc-rounded rc-p-3 rc-h-100 rc-bg-body-tertiary",
+                  "children": "Side column (col-md-4)."
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "id": "row-three",
+        "props": {
+          "className": "rc-g-3 rc-mb-3 rc-text-center"
+        },
+        "children": [
+          {
+            "type": "column",
+            "id": "col-a",
+            "children": [
+              {
+                "type": "DIV",
+                "id": "box-a",
+                "props": {
+                  "className": "rc-border rc-rounded rc-p-2",
+                  "children": "Equal"
+                }
+              }
+            ]
+          },
+          {
+            "type": "column",
+            "id": "col-b",
+            "children": [
+              {
+                "type": "DIV",
+                "id": "box-b",
+                "props": {
+                  "className": "rc-border rc-rounded rc-p-2",
+                  "children": "Equal"
+                }
+              }
+            ]
+          },
+          {
+            "type": "column",
+            "id": "col-c",
+            "children": [
+              {
+                "type": "DIV",
+                "id": "box-c",
+                "props": {
+                  "className": "rc-border rc-rounded rc-p-2",
+                  "children": "Equal"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "id": "row-button",
+        "props": {
+          "className": "rc-mb-3"
+        },
+        "children": [
+          {
+            "type": "column",
+            "id": "col-button",
+            "children": [
+              {
+                "type": "ButtonField",
+                "id": "change",
+                "props": {
+                  "text": "Change the title",
+                  "variant": "primary",
+                  "onClick": "changeTitle()"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "children": {
+          "type": "column",
+          "props": {
+            "className": "rc-col-12 rc-border rc-rounded rc-p-3 rc-bg-body-tertiary"
+          },
+          "children": {
+            "type": "P",
+            "props": {
+              "text": "This row is written with the shorthands: no ids, and each single child is an object, not a list.",
+              "className": "rc-mb-0"
+            }
+          }
+        }
+      }
+    ];
+
+    RcubeHtml.mount("#example", {
+      schema,
+      // the actions the schema names, e.g. "onClick": "save()"
+      actions: (api) => ({
+        changeTitle: () => api.setNodeProps("title", { text: "Changed at " + new Date().toLocaleTimeString() }),
+      }),
+    });
+  </script>
+</body>
+</html>

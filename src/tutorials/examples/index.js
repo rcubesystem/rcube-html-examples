@@ -7,12 +7,14 @@ import { dataTable, serverPaging, tableEditing, charts, calendar, fileUpload, tr
 import { languages, customComponents } from "./advanced";
 import { richText, rememberView } from "./latest";
 import { stylesThemes } from "./styles";
+import { useAnywhere } from "./anywhere";
 
 export const examples = {
   introduction,
   "schema-basics": schemaBasics,
   "events-actions": eventsActions,
   "styles-themes": stylesThemes,
+  "angular-vue-jsp": useAnywhere,
   "html-tags": htmlTags,
   "element-dynamics": elementDynamics,
   "input-fields": inputFields,

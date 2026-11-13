@@ -32,8 +32,8 @@ const schema = [
               "placeholder": "Default (this site's Bootstrap colours)",
               "options": [
                 {
-                  "label": "Liferay (Clay colours)",
-                  "value": "clay"
+                  "label": "CMS theme (blue, square corners)",
+                  "value": "cms"
                 },
                 {
                   "label": "Teal, round corners",
@@ -306,7 +306,7 @@ function Example() {
       applyLook: (event, { value }) => {
         const box = document.querySelector(".theme-demo");
         const looks = {
-          clay: { "--rc-primary": "#0b5fff", "--rc-primary-rgb": "11, 95, 255", "--rc-success": "#287d3c", "--rc-success-rgb": "40, 125, 60",
+          cms: { "--rc-primary": "#0b5fff", "--rc-primary-rgb": "11, 95, 255", "--rc-success": "#287d3c", "--rc-success-rgb": "40, 125, 60",
             "--rc-warning": "#b95000", "--rc-warning-rgb": "185, 80, 0", "--rc-danger": "#da1414", "--rc-danger-rgb": "218, 20, 20",
             "--rc-info": "#2e5aac", "--rc-info-rgb": "46, 90, 172", "--rc-info-bg-subtle": "#eef2fa", "--rc-info-text": "#2e5aac", "--rc-info-border-subtle": "#89a7e0",
             "--rc-body-color": "#272833", "--rc-border-color": "#e7e7ed", "--rc-border-radius": ".25rem", "--rc-border-radius-sm": ".2rem",

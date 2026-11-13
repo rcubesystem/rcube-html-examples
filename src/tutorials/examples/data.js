@@ -363,6 +363,13 @@ export const calendar = {
         "`recurrence: { freq: \"weekly\", byDay: [1, 3] }` repeats an event (`daily`, `weekly`, `monthly`, `yearly`, with `interval`, `count`, `until`).",
       ],
     },
+    {
+      heading: "Repeating events from the editor",
+      body: [
+        "Click or drag on empty time (or `+ Create`): the event editor has a **Repeat** section — daily, weekly on the days you pick, monthly or yearly, every N days / weeks / months / years, ending never, on a date or after a number of times. Saving gives the event its `recurrence`, and `onEventCreate` / `onEventUpdate` get it like any other change.",
+        "Open a repeating event (the standup or the gym) and Edit: the series' first date and its schedule can be changed; occurrences deleted on their own stay deleted. `repeatable: false` hides the Repeat section.",
+      ],
+    },
   ],
   wide: true,
   helpersCode: `// ---- A stand-in for your events API (dates relative to today) ----
@@ -458,6 +465,7 @@ addViaApi: async () => {
     ["workingHours", "`{ start, end, days }` — shades the rest."],
     ["firstDay / weekends", "Week starts on (0 = Sunday); `false` hides Sat / Sun."],
     ["editable / selectable / eventEditor / autoUpdate", "Drag & edit, drag-select, built-in editor, apply changes itself."],
+    ["repeatable", "The editor's Repeat section (default `true`): daily / weekly on chosen days / monthly / yearly, every N, ending never / on a date / after N times."],
     ["sidebar / searchable / keyboardShortcuts", "Mini month + calendars, search box, T / D / W / M / Y / A / J / K / C keys."],
     ["sidebarToggle / sidebarOpen", "A ☰ button before Today shows / hides the side panel; `sidebarOpen` fixes it open / closed (unset: open on large screens, closed on small)."],
     ["toolbar / toolbarActions", "`false` hides the header; your buttons `{ text, variant, icon, onClick }` → `(event, { calendar, view, date })`."],

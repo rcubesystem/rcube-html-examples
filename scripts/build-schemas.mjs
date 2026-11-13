@@ -17,6 +17,8 @@ const outDir = path.join(root, "schema");
 register("./esm-loader.mjs", import.meta.url);
 const { examples } = await import(pathToFileURL(path.join(root, "src/tutorials/examples/index.js")).href);
 const { topics } = await import(pathToFileURL(path.join(root, "src/tutorials/topics.js")).href);
+// the ids the form gives nodes written without one (and single children as lists), so the comments name every node
+const { normalizeSchema, schemaIds } = await import("rcube-html/core");
 
 const indent = (text, spaces) => text.split("\n").map((line) => (line ? " ".repeat(spaces) + line : line)).join("\n");
 const plain = (text) => String(text).replace(/`/g, "").replace(/\s+/g, " ").trim();
@@ -107,7 +109,8 @@ mkdirSync(outDir, { recursive: true });
 
 for (const topic of list) {
   const ex = examples[topic.slug];
-  const nodes = [...(ex.schema || []), ...(ex.buttons || [])];
+  const schema = normalizeSchema(ex.schema || []);
+  const nodes = [...schema, ...normalizeSchema(ex.buttons || [], { taken: schemaIds(schema), prefix: "buttons-" })];
   const calls = actionCalls(nodes);
   const defined = [...(ex.actionsCode || "").matchAll(/^([A-Za-z_$][\w$]*)\s*:/gm)].map((m) => m[1]);
   const builtIns = [...calls.keys()].filter((name) => !defined.includes(name));

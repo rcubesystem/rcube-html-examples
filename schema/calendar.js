@@ -5,6 +5,7 @@
 // Covers:
 //   - Events come from your API
 //   - Event objects
+//   - Repeating events from the editor
 //
 // No form fields: it shows content, layout or data.
 //

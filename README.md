@@ -2,7 +2,7 @@
 
 **Examples for rcube-html: An Open-Source, JSON-Driven HTML Page Renderer.**
 
-Tutorials and copy-ready examples for [rcube-html](https://www.npmjs.com/package/rcube-html) — schema-driven React forms, tables, charts, calendar, file upload and trees. It works with any CSS framework (Bootstrap, Tailwind, Clay, your own CSS or none) for building responsive pages.
+Tutorials and copy-ready examples for [rcube-html](https://www.npmjs.com/package/rcube-html), a schema-driven form and layout engine: describe rows, columns, fields and buttons as JSON-like objects, and it renders them — with built-in validation, conditional and dependent fields, input masks, repeatable entries, runtime changes and multi-language text. Use it natively in React, or as the `<rcube-form>` web component in Angular, Vue, plain JavaScript, and server-rendered pages (JSP, PHP, .NET). It ships with its own components and stylesheet — no framework lock-in — and works with any CSS framework, including Bootstrap.
 
 **Live site: [rcube-html.com](https://rcube-html.com/)**
 
@@ -10,7 +10,8 @@ Every page has:
 
 - a short explanation in simple English,
 - a **live example** with an **Events** box that shows each action as it runs and the data it receives,
-- the **code**: the schema (JSON), the actions, and a complete `page.js` you can paste into a Next.js app and run as is,
+- the **code**: the schema (JSON), the actions, and the complete page for **React, Angular, Vue, HTML / JS or JSP** (the
+  "Code for" switch) — paste it into your app and run it as is,
 - tables of the options and events used.
 
 The contents on the left are searchable (press `/`).
@@ -26,12 +27,20 @@ npm run preview    # build + serve out/ with the Firebase emulator (http://127.0
 
 ## Run every example on your computer
 
-**[starter/](https://github.com/rcubesystem/rcube-html-examples/tree/main/starter)** is a ready-to-run
-Next.js app with every example on its own page, plus `My page` (a form to change and play with). You need Node.js 20
-or 22. Get it in one of these ways — none needs a file download, so they also work on work computers that block
-downloads:
+One starter per kind of app, each with every example on its own page plus `My page` (a form to change and play with):
 
-**With git** (copies only the `starter` folder):
+| Starter | For | Needs | Run |
+|---|---|---|---|
+| [starter/](starter/) | React (Next.js) | Node.js 20 or 22 | `npm install`, `npm run dev` → http://localhost:3000 |
+| [starter-angular/](starter-angular/) | Angular 21 | Node.js 20.19+ or 22.12+ | `npm install`, `npm start` → http://localhost:4200 |
+| [starter-vue/](starter-vue/) | Vue 3 (Vite) | Node.js 20.19+ or 22.12+ | `npm install`, `npm run dev` → http://localhost:5173 |
+| [starter-html/](starter-html/) | plain HTML / JavaScript (any server page) | a browser | open `index.html` |
+| [starter-jsp/](starter-jsp/) | JSP (Maven web app) | Java 17+, Maven | `mvn jetty:run` → http://localhost:8080 |
+
+Get one in one of these ways — none needs a file download, so they also work on work computers that block
+downloads. Write the starter's folder instead of `starter` for the others:
+
+**With git** (copies only that folder):
 
 ```bash
 git clone --depth 1 --filter=blob:none --sparse https://github.com/rcubesystem/rcube-html-examples.git
@@ -51,10 +60,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000: the home page links to every example. Change any `app/examples/<name>/page.js` (or
-`app/my-page/page.js`) and save: the page updates by itself.
-
-**If GitHub is blocked too**, make the same app yourself:
+**If GitHub is blocked too**, make the same React app yourself:
 
 ```bash
 npx create-next-app@latest my-rcube-app --js --app --no-src-dir --no-tailwind --yes
@@ -66,6 +72,9 @@ npm run dev
 1. In `app/layout.js`, add `import "rcube-html/styles.css";` under the other imports.
 2. Replace `app/page.js` with any tutorial's **Full page.js** (the Code box on its page) and open http://localhost:3000.
 3. More examples: one folder each, e.g. `app/validation/page.js` → http://localhost:3000/validation.
+
+For Angular, Vue, a plain page or JSP, add rcube-html to your app (see the site's *Angular, Vue, JSP & plain HTML*
+page) and paste any example's code for your framework.
 
 ### How the starter app is made
 
@@ -79,6 +88,18 @@ npm run dev
   `src/tutorials/pageCode.js`) and `app/my-page/page.js`.
 
 So the starter always matches the tutorials. Commit `starter/` after changing a tutorial, so GitHub has the latest.
+
+### How the other starters are made
+
+`scripts/build-starters.mjs` (also run before every `npm run dev` and `npm run build`, or `npm run starters`) writes each
+example's code for Angular, Vue, HTML and JSP — the same code as the site's "Code for" switch, from
+`src/tutorials/frameworkCode.js` — into `starter-angular/`, `starter-vue/`, `starter-html/` and `starter-jsp/`, plus their
+example lists, the library's `<script>` files (HTML, JSP), the Angular component and the JSP tag (from rcube-html). The
+config files, home pages and READMEs are hand-written. Commit the starters after changing a tutorial.
+
+`npm run check:frameworks` runs every tutorial's HTML and JSP page in jsdom (the form must appear with no errors).
+Each starter's own build checks the rest: `ng build` (Angular), `vite build` (Vue), `mvn package -Pcheck` (compiles
+every JSP).
 
 ## All the schemas
 

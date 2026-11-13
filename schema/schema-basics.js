@@ -6,6 +6,7 @@
 //   - Nodes
 //   - Rows and columns
 //   - Why ids matter
+//   - Shorthands: a single child, and no ids
 //
 // No form fields: it shows content, layout or data.
 //
@@ -151,6 +152,9 @@ export const schema = [
   {
     "type": "row",
     "id": "row-button",
+    "props": {
+      "className": "rc-mb-3"
+    },
     "children": [
       {
         "type": "column",
@@ -168,6 +172,22 @@ export const schema = [
         ]
       }
     ]
+  },
+  {
+    "type": "row",
+    "children": {
+      "type": "column",
+      "props": {
+        "className": "rc-col-12 rc-border rc-rounded rc-p-3 rc-bg-body-tertiary"
+      },
+      "children": {
+        "type": "P",
+        "props": {
+          "text": "This row is written with the shorthands: no ids, and each single child is an object, not a list.",
+          "className": "rc-mb-0"
+        }
+      }
+    }
   }
 ];
 

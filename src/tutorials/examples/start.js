@@ -5,8 +5,9 @@ export const introduction = {
     {
       heading: "What is rcube-html?",
       body: [
-        "rcube-html builds React pages from a schema: a plain list of objects that says what to show — rows, columns, text, form fields, tables, charts, a calendar, file uploads, trees and more.",
-        "You write the schema (it is JSON, so it can also come from an API or a database) and a few small functions called actions. The library does the rest: layout, validation, error messages, values, events and translation.",
+        "rcube-html is a schema-driven form and layout engine. Describe rows, columns, fields and buttons as JSON-like objects, and it renders them — with built-in validation, conditional and dependent fields, input masks, repeatable entries, runtime changes and multi-language text.",
+        "Use it natively in **React**, or as the `<rcube-form>` web component in **Angular, Vue, plain JavaScript, and server-rendered pages (JSP, PHP, .NET)**. Ships with its own components and stylesheet — no framework lock-in — and works with any CSS framework, including Bootstrap.",
+        "You write the schema (it is JSON, so it can also come from an API, a database or a file shared by all your apps) and a few small functions called actions. The library does the rest: layout, validation, error messages, values, events and translation.",
       ],
     },
     {
@@ -14,38 +15,48 @@ export const introduction = {
       list: [
         "Pick a topic in the contents on the left (or search with `/`).",
         "Try it: every page has a live example. Its Events box shows each action that runs and the data it receives.",
-        "Copy it: the Code box has the schema, the actions and a Full page.js that you can paste into your app and run as is.",
+        "Copy it: the Code box has the schema, the actions and the complete page — pick **React, Angular, Vue, HTML / JS or JSP** above it (the site remembers your choice). Every one runs as is.",
       ],
     },
     {
       heading: "Run every example on your computer",
       body: [
-        "The starter app is a small Next.js app with all the examples of these tutorials, each on its own page, plus `My page` — a form to change and play with. It is the `starter` folder of the rcube-html-examples repository on GitHub. You need Node.js 20 or 22.",
-        "Get it in one of the three ways below — no file download needed, so they also work on work computers that block downloads. Then open http://localhost:3000: the home page links to every example. Change any `app/examples/<name>/page.js` (or `app/my-page/page.js`) and save: the page updates by itself.",
+        "There is a starter for each kind of app, with all the examples of these tutorials, each on its own page, plus `My page` — a form to change and play with. Each is a folder of the rcube-html-examples repository on GitHub; pick yours:",
+      ],
+      list: [
+        "**React (Next.js)** — `starter`: Node.js 20 or 22; `npm install`, `npm run dev`, then http://localhost:3000.",
+        "**Angular** — `starter-angular`: Node.js 20.19+ or 22.12+; `npm install`, `npm start`, then http://localhost:4200.",
+        "**Vue 3** — `starter-vue`: Node.js 20.19+ or 22.12+; `npm install`, `npm run dev`, then http://localhost:5173.",
+        "**Plain HTML / JavaScript** — `starter-html`: nothing to install; open `index.html` in the browser.",
+        "**JSP** — `starter-jsp`: Java 17+ and Maven; `mvn jetty:run`, then http://localhost:8080 (or `mvn package` for a .war).",
+        "Get the folder in one of the ways below — no file download needed, so they also work on work computers that block downloads.",
       ],
       links: [
-        { href: "https://github.com/rcubesystem/rcube-html-examples/tree/main/starter", label: "The starter app on GitHub" },
-        { href: "https://github.com/rcubesystem/rcube-html-examples", label: "The whole repository" },
+        { href: "https://github.com/rcubesystem/rcube-html-examples/tree/main/starter", label: "React" },
+        { href: "https://github.com/rcubesystem/rcube-html-examples/tree/main/starter-angular", label: "Angular" },
+        { href: "https://github.com/rcubesystem/rcube-html-examples/tree/main/starter-vue", label: "Vue" },
+        { href: "https://github.com/rcubesystem/rcube-html-examples/tree/main/starter-html", label: "HTML" },
+        { href: "https://github.com/rcubesystem/rcube-html-examples/tree/main/starter-jsp", label: "JSP" },
       ],
     },
     {
       heading: "Way 1: with git",
       body: [
-        "If git is installed, copy only the `starter` folder (a sparse checkout skips the rest of the repository), then install and start it:",
+        "If git is installed, copy only the starter's folder (a sparse checkout skips the rest of the repository), then install and start it. For another framework, write its folder instead of `starter` (`starter-angular`, `starter-vue`, `starter-html`, `starter-jsp`) and run it as its line above says:",
       ],
       code: "git clone --depth 1 --filter=blob:none --sparse https://github.com/rcubesystem/rcube-html-examples.git\ncd rcube-html-examples\ngit sparse-checkout set starter\ncd starter\nnpm install\nnpm run dev",
     },
     {
       heading: "Way 2: with npm only (no git)",
       body: [
-        "`degit` (run through npx) copies the `starter` folder from GitHub into a new folder `rcube-html-starter`, without git:",
+        "`degit` (run through npx) copies a starter's folder from GitHub into a new folder, without git (here the React one; `rcubesystem/rcube-html-examples/starter-vue` and so on for the others):",
       ],
       code: "npx degit rcubesystem/rcube-html-examples/starter rcube-html-starter\ncd rcube-html-starter\nnpm install\nnpm run dev",
     },
     {
       heading: "Way 3: make the same app yourself",
       body: [
-        "If GitHub is blocked too, npm can create an empty Next.js app, and you paste the examples into it:",
+        "If GitHub is blocked too, npm can create an empty Next.js app, and you paste the examples into it. (For Angular, Vue, a plain page or JSP, see Angular, Vue, JSP & plain HTML: add rcube-html to your app and paste any example's code for your framework.)",
       ],
       list: [
         "Run the commands below. They create a folder `my-rcube-app` with a new Next.js app, add rcube-html and start it.",
@@ -58,14 +69,22 @@ export const introduction = {
     },
     {
       heading: "1. Install",
-      body: ["In a Next.js (or any React) app:"],
+      body: ["In a Next.js (or any React) app — for Angular, Vue, plain HTML or JSP, see Angular, Vue, JSP & plain HTML:"],
       code: "npm install rcube-html",
+    },
+    {
+      heading: "Load only what you use (optional)",
+      body: [
+        "`import … from \"rcube-html\"` brings everything (about 118 KB gzipped, with its styles). A page that needs only forms can import `rcube-html/core` instead (about 51 KB): fields, layout, containers, actions, languages and styles.",
+        "The bigger components have entry points of their own, which add them to your schemas when imported: `rcube-html/table`, `/chart`, `/calendar`, `/tree`, `/richtext` and `/upload` (core plus a table is about 60 KB). They all share one copy of the core. If a schema uses one the page didn't import, its place says which import is missing.",
+      ],
+      code: "import { useDynamicTag, DynamicTag } from \"rcube-html/core\";\nimport \"rcube-html/table\";   // DataTable can now be used in schemas",
     },
     {
       heading: "2. Add its stylesheet once",
       body: [
-        "rcube-html draws its own buttons, fields, tables and dialogs, and works with any CSS framework — Bootstrap, Tailwind, Clay, your own CSS or none — for building responsive pages. In Next.js, import its CSS in `app/layout.js` (without it, the library adds the same CSS itself when the page loads):",
-        "Its colours and corners are CSS variables (`--rc-primary`, `--rc-border-radius`, ...): set them on `:root` to match your site. On a page with Bootstrap 5.3 they follow Bootstrap's colours by themselves; in Liferay, map them to Clay's.",
+        "rcube-html draws its own buttons, fields, tables and dialogs, and works with any CSS framework — Bootstrap, Tailwind, a CMS theme, your own CSS or none — for building responsive pages. In Next.js, import its CSS in `app/layout.js` (without it, the library adds the same CSS itself when the page loads):",
+        "Its colours and corners are CSS variables (`--rc-primary`, `--rc-border-radius`, ...): set them on `:root` to match your site. On a page with Bootstrap 5.3 they follow Bootstrap's colours by themselves; in a CMS, map them to its theme's.",
       ],
       code: "import \"rcube-html/styles.css\";",
     },
@@ -124,7 +143,7 @@ export const schemaBasics = {
     {
       heading: "Nodes",
       body: [
-        "A schema is an array of nodes. Every node is an object with a `type` and a unique `id`.",
+        "A schema is an array of nodes. Every node is an object with a `type`, and usually an `id` (optional: see Shorthands below).",
         "Layout nodes (`row`, `column`, containers like `Card` or `Tabs`) have `children`: a list of more nodes. Other nodes have `props`: the settings for that element (its text, label, color, ...).",
       ],
       code: "{ type: \"row\", id: \"row-1\", props: { className: \"rc-mb-3\" }, children: [\n  { type: \"column\", id: \"col-1\", children: [\n    { type: \"H4\", id: \"title\", props: { text: \"Hello\" } }\n  ] }\n]}",
@@ -140,7 +159,17 @@ export const schemaBasics = {
       heading: "Why ids matter",
       body: [
         "Actions find nodes by id. In this example the button runs `changeTitle()`, which calls `api.setNodeProps(\"title\", { text: ... })` — it changes the node whose id is `title`.",
+        "So write the `id` yourself on a node your code changes. Other nodes can do without one (next section).",
       ],
+    },
+    {
+      heading: "Shorthands: a single child, and no ids",
+      body: [
+        "A single child can be written as an object instead of a list of one — in `children`, in a tab's or accordion's `children` and in a modal's `footer`. Empty entries (`null`, `false`) are skipped, so `condition && node` works inside a list.",
+        "The `id` is optional. A field gets its `name` (`email`, then `email-2` if taken); any other node gets its parent's id, its type and its place: `row1`, `row1-column1`, `row1-column1-p1`. Ids you write are kept and never given to another node. A generated id follows the node's place, so give your own id to a node your actions change.",
+        "The last row of the example below is written this way. Arrays and ids you write keep working exactly as before. In your own code, `childrenOf(node)` reads children as a list, and `normalizeSchema(schema)` returns a schema with lists and ids everywhere.",
+      ],
+      code: "// the long way\n{ type: \"row\", id: \"r1\", children: [\n  { type: \"column\", id: \"c1\", children: [\n    { type: \"InputField\", id: \"email\", props: { name: \"email\", label: \"Email\" } }\n  ] }\n] }\n\n// the same with the shorthands\n{ type: \"row\", children: { type: \"column\", children:\n  { type: \"InputField\", props: { name: \"email\", label: \"Email\" } } } }",
     },
   ],
   schema: [
@@ -163,17 +192,20 @@ export const schemaBasics = {
       { type: "column", id: "col-b", children: [{ type: "DIV", id: "box-b", props: { className: "rc-border rc-rounded rc-p-2", children: "Equal" } }] },
       { type: "column", id: "col-c", children: [{ type: "DIV", id: "box-c", props: { className: "rc-border rc-rounded rc-p-2", children: "Equal" } }] },
     ] },
-    { type: "row", id: "row-button", children: [
+    { type: "row", id: "row-button", props: { className: "rc-mb-3" }, children: [
       { type: "column", id: "col-button", children: [
         { type: "ButtonField", id: "change", props: { text: "Change the title", variant: "primary", onClick: "changeTitle()" } },
       ] },
     ] },
+    // written with the shorthands: no ids, and each single child is an object
+    { type: "row", children: { type: "column", props: { className: "rc-col-12 rc-border rc-rounded rc-p-3 rc-bg-body-tertiary" }, children:
+      { type: "P", props: { text: "This row is written with the shorthands: no ids, and each single child is an object, not a list.", className: "rc-mb-0" } } } },
   ],
   actionsCode: `changeTitle: () => api.setNodeProps("title", { text: "Changed at " + new Date().toLocaleTimeString() }),`,
   props: [
     ["type", "The kind of node: layout (`row`, `column`), text (`H4`, `P`, `DIV`), field, container, table, chart, ..."],
-    ["id", "Unique per schema; used by actions and as React key."],
-    ["children", "Nested nodes (rows, columns and containers)."],
+    ["id", "Unique per schema; used by actions and as React key. Optional: a field gets its name, other nodes their place (`row1-column1-p1`)."],
+    ["children", "Nested nodes (rows, columns and containers): a list, or a single node as an object."],
     ["props.className / props.style", "Classes (`rc-…`, or your own) or inline styles for that element."],
     ["props.span / props.gap", "A column's width (`6`, `\"auto\"`, `{ xs: 12, md: 6 }`) / a row's space between columns (`0`–`5`)."],
     ["props.text", "The text of text nodes (`H1`–`H6`, `P`, `SPAN`, ...). `DIV` uses `props.children`."],

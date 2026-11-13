@@ -23,6 +23,7 @@ register("./esm-loader.mjs", import.meta.url);
 const { examples } = await import(pathToFileURL(path.join(root, "src/tutorials/examples/index.js")).href);
 const { groups, topics } = await import(pathToFileURL(path.join(root, "src/tutorials/topics.js")).href);
 const { pageCode } = await import(pathToFileURL(path.join(root, "src/tutorials/pageCode.js")).href);
+const { packageKeywords } = await import(pathToFileURL(path.join(root, "src/tutorials/tags.js")).href);
 
 const files = new Map(); // path in starter/ -> text
 
@@ -34,6 +35,7 @@ files.set("package.json", `${JSON.stringify({
   version: "0.1.0",
   private: true,
   description: "Every rcube-html example as a Next.js app: npm install, then npm run dev.",
+  keywords: packageKeywords(["rcube-html", "starter", "sample application", "simple application", "examples", "dynamic forms", "dynamic content", "JSON forms", "data table", "charts", "calendar", "tree view", "file upload", "React", "Next.js"]),
   scripts: { dev: "next dev", build: "next build", start: "next start" },
   dependencies: { next: site.dependencies.next, react: site.dependencies.react, "react-dom": site.dependencies["react-dom"], "rcube-html": `^${rcubeHtml}` },
   engines: site.engines,

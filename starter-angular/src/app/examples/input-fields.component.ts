@@ -1,0 +1,209 @@
+// @ts-nocheck — the example's actions and helpers are plain JavaScript; give them types in your own code
+// Input fields — https://rcube-html.com/input-fields
+import { Component } from "@angular/core";
+import { RcubeFormComponent } from "../rcube-form.component";
+
+const schema = [
+  {
+    "type": "row",
+    "id": "row-1",
+    "children": [
+      {
+        "type": "column",
+        "id": "c-text",
+        "props": {
+          "className": "rc-col-12 rc-col-md-6"
+        },
+        "children": [
+          {
+            "type": "InputField",
+            "id": "full-name",
+            "props": {
+              "name": "fullName",
+              "label": "Full name (uppercase)",
+              "placeholder": "Jane Doe",
+              "uppercase": true,
+              "onChange": "fieldChanged()"
+            }
+          }
+        ]
+      },
+      {
+        "type": "column",
+        "id": "c-email",
+        "props": {
+          "className": "rc-col-12 rc-col-md-6"
+        },
+        "children": [
+          {
+            "type": "InputField",
+            "id": "email",
+            "props": {
+              "type": "email",
+              "name": "email",
+              "label": "Email (lowercase)",
+              "lowercase": true,
+              "onChange": "fieldChanged()"
+            }
+          }
+        ]
+      },
+      {
+        "type": "column",
+        "id": "c-password",
+        "props": {
+          "className": "rc-col-12 rc-col-md-6"
+        },
+        "children": [
+          {
+            "type": "InputField",
+            "id": "password",
+            "props": {
+              "type": "password",
+              "name": "password",
+              "label": "Password",
+              "onChange": "fieldChanged()"
+            }
+          }
+        ]
+      },
+      {
+        "type": "column",
+        "id": "c-phone",
+        "props": {
+          "className": "rc-col-12 rc-col-md-6"
+        },
+        "children": [
+          {
+            "type": "InputField",
+            "id": "phone",
+            "props": {
+              "type": "tel",
+              "name": "phone",
+              "label": "Phone (mask)",
+              "mask": "(###) ###-####",
+              "placeholder": "(555) 123-4567",
+              "hint": "Digits only — the mask adds the rest.",
+              "onChange": "fieldChanged()"
+            }
+          }
+        ]
+      },
+      {
+        "type": "column",
+        "id": "c-number",
+        "props": {
+          "className": "rc-col-6 rc-col-md-3"
+        },
+        "children": [
+          {
+            "type": "InputField",
+            "id": "quantity",
+            "props": {
+              "type": "number",
+              "name": "quantity",
+              "label": "Quantity",
+              "min": 1,
+              "max": 10,
+              "onChange": "fieldChanged()"
+            }
+          }
+        ]
+      },
+      {
+        "type": "column",
+        "id": "c-date",
+        "props": {
+          "className": "rc-col-6 rc-col-md-3"
+        },
+        "children": [
+          {
+            "type": "InputField",
+            "id": "start",
+            "props": {
+              "type": "date",
+              "name": "startDate",
+              "label": "Start date",
+              "onChange": "fieldChanged()"
+            }
+          }
+        ]
+      },
+      {
+        "type": "column",
+        "id": "c-color",
+        "props": {
+          "className": "rc-col-6 rc-col-md-3"
+        },
+        "children": [
+          {
+            "type": "InputField",
+            "id": "theme",
+            "props": {
+              "type": "color",
+              "name": "themeColor",
+              "label": "Color",
+              "onChange": "fieldChanged()"
+            }
+          }
+        ]
+      },
+      {
+        "type": "column",
+        "id": "c-check",
+        "props": {
+          "className": "rc-col-6 rc-col-md-3 rc-d-flex rc-align-items-center"
+        },
+        "children": [
+          {
+            "type": "InputField",
+            "id": "agree",
+            "props": {
+              "type": "checkbox",
+              "name": "agree",
+              "label": "I agree",
+              "onChange": "fieldChanged()"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "row",
+    "id": "row-result",
+    "children": [
+      {
+        "type": "column",
+        "id": "col-result",
+        "children": [
+          {
+            "type": "P",
+            "id": "result",
+            "props": {
+              "className": "rc-alert rc-alert-secondary rc-py-2 rc-small rc-mb-0",
+              "text": "Change any field."
+            }
+          }
+        ]
+      }
+    ]
+  }
+];
+
+@Component({
+  selector: "app-input-fields",
+  standalone: true,
+  imports: [RcubeFormComponent],
+  template: `<rcube-html-form
+    [schema]="schema"
+    [actions]="actions"
+  ></rcube-html-form>`,
+})
+export class InputFieldsComponent {
+  schema = schema;
+  // the actions the schema names, e.g. "onClick": "save()"
+  actions = (api: any): Record<string, (...args: any[]) => any> => ({
+    fieldChanged: (event, { name, value }) => api.setNodeProps("result", { text: name + " = " + JSON.stringify(value) }),
+  });
+}
