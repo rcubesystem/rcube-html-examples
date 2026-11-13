@@ -80,6 +80,25 @@ npm run dev
 
 So the starter always matches the tutorials. Commit `starter/` after changing a tutorial, so GitHub has the latest.
 
+## All the schemas
+
+**[schema/](schema/)** has every schema used on the site, one commented file per tutorial (`schema/validation.js`,
+`schema/data-table.js`, …), plus `schema/index.js` (all of them by slug) and a list in `schema/README.md`. Each file
+starts with a comment saying what the example shows, its form fields and its actions, then exports:
+
+- `schema` (and `buttons` / `options` where the example has them),
+- `actions`, each with a comment saying which element and event run it (e.g. `fillDemo: run by ButtonField "fill" (onClick)`),
+- the helpers the actions use (a mock API, data) and `onLoad(form)` where the page loads something first.
+
+```js
+import { schema, actions } from "./schema/events-actions";
+const form = useDynamicTag({ schema, actions });
+```
+
+`scripts/build-schemas.mjs` writes the folder fresh before every `npm run dev` and `npm run build` (or on its own:
+`npm run schemas`) from `src/tutorials/examples/`, so don't edit `schema/` by hand. `custom-components.js` contains
+JSX (its React components), so it needs a bundler such as Next.js, like any component file.
+
 ## Publish
 
 The site is a static export hosted on Firebase Hosting (project `rcube-html`, see `firebase.json` and `.firebaserc`):
